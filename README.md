@@ -29,7 +29,7 @@ Quenzy is a modern, full-stack e-commerce web application built with React, Node
 ## 📌 Author
 
 - 👨‍💻 Ashok Kumar — Full Stack Developer  
-- 🔗 [LinkedIn](https://ashokkumar-p.netlify.app) | [Portfolio](https://ashokkumar-p.netlify.app) 
+- 🔗 [LinkedIn](https://www.linkedin.com/in/ashok-kumar-p-030847247/) | [Portfolio](https://ashokkumar-p.netlify.app) 
 
 ---
 
