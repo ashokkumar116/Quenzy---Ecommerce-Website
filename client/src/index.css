@@ -10,3 +10,9 @@
 @theme{
   --font-poppins:"Poppins", sans-serif;
 }
+
+@layer components{
+  .input-prime{
+    @apply  outline-none border-b border-b-primary px-3 py-3 w-100
+  }
+}
