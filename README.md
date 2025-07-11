@@ -11,7 +11,7 @@ Quenzy is a modern, full-stack e-commerce web application built with React, Node
 
 ## 🔧 Tech Stack
 
-- **Frontend:** React.js (with Tailwind or PrimeReact)
+- **Frontend:** React.js (with TailwindCss)
 - **Backend:** Node.js, Express.js
 - **Database:** MySQL
 - **Authentication:** JWT + Cookies
@@ -29,7 +29,7 @@ Quenzy is a modern, full-stack e-commerce web application built with React, Node
 ## 📌 Author
 
 - 👨‍💻 Ashok Kumar — Full Stack Developer  
-- 🔗 [LinkedIn](#) | [Portfolio](#) *(add links when ready)*
+- 🔗 [LinkedIn](https://ashokkumar-p.netlify.app) | [Portfolio](https://ashokkumar-p.netlify.app) 
 
 ---
 
