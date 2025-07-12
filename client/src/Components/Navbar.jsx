@@ -8,7 +8,7 @@ import { Badge } from "primereact/badge";
 
 const Navbar = () => {
     return (
-        <div className="fixed top-0 bg-base-300 w-[100%] px-5 py-2 shadow-lg backdrop-blur-xl">
+        <div className="fixed top-0 bg-base-300 z-100 w-[100%] px-5 py-2 shadow-lg backdrop-blur-xl">
             <nav className="flex justify-between items-center">
                 <div className="logo flex items-center">
                     <img
