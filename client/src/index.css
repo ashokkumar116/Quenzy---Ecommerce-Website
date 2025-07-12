@@ -16,3 +16,10 @@
     @apply  outline-none border-b border-b-primary px-3 py-3 w-100
   }
 }
+/* src/index.css or App.css */
+.slick-prev::before,
+.slick-next::before {
+  color: #3b82f6; /* Tailwind blue-500 */
+  font-size: 24px;
+}
+
