@@ -1,10 +1,10 @@
-import { InputText } from 'primereact/inputtext'
-import { Password } from 'primereact/password'
+
 import React from 'react'
 import { Link } from 'react-router-dom'
-import {InputNumber} from 'primereact/inputnumber'
 
 const Register = () => {
+
+    
   return (
     <div className="h-[100vh] flex justify-center items-center">
             <div className="form flex justify-center items-center gap-7 bg-base-200 shadow-lg rounded-md w-[70%] h-[70%] ">
