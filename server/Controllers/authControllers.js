@@ -61,8 +61,25 @@ const registerUser = async(req,res)=>{
     }
 }
 
+const getUser = async(req,res)=>{
+    const id = req.user.id;
+    const sql = "SELECT * FROM users WHERE id = ?";
+
+    const [users] = await db.query(sql,[id]);
+
+    if(users.length === 0){
+        return res.status(401).json({message:"No User Found"})
+    }
+
+    const user = users[0];
+
+    return res.json(user);
+
+}
+
 module.exports = {
     loginUser,
-    registerUser
+    registerUser,
+    getUser
 
 }

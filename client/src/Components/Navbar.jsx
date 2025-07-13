@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { GoSearch } from "react-icons/go";
 import { IoCartOutline } from "react-icons/io5";
 import { Badge } from "primereact/badge";
-
+import { AuthContext } from "../Contexts/AuthContext";
+import { MdLogin } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 
 const Navbar = () => {
+
+    const {user} = useContext(AuthContext);
+    console.log(user);  
+
     return (
         <div className="fixed top-0 bg-base-300 z-100 w-[100%] px-5 py-2 shadow-lg backdrop-blur-xl">
             <nav className="flex justify-between items-center">
@@ -27,6 +33,9 @@ const Navbar = () => {
                         <li className="flex justify-center items-center gap-2 p-overlay-badge">
                         <IoCartOutline className="text-2xl" />
                         <Badge value={3} severity="success" />
+                        </li>
+                        <li>
+                            {user ? <p>{user.name}</p> :<Link to={'/login'} ><button className="btn btn-primary" ><MdLogin />Login</button></Link> }
                         </li>
                     </ul>
                 </div>
