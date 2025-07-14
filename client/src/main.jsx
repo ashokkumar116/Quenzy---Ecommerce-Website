@@ -15,7 +15,7 @@ createRoot(document.getElementById("root")).render(
     <BrowserRouter>
         <PrimeReactProvider>
             <AuthProvider>
-            <Navbar/>
+                <Navbar/>
                 <App />
             </AuthProvider>
         </PrimeReactProvider>

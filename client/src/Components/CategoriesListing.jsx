@@ -5,6 +5,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 import { SampleNextArrow, SamplePrevArrow } from './Arrows';
+import QuenzyLoader from '../Loader/QuenzyLoader';
+import MiniQuenzyLoader from '../Loader/MiniQuenzyLoader';
 
 
 const CategoriesListing = () => {
@@ -43,7 +45,7 @@ const CategoriesListing = () => {
                         </div>
                     ))}
                 </Slider>
-            ) : <p>Loading ....</p> }
+            ) : <MiniQuenzyLoader/> }
         </div>
     )
 }

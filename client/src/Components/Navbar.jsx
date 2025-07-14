@@ -36,7 +36,7 @@ const Navbar = () => {
                         </li>
                         <li>
                             {user ? <p>{user.name}</p> :<Link to={'/login'} ><button className="btn btn-primary" ><MdLogin />Login</button></Link> }
-                        </li>
+                        </li>   
                     </ul>
                 </div>
             </nav>

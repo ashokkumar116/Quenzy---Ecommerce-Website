@@ -7,12 +7,11 @@ import img3 from "../assets/sample3.webp";
 import {
     NextArrow,
     PrevArrow,
-    SampleNextArrow,
-    SamplePrevArrow,
 } from "../Components/Arrows";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ReactStars from "react-rating-stars-component";
+import MiniQuenzyLoader from "../Loader/MiniQuenzyLoader";
 
 
 const Home = () => {
@@ -65,9 +64,7 @@ const Home = () => {
                     next={fetchMoreProducts}
                     hasMore={hasMore}
                     loader={
-                        <p className="text-center my-4">
-                            Loading more products...
-                        </p>
+                        <MiniQuenzyLoader/>
                     }
                     endMessage={
                         <p className="text-center text-gray-500 mt-4">
