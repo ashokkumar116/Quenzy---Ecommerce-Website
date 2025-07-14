@@ -1,10 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "../../axios";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 
 const AddBrands = () => {
     const [name, setName] = useState("");
-    const [message, setMessage] = useState(null);
+    const [brands, setBrands] = useState([]);
+
+    const fetchBrands = async () => {
+        try {
+            const res = await axios.get("/brands/getbrands");
+            setBrands(res.data);
+        } catch (error) {
+            console.error("Error fetching brands:", error);
+            toast.error(
+                error.response?.data?.message ||
+                    "An error occurred while fetching brands."
+            );
+        }
+    }
+
+    useEffect(()=>{
+        fetchBrands();
+    })
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -14,6 +31,7 @@ const AddBrands = () => {
 
             if (res.status === 201) {
                 setName("");
+                fetchBrands();
                 toast.success("Brand added successfully!");
             }
         } catch (error) {
@@ -53,6 +71,14 @@ const AddBrands = () => {
                     transition={Bounce}
                 />
             </form>
+            <div>
+                <h2 className="text-2xl font-bold mt-10 mb-5">Brands List</h2>
+                <ul className="list-disc pl-5">
+                    {brands.map((brand) => (
+                        <p>{brand.name}</p>
+                    ))}
+                </ul>
+            </div>
         </div>
     );
 };
