@@ -21,6 +21,7 @@ function AdminLayout() {
         <NavLink className="hover:bg-base-100 px-5 py-2 rounded-md transition transition-all" to="/admin/add-product" >Add Product</NavLink>
         <NavLink className="hover:bg-base-100 px-5 py-2 rounded-md transition transition-all" to="/admin/add-category">Add Category</NavLink>
         <NavLink className="hover:bg-base-100 px-5 py-2 rounded-md transition transition-all" to="/admin/add-brand">Add Brand</NavLink>
+        <NavLink className="hover:bg-base-100 px-5 py-2 rounded-md transition transition-all" to="/admin/add-seller">Add Seller</NavLink>
         </div>
       </aside>
 
