@@ -6,6 +6,20 @@ const addBrand = async (req, res) => {
 
     const {name} = req.body;
 
+    if (!name || name.trim() === "") {
+        return res.status(400).json({
+            message: "Brand name is required"
+        });
+    }
+
+    const checkSql = "SELECT * FROM brands WHERE name = ?";
+    const [existingBrand] = await db.query(checkSql, [name]);
+    if (existingBrand.length > 0) {
+        return res.status(400).json({
+            message: "Brand already exists"
+        });
+    }
+
     const slugify = (name) => {
         return name
           .toLowerCase()
