@@ -3,7 +3,7 @@ const { getCategories, AddCategory, updateCategory, deleteCategory } = require('
 const adminAuth = require('../Middlewares/adminAuth');
 const router = express.Router();
 
-router.get('/getcategories',adminAuth,getCategories);
+router.get('/getcategories',getCategories);
 router.post('/addcategory',adminAuth,AddCategory);
 router.put('/updatecategory/:id',adminAuth,updateCategory);
 router.delete('/deletecategory/:id',adminAuth,deleteCategory)

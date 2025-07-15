@@ -1,6 +1,14 @@
 import { useContext } from 'react';
 import { Outlet, NavLink } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthContext';
+import { MdOutlineDashboard } from "react-icons/md";
+import { AiTwotoneShop } from "react-icons/ai";
+import { MdOutlineCategory } from "react-icons/md";
+import { HiOutlineTag } from "react-icons/hi";
+import { MdOutlineAddBusiness } from "react-icons/md";
+
+
+
 
 function AdminLayout() {
   const { user } = useContext(AuthContext);
@@ -21,51 +29,56 @@ function AdminLayout() {
           <NavLink
             to="/admin/dashboard"
             className={({ isActive }) =>
-              `px-4 py-2 rounded-md text-sm font-medium transition ${
+              `px-4 py-2 rounded-md text-sm font-medium transition flex items-center gap-1 ${
                 isActive ? 'bg-primary text-white' : 'hover:bg-base-100'
               }`
             }
           >
+            <MdOutlineDashboard/>
             Dashboard
           </NavLink>
           <NavLink
             to="/admin/add-product"
             className={({ isActive }) =>
-              `px-4 py-2 rounded-md text-sm font-medium transition ${
+              `px-4 py-2 rounded-md text-sm font-medium transition flex items-center gap-1 ${
                 isActive ? 'bg-primary text-white' : 'hover:bg-base-100'
               }`
             }
           >
+            <AiTwotoneShop/>
             Add Product
           </NavLink>
           <NavLink
             to="/admin/add-category"
             className={({ isActive }) =>
-              `px-4 py-2 rounded-md text-sm font-medium transition ${
+              `px-4 py-2 rounded-md text-sm font-medium transition flex items-center gap-1 ${
                 isActive ? 'bg-primary text-white' : 'hover:bg-base-100'
               }`
             }
           >
+            <MdOutlineCategory/>
             Add Category
           </NavLink>
           <NavLink
             to="/admin/add-brand"
             className={({ isActive }) =>
-              `px-4 py-2 rounded-md text-sm font-medium transition ${
+              `px-4 py-2 rounded-md text-sm font-medium transition flex items-center gap-1 ${
                 isActive ? 'bg-primary text-white' : 'hover:bg-base-100'
               }`
             }
           >
+            <HiOutlineTag/>
             Add Brand
           </NavLink>
           <NavLink
             to="/admin/add-seller"
             className={({ isActive }) =>
-              `px-4 py-2 rounded-md text-sm font-medium transition ${
+              `px-4 py-2 rounded-md text-sm font-medium transition flex items-center gap-1 ${
                 isActive ? 'bg-primary text-white' : 'hover:bg-base-100'
               }`
             }
           >
+            <MdOutlineAddBusiness/>
             Add Seller
           </NavLink>
         </nav>

@@ -1,32 +1,43 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import axios from '../axios'
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 import { SampleNextArrow, SamplePrevArrow } from './Arrows';
-import QuenzyLoader from '../Loader/QuenzyLoader';
 import MiniQuenzyLoader from '../Loader/MiniQuenzyLoader';
 
 
 const CategoriesListing = () => {
-    const [categories, setCategories] = useState([])
+    const [categories, setCategories] = useState([]);
+    const [slidesCount,setSlidesCount] = useState(null);
 
     const fetchCategories = async () => {
-        const response = await axios.get('https://dummyjson.com/products/categories');
+        const response = await axios.get('/categories/getcategories');
+        console.log(response.data);
         setCategories(response.data);
     }
 
     useEffect(() => {
         fetchCategories();
     }, [])
+
+    useEffect(() => {
+        if (categories.length > 0) {
+            if(categories.length < 6){
+                setSlidesCount(categories.length);
+        }
+    }
+        else{
+            setSlidesCount(6);
+        }
+    },[categories])
     
 
     var settings = {
         dots: false,
         infinite: true,
         speed: 500,
-        slidesToShow: 6,
+        slidesToShow: slidesCount,
         slidesToScroll: 2,
         prevArrow :<SamplePrevArrow /> ,
         nextArrow :<SampleNextArrow />

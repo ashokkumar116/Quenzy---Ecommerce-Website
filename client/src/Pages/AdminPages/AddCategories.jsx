@@ -16,10 +16,10 @@ const AddCategories = () => {
             const res = await axios.get("/categories/getcategories");
             setCategories(res.data);
         } catch (error) {
-            console.error("Error fetching brands:", error);
+            console.error("Error fetching Categories:", error);
             toast.error(
                 error.response?.data?.message ||
-                    "An error occurred while fetching brands."
+                    "An error occurred while fetching Categories."
             );
         }
     };
@@ -47,10 +47,10 @@ const AddCategories = () => {
         }
     };
 
-    const handleEditModal = (brand) => {
+    const handleEditModal = (category) => {
         setShowModal(true);
-        setEditId(brand.id);
-        setEditName(brand.name);
+        setEditId(category.id);
+        setEditName(category.name);
     };
 
     const handleEditSave = async(e)=>{
@@ -70,9 +70,9 @@ const AddCategories = () => {
         }
     }
 
-    const handleShowDeleteModal = (brand) => {
+    const handleShowDeleteModal = (category) => {
         setShowDeleteModal(true);
-        setDeleteId(brand.id);
+        setDeleteId(category.id);
     }
 
     const handleDelete = async(e)=>{
@@ -134,19 +134,19 @@ const AddCategories = () => {
                 </thead>
 
                 <tbody className="px-5 py-2 cursor-pointer rounded-md gap-5">
-                    {categories.map((brand) => (
+                    {categories.map((category) => (
                         <tr>
-                            <td>{brand.name}</td>
+                            <td>{category.name}</td>
                             <td>
                                 <button
                                     className="btn btn-warning"
-                                    onClick={()=>handleEditModal(brand)}
+                                    onClick={()=>handleEditModal(category)}
                                 >
                                     Edit
                                 </button>
                             </td>
                             <td>
-                                <button className="btn btn-error" onClick={()=>handleShowDeleteModal(brand)}>
+                                <button className="btn btn-error" onClick={()=>handleShowDeleteModal(category)}>
                                     Delete
                                 </button>
                             </td>
@@ -161,7 +161,7 @@ const AddCategories = () => {
         {showModal && (
             <div className="fixed top-0 left-0 w-full h-full bg-[rgba(1,1,1,0.8)] flex items-center justify-center z-50">
                 <div className="bg-white p-5 rounded-lg shadow-lg w-1/3 z-80 flex flex-col gap-5">
-                    <h1 className="text-2xl font-bold uppercase text-primary">Edit Brand</h1>
+                    <h1 className="text-2xl font-bold uppercase text-primary">Edit Category</h1>
                     <form onSubmit={handleEditSave} className="flex flex-col gap-5 items-center">
                         <input type="text" className="input-prime" placeholder="Name " value={editName} onChange={(e)=>setEditName(e.target.value)} />
                         <div className="flex gap-3">
@@ -177,8 +177,8 @@ const AddCategories = () => {
             <div>
                 <div className="fixed top-0 left-0 w-full h-full bg-[rgba(1,1,1,0.8)] flex items-center justify-center z-50">
                     <div className="bg-white p-5 rounded-lg shadow-lg w-1/3 z-80 flex flex-col gap-5 items-center">
-                        <h1 className="text-2xl font-bold uppercase text-primary">Delete Brand</h1>
-                        <p>Are you sure you want to delete this brand?</p>
+                        <h1 className="text-2xl font-bold uppercase text-primary">Delete Category</h1>
+                        <p>Are you sure you want to delete this Category?</p>
                         <div className="flex gap-3">
                             <button className="btn btn-success" onClick={handleDelete}>Yes</button>
                             <button className="btn btn-outline btn-error" onClick={()=>setShowDeleteModal(false)}>No</button>
