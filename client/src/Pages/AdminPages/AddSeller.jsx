@@ -3,6 +3,10 @@ import axios from "../../axios";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import { FaEdit, FaRegSave } from "react-icons/fa";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { IoMdCloseCircleOutline } from "react-icons/io";
+import { CiNoWaitingSign } from "react-icons/ci";
+import { SiTicktick } from "react-icons/si";
+
 
 const AddSeller = () => {
 
@@ -202,7 +206,7 @@ const AddSeller = () => {
                         <input type="text" className="input-prime" placeholder="Phone " value={editPhone} onChange={(e)=>setEditPhone(e.target.value)} />
                         <div className="flex gap-3">
                         <button type="submit" className="btn btn-success"><FaRegSave/>Save Changes</button>
-                        <button className="btn btn-outline btn-error" onClick={()=>setShowModal(false)} >Close</button>
+                        <button className="btn btn-outline btn-error" onClick={()=>setShowModal(false)} ><IoMdCloseCircleOutline/> Close</button>
                         </div>
                     </form>
                 </div>
@@ -216,8 +220,8 @@ const AddSeller = () => {
                         <h1 className="text-2xl font-bold uppercase text-primary">Delete Seller</h1>
                         <p>Are you sure you want to delete this Seller?</p>
                         <div className="flex gap-3">
-                            <button className="btn btn-success" onClick={handleDelete}>Yes</button>
-                            <button className="btn btn-outline btn-error" onClick={()=>setShowDeleteModal(false)}>No</button>
+                            <button className="btn btn-success" onClick={handleDelete}><SiTicktick/>Yes</button>
+                            <button className="btn btn-outline btn-error" onClick={()=>setShowDeleteModal(false)}><CiNoWaitingSign/>No</button>
                         </div>
                     </div>
                 </div>
