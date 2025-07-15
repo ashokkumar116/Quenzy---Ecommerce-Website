@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../axios";
 import { Bounce, ToastContainer, toast } from "react-toastify";
+import { FaEdit } from "react-icons/fa";
+import { FaRegTrashAlt } from "react-icons/fa";
 
 const AddBrands = () => {
     const [name, setName] = useState("");
@@ -106,7 +108,7 @@ const AddBrands = () => {
                     onChange={(e) => setName(e.target.value)}
                 />
                 <button type="submit" className="btn btn-primary">
-                    Add Brand
+                    Add Brand +
                 </button>
                 <ToastContainer
                     position="top-right"
@@ -141,11 +143,13 @@ const AddBrands = () => {
                                         className="btn btn-warning"
                                         onClick={()=>handleEditModal(brand)}
                                     >
+                                        <FaEdit />
                                         Edit
                                     </button>
                                 </td>
                                 <td>
                                     <button className="btn btn-error" onClick={()=>handleShowDeleteModal(brand)}>
+                                        <FaRegTrashAlt />
                                         Delete
                                     </button>
                                 </td>
