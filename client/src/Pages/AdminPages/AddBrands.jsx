@@ -3,6 +3,7 @@ import axios from "../../axios";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import { FaEdit } from "react-icons/fa";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { FaRegSave } from "react-icons/fa";
 
 const AddBrands = () => {
     const [name, setName] = useState("");
@@ -168,7 +169,7 @@ const AddBrands = () => {
                         <form onSubmit={handleEditSave} className="flex flex-col gap-5 items-center">
                             <input type="text" className="input-prime" placeholder="Name " value={editName} onChange={(e)=>setEditName(e.target.value)} />
                             <div className="flex gap-3">
-                            <button type="submit" className="btn btn-success">Save Changes</button>
+                            <button type="submit" className="btn btn-success"> <FaRegSave/> Save Changes</button>
                             <button className="btn btn-outline btn-error" onClick={()=>setShowModal(false)} >Close</button>
                             </div>
                         </form>

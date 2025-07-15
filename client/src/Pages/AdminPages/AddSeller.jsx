@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../axios";
 import { Bounce, ToastContainer, toast } from "react-toastify";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaRegSave } from "react-icons/fa";
 import { FaRegTrashAlt } from "react-icons/fa";
 
 const AddSeller = () => {
@@ -201,7 +201,7 @@ const AddSeller = () => {
                         <input type="email" className="input-prime" placeholder="Email " value={editEmail} onChange={(e)=>setEditEmail(e.target.value)} />
                         <input type="text" className="input-prime" placeholder="Phone " value={editPhone} onChange={(e)=>setEditPhone(e.target.value)} />
                         <div className="flex gap-3">
-                        <button type="submit" className="btn btn-success">Save Changes</button>
+                        <button type="submit" className="btn btn-success"><FaRegSave/>Save Changes</button>
                         <button className="btn btn-outline btn-error" onClick={()=>setShowModal(false)} >Close</button>
                         </div>
                     </form>
