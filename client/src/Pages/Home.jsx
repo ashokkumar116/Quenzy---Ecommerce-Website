@@ -28,7 +28,6 @@ const Home = () => {
         // if (skip + limit >= res.data.total) {
         //     setHasMore(false);
         // }
-        console.log(res.data.images[0].image_url);
         setProducts(res.data);
     };
 
@@ -63,19 +62,6 @@ const Home = () => {
                 </Slider>
             </div>
             <div className="products mt-10">
-                {/* <InfiniteScroll
-                    dataLength={products.length}
-                    next={fetchMoreProducts}
-                    hasMore={hasMore}
-                    loader={
-                        <MiniQuenzyLoader/>
-                    }
-                    endMessage={
-                        <p className="text-center text-gray-500 mt-4">
-                            No more products to show.
-                        </p>
-                    }
-                > */}
 
                     <div className="grid grid-cols-4 gap-10 p-5">
                       {products.length>0 && products.map((product)=>{
@@ -86,8 +72,8 @@ const Home = () => {
                         </div>
                       })}
                     </div>
+                    {products.length === 0 && <MiniQuenzyLoader />}
 
-                {/* </InfiniteScroll> */}
             </div>
         </div>
     );

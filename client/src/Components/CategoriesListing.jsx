@@ -57,6 +57,7 @@ const CategoriesListing = () => {
                     ))}
                 </Slider>
             ) : <MiniQuenzyLoader/> }
+            
         </div>
     )
 }
