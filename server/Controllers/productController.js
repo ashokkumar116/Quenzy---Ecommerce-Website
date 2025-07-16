@@ -1,12 +1,41 @@
 const db = require("../db");
 
 const getAllProducts = async (req, res) => {
-    const sql = "SELECT * FROM products";
-
-    const [products] = await db.query(sql);
-
-    return res.json(products);
-};
+    try {
+      const productSql = `
+        SELECT 
+          p.id, p.name, p.slug, p.description, p.short_description, 
+          p.price, p.discount_percentage, p.stock, p.is_active, p.created_at,
+          c.name AS category_name,
+          b.name AS brand_name,
+          s.name AS seller_name
+        FROM products p
+        LEFT JOIN categories c ON p.category_id = c.id
+        LEFT JOIN brands b ON p.brand_id = b.id
+        LEFT JOIN sellers s ON p.seller_id = s.id
+        ORDER BY p.created_at DESC
+      `;
+      const [products] = await db.query(productSql);
+  
+      const imageSql = `SELECT product_id, image_url, is_main FROM product_images`;
+      const [images] = await db.query(imageSql);
+  
+      const productsWithImages = products.map(product => {
+        const productImages = images.filter(img => img.product_id === product.id);
+        return {
+          ...product,
+          images: productImages 
+        };
+      });
+  
+      res.json(productsWithImages);
+  
+    } catch (error) {
+      console.error("Error fetching products:", error.message);
+      res.status(500).json({ error: "Failed to get products with images" });
+    }
+  };
+  
 
 const addProduct = async (req, res) => {
     const {

@@ -25,7 +25,7 @@ app.use('/api/categories',categoriesRoutes)
 app.use('/api/sellers',sellerRoutes);
 app.use('/api/products',productRoutes);
 
-
+app.use('/uploads', express.static('Uploads'));
 
 
 

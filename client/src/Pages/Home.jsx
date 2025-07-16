@@ -8,8 +8,8 @@ import {
     NextArrow,
     PrevArrow,
 } from "../Components/Arrows";
-import axios from "axios";
-import InfiniteScroll from "react-infinite-scroll-component";
+import axios from "../axios";
+// import InfiniteScroll from "react-infinite-scroll-component";
 import ReactStars from "react-rating-stars-component";
 import MiniQuenzyLoader from "../Loader/MiniQuenzyLoader";
 
@@ -21,20 +21,24 @@ const Home = () => {
     const limit = 10;
 
     const fetchMoreProducts = async () => {
-        const res = await axios.get(
-            `https://dummyjson.com/products?limit=${limit}&skip=${skip}`
-        );
-        const newProducts = res.data.products;
-        setProducts((prev) => [...prev, ...newProducts]);
-        setSkip((prev) => prev + limit);
-        if (skip + limit >= res.data.total) {
-            setHasMore(false);
-        }
+        const res = await axios.get('/products/getproducts');
+        // const newProducts = res.data.products;
+        // setProducts((prev) => [...prev, ...newProducts]);
+        // setSkip((prev) => prev + limit);
+        // if (skip + limit >= res.data.total) {
+        //     setHasMore(false);
+        // }
+        console.log(res.data.images[0].image_url);
+        setProducts(res.data);
     };
 
     useEffect(() => {
         fetchMoreProducts();
     },[]);
+
+    useEffect(()=>{
+        console.log(products);
+    },[products]);  
 
     const settings = {
         dots: true,
@@ -59,7 +63,7 @@ const Home = () => {
                 </Slider>
             </div>
             <div className="products mt-10">
-                <InfiniteScroll
+                {/* <InfiniteScroll
                     dataLength={products.length}
                     next={fetchMoreProducts}
                     hasMore={hasMore}
@@ -71,19 +75,19 @@ const Home = () => {
                             No more products to show.
                         </p>
                     }
-                >
+                > */}
 
                     <div className="grid grid-cols-4 gap-10 p-5">
-                      {products.map((product)=>{
+                      {products.length>0 && products.map((product)=>{
                         return <div className="bg-base-300 p-5 shadow-lg rounded-md flex flex-col justify-center items-center hover:scale-102 transition-all duration-100 cursor-pointer">
-                          <img src={product.thumbnail} className="h-60" alt={product.title} />
-                          <h1>{product.title}</h1>
+                          <img src={`http://localhost:5000${product.images[0]?.image_url}`} className="h-60" alt={product.name} />
+                          <h1>{product.name}</h1>
                           <ReactStars count={5} value={4} size={24}  activeColor="#ffd700" edit={false} /> 
                         </div>
                       })}
                     </div>
 
-                </InfiniteScroll>
+                {/* </InfiniteScroll> */}
             </div>
         </div>
     );
