@@ -15,25 +15,14 @@
   .input-prime{
     @apply  outline-none border-b border-b-primary px-3 py-3 w-100
   }
-}
 
+  .select-prime{
+    @apply outline-none border-b border-b-primary px-3 py-3 w-100
+  }
 
-/* Fill (selected) stars */
-.p-rating .pi-star-fill {
-  color: #facc15 !important; /* Tailwind yellow-400 */
-}
+  .options-prime{
+    @apply bg-base-100 text-base-content border border-base-300 rounded-lg shadow-lg p-2
+  }
 
-/* Empty (unselected) stars */
-.p-rating .pi-star {
-  color: #d1d5db !important; /* Tailwind gray-300 */
-}
-
-/* On hover */
-.p-rating .pi-star:hover {
-  color: #fbbf24 !important; /* Tailwind yellow-400 */
-}
-
-.active{
-  @apply text-white bg-primary rounded-lg px-5 py-2;
 }
 
