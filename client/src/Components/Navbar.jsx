@@ -5,18 +5,19 @@ import { IoCartOutline } from "react-icons/io5";
 import { Badge } from "primereact/badge";
 import { AuthContext } from "../Contexts/AuthContext";
 import { MdLogin } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 const Navbar = () => {
 
     const {user} = useContext(AuthContext);
-    console.log(user);  
+    console.log(user); 
+    const navigate = useNavigate(); 
 
     return (
         <div className="fixed top-0 bg-base-300 z-100 w-[100%] px-5 py-2 shadow-lg backdrop-blur-xl">
             <nav className="flex justify-between items-center">
-                <div className="logo flex items-center">
+                <div className="logo flex items-center cursor-pointer" onClick={()=>navigate('/')}>
                     <img
                         className="w-60"
                         src="../../src/assets/navlogo.png"

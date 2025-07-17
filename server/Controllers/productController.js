@@ -99,6 +99,10 @@ const addProduct = async (req, res) => {
     }
 };
 
+const updateProduct = async(req,res)=>{
+  const {} = req.body;
+}
+
 module.exports = {
     getAllProducts,
     addProduct,
