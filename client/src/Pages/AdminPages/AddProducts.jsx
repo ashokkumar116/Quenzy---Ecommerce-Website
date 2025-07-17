@@ -10,6 +10,8 @@ const AddProducts = () => {
   const [sellers, setSellers] = useState([]);
   const [products, setProducts] = useState([]);
 
+
+    // Add state variables for product details
   const [name, setName] = useState("");
   const [short_description, setShortDescription] = useState("");
   const [description, setDescription] = useState("");
@@ -21,6 +23,23 @@ const AddProducts = () => {
   const [seller_id, setSellerId] = useState("");
   const [is_active, setIsActive] = useState("1");
   const [selectedImages, setSelectedImages] = useState([]);
+
+
+    // Edit state variables
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [editName, setEditName] = useState("");
+    const [editShortDescription, setEditShortDescription] = useState("");
+    const [editDescription, setEditDescription] = useState("");
+    const [editPrice, setEditPrice] = useState("");
+    const [editDiscountPercentage, setEditDiscountPercentage] = useState("");
+    const [editStock, setEditStock] = useState("");
+    const [editCategoryId, setEditCategoryId] = useState("");
+    const [editBrandId, setEditBrandId] = useState("");
+    const [editSellerId, setEditSellerId] = useState("");
+    const [editIsActive, setEditIsActive] = useState("1");
+    const [moreImages, setMoreImages] = useState([]);
+
+
 
   const fileInputRef = useRef(null);
 
@@ -99,6 +118,35 @@ const AddProducts = () => {
     if (!text) return "";
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
   };
+
+  const handleEditSave = async (e)=>{
+    e.preventDefault();
+    
+
+  }
+
+    const handleEditSHow = (product) => {
+        console.log(product)
+        setShowEditModal(true);
+        setEditName(product.name);
+        setEditShortDescription(product.short_description);
+        setEditDescription(product.description);
+        setEditPrice(product.price);
+        setEditDiscountPercentage(product.discount_percentage);
+        setEditStock(product.stock);
+        setEditCategoryId(product.category_id);
+        setEditBrandId(product.brand_id);
+        setEditSellerId(product.seller_id);
+        setEditIsActive(product.is_active ? "1" : "0");
+        if (product.images && product.images.length > 0) {
+            setMoreImages(product.images.map(img => img.image_url));
+        } else {
+            setMoreImages([]);
+        }
+        console.log("Edit Category ID:", product.category_id);
+console.log("Type:", typeof product.category_id);
+
+    }
   
 
   return (
@@ -300,8 +348,8 @@ const AddProducts = () => {
                         {product.is_active ? "Active" : "Inactive"}
                       </span>
                     </td>
-                    <td><button className="btn btn-sm btn-primary mr-2">View</button></td>
-                    <td><button className="btn btn-sm btn-warning mr-2">Edit</button></td>
+                    <td><button className="btn btn-sm btn-primary mr-2"  >View</button></td>
+                    <td><button className="btn btn-sm btn-warning mr-2" onClick={()=>handleEditSHow(product)}>Edit</button></td>
                     <td><button className="btn btn-sm btn-error">Delete</button></td>
                    
                   </tr>
@@ -310,6 +358,168 @@ const AddProducts = () => {
           </table>
         </div>
       </div>
+
+    { /* Edit Product Modal (Placeholder) */}
+    {showEditModal && (
+        <div className="fixed top-20 inset-0 bg-[rgba(1,1,1,0.7)] bg-opacity-50 flex items-center justify-center z-50 overflow-y-scroll pt-20 pb-3">
+            <form
+        onSubmit={handleEditSave}
+        className="bg-white shadow-xl rounded-xl p-8 grid grid-cols-1 md:grid-cols-2 gap-8 w-200"
+      >
+        {/* Left Column */}
+        <div className="flex flex-col gap-5">
+          <input
+            className="input input-bordered"
+            placeholder="Product Name"
+            value={editName}
+            onChange={(e) => setEditName(e.target.value)}
+          />
+          <input
+            className="input input-bordered"
+            placeholder="Short Description"
+            value={editShortDescription}
+            onChange={(e) => setEditShortDescription(e.target.value)}
+          />
+          <textarea
+            className="textarea textarea-bordered"
+            placeholder="Description"
+            value={editDescription}
+            onChange={(e) => setEditDescription(e.target.value)}
+          />
+          <input
+            className="input input-bordered"
+            placeholder="Price"
+            value={editPrice}
+            onChange={(e) => setEditPrice(e.target.value)}
+          />
+          <input
+            className="input input-bordered"
+            placeholder="Discount Percentage"
+            value={editDiscountPercentage}
+            onChange={(e) => setEditDiscountPercentage(e.target.value)}
+          />
+          <input
+            className="input input-bordered"
+            placeholder="Available Stocks"
+            value={editStock}
+            onChange={(e) => setEditStock(e.target.value)}
+          />
+        </div>
+
+        {/* Right Column */}
+        <div className="flex flex-col gap-5">
+          <select
+            className="select select-bordered"
+            value={editCategoryId}
+            onChange={(e) => setEditCategoryId(e.target.value)}
+          >
+            <option value="">Select Category</option>
+            {categories.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.name}
+              </option>
+            ))}
+          </select>
+
+          <select
+            className="select select-bordered"
+            value={editBrandId}
+            onChange={(e) => setEditBrandId(e.target.value)}
+          >
+            <option value="">Select Brand</option>
+            {brands.map((b) => (
+              <option key={b.id} value={b.id}>
+                {b.name}
+              </option>
+            ))}
+          </select>
+
+          <select
+            className="select select-bordered"
+            value={editSellerId}
+            onChange={(e) => setEditSellerId(e.target.value)}
+          >
+            <option value="">Select Seller</option>
+            {sellers.map((s) => (
+              <option key={s.id} value={s.id}>
+                {s.name}
+              </option>
+            ))}
+          </select>
+
+          <select
+            className="select select-bordered"
+            value={editIsActive}
+            onChange={(e) => setEditIsActive(e.target.value)}
+          >
+            <option value="1">Active</option>
+            <option value="0">Inactive</option>
+          </select>
+
+          {/* Image Upload */}
+          <div className="bg-base-100 border p-4 rounded-md">
+            <div className="mb-3">
+              <input
+                type="file"
+                multiple
+                onChange={handleImageChange}
+                ref={fileInputRef}
+                id="product-images"
+                className="hidden"
+              />
+              <label
+                htmlFor="product-images"
+                className="cursor-pointer inline-flex items-center gap-2 bg-base-300 hover:bg-base-200 px-4 py-2 rounded-full"
+              >
+                <TbUpload className="text-xl" /> Upload Images
+              </label>
+            </div>
+
+            {/* Preview */}
+            <div className="flex flex-wrap gap-3">
+              {selectedImages.length > 0 ? (
+                selectedImages.map((image, index) => (
+                  <div className="relative" key={index}>
+                    <img
+                      src={URL.createObjectURL(image)}
+                      alt={`Preview ${index}`}
+                      className="h-20 w-20 object-cover rounded border"
+                    />
+                    <TiDelete
+                      onClick={() => handleDelete(index)}
+                      className="absolute -right-2 -bottom-2 text-3xl text-error bg-white rounded-full cursor-pointer"
+                    />
+                  </div>
+                ))
+              ) : (
+                <p className="text-sm text-gray-500">No images selected</p>
+              )}
+            </div>
+
+            {selectedImages.length > 0 && (
+              <p className="mt-2 text-sm text-gray-700">
+                {selectedImages.length} image(s) selected
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div className="col-span-1 md:col-span-2">
+          <button className="btn btn-primary w-full" type="submit">
+            Save Changes
+          </button>
+            <button
+                className="btn btn-secondary w-full mt-2"
+                type="button"
+                onClick={() => setShowEditModal(false)}
+            >
+                Close
+            </button>
+        </div>
+      </form>
+        </div>
+    )}
+
     </div>
   );
 };

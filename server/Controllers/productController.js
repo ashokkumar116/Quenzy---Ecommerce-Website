@@ -8,7 +8,10 @@ const getAllProducts = async (req, res) => {
           p.price, p.discount_percentage, p.stock, p.is_active, p.created_at,
           c.name AS category_name,
           b.name AS brand_name,
-          s.name AS seller_name
+          s.name AS seller_name,
+          p.category_id,
+          p.brand_id,
+          p.seller_id
         FROM products p
         LEFT JOIN categories c ON p.category_id = c.id
         LEFT JOIN brands b ON p.brand_id = b.id
@@ -170,7 +173,7 @@ const deleteProduct = async (req, res) => {
       console.error("Error deleting product:", error.message);
       return res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
-  
+
 }
 
 module.exports = {
