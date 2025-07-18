@@ -6,12 +6,17 @@ import { AiTwotoneShop } from "react-icons/ai";
 import { MdOutlineCategory } from "react-icons/md";
 import { HiOutlineTag } from "react-icons/hi";
 import { MdOutlineAddBusiness } from "react-icons/md";
+import QuenzyLoader from '../../Loader/QuenzyLoader';
 
 
 
 
 function AdminLayout() {
-  const { user } = useContext(AuthContext);
+  const { user,loading } = useContext(AuthContext);
+
+  if (loading) {
+    return <QuenzyLoader/>
+  }
 
   return (
     <div className="flex h-screen bg-base-200 text-base-content">
@@ -46,7 +51,7 @@ function AdminLayout() {
             }
           >
             <AiTwotoneShop/>
-            Add Product
+            Manage Products
           </NavLink>
           <NavLink
             to="/admin/add-category"
@@ -57,7 +62,7 @@ function AdminLayout() {
             }
           >
             <MdOutlineCategory/>
-            Add Category
+            Manage Categories
           </NavLink>
           <NavLink
             to="/admin/add-brand"
@@ -68,7 +73,7 @@ function AdminLayout() {
             }
           >
             <HiOutlineTag/>
-            Add Brand
+            Manage Brands
           </NavLink>
           <NavLink
             to="/admin/add-seller"
@@ -79,7 +84,7 @@ function AdminLayout() {
             }
           >
             <MdOutlineAddBusiness/>
-            Add Seller
+            Manage Sellers
           </NavLink>
         </nav>
       </aside>

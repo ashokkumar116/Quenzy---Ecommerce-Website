@@ -1,31 +1,49 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../Contexts/AuthContext';
 import axios from '../../axios';
+import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import QuenzyLoader from '../../Loader/QuenzyLoader';
 
 const Dashboard = () => {
   const {user} = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
   const [userCount, setUserCount] = useState(0);
   const [productCount, setProductCount] = useState(0);
   const [sellerCount, setSellerCount] = useState(0);
+  const [categoryData, setCategoryData] = useState([]);
+
 
 
   const getDatas = async () => {
     try {
+      // setLoading(true);
       const userCountresponse = await axios.get('/dashboard/getusercount');
       const productCountResponse = await axios.get('/dashboard/getproductcount');
       const sellerCountResponse = await axios.get('/dashboard/getsellerscout');
+      const categoryDataResponse = await axios.get('/dashboard/categoriesdata');
+      
+      console.log(categoryDataResponse.data);
       setUserCount(userCountresponse.data.userCount);
       setProductCount(productCountResponse.data.productCount);
       setSellerCount(sellerCountResponse.data.sellerCount);
+      setCategoryData(categoryDataResponse.data);
     } catch (error) {
+      setLoading(false);
       console.error("Error fetching user count:", error);
       return 0;
+    }
+    finally {
+      setLoading(false);
     }
   }
 
   useEffect(()=>{
     getDatas();
-  })
+  },[])
+
+  if (loading) {
+    return <QuenzyLoader/>
+  }
 
 
   return (
@@ -62,6 +80,19 @@ const Dashboard = () => {
                 {sellerCount} Sellers registered on the platform.
             </p>
             </div>
+            </div>
+            <div className="categorieswiseChart">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">Categories Wise Product Count</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={categoryData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="productCount" fill="#8884d8" />
+              </BarChart>
+            </ResponsiveContainer>
             </div>
         </div>
     </div>

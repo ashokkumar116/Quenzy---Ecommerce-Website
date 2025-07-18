@@ -33,9 +33,27 @@ const getSellerCount = async(req,res)=>{
     }
 }
 
+const getCategoriesData = async(req,res)=>{
+    try {
+        
+        const sql = "SELECT c.id, c.name, COUNT(p.id) AS productCount FROM categories c LEFT JOIN products p ON c.id = p.category_id GROUP BY c.id";
+        const [rows] = await db.query(sql);
+        const categoriesData = rows.map(category => ({
+            id: category.id,
+            name: category.name,
+            productCount: category.productCount
+        }));
+        res.json(categoriesData);
+
+    } catch (error) {
+        console.error("Error fetching categories data:", error.message);
+        res.status(500).json({ error: "Failed to get categories data" });
+    }
+}
 
 module.exports = {
     getUserCount,
     getProductCount,
-    getSellerCount
+    getSellerCount,
+    getCategoriesData
 };
