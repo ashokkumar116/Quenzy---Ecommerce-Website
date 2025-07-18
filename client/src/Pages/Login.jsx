@@ -19,7 +19,7 @@ const Login = () => {
 
         try {
             
-            const success = login(values);
+            const success = await login(values);
             if(success){
                 navigate('/');
             }

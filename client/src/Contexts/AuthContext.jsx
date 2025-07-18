@@ -26,18 +26,25 @@ export const AuthProvider = ({children}) =>{
     const login = async({email,password})=>{
         try {
             setLoading(true);
+            setMessage(null);
             const response = await axios.post('/auth/login',{email,password},{withCredentials:true});
             if(response.status === 200){
                 fetchUser();
                 return true;
+
             }
+            return false;
         } catch (error) {
+
             setMessage(error.response.data.message);
             console.log(error);
             setUser(null);
+            return false;
+
         }
         finally{
             setLoading(false);
+
         }
     }
 
