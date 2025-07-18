@@ -81,7 +81,9 @@ const Dashboard = () => {
             </p>
             </div>
             </div>
-            <div className="categorieswiseChart">
+            <div className="categorieswiseChart col-span-3">
+            <div className="rounded-xl shadow-xl p-5  overflow-hidden transition-transform duration-200 ease-out cursor-pointer bg-white">
+              
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Categories Wise Product Count</h3>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={categoryData}>
@@ -93,6 +95,8 @@ const Dashboard = () => {
                 <Bar dataKey="productCount" fill="#8884d8" />
               </BarChart>
             </ResponsiveContainer>
+              
+              </div>
             </div>
         </div>
     </div>
