@@ -38,6 +38,10 @@ const AddProducts = () => {
     const [editIsActive, setEditIsActive] = useState("1");
     const [moreImages, setMoreImages] = useState([]);
 
+    // State for delete confirmation modal
+    const [showDelete, setShowDelete] = useState(false);
+    const [deleteProductId, setDeleteProductId] = useState(null);
+
     // Refs for file inputs
     const fileInputRef = useRef(null);
     const editFileInputRef = useRef(null);
@@ -195,6 +199,30 @@ const AddProducts = () => {
         console.log("Edit Category ID:", product.category_id);
         console.log("Type:", typeof product.category_id);
     };
+
+    const ShowDeleteModal = (productId) => {
+        setShowDelete(true);
+        setDeleteProductId(productId);
+    }
+
+
+
+
+    const handleDeleteProduct = async () => {
+        try {
+            const res = await axios.delete(`/products/deleteproduct/${deleteProductId}`);
+            if (res.status === 200) {
+                toast.success("Product deleted successfully!");
+                setShowDelete(false);
+                fetchDatas();
+            }
+        } catch (error) {
+            console.error("Error deleting product:", error);
+            toast.error(
+                error.response?.data?.message || "Failed to delete product"
+            );
+        }
+    }
 
     return (
         <div className="pt-20 px-4 max-w-7xl mx-auto">
@@ -435,7 +463,7 @@ const AddProducts = () => {
                                             </button>
                                         </td>
                                         <td>
-                                            <button className="btn btn-sm btn-error">
+                                            <button className="btn btn-sm btn-error" onClick={()=>ShowDeleteModal(product.id)}>
                                                 Delete
                                             </button>
                                         </td>
@@ -632,6 +660,33 @@ const AddProducts = () => {
                     </form>
                 </div>
             )}
+
+            {/*Delete Modal */}
+            {
+              showDelete && (
+                <div className="fixed top-20 inset-0 bg-[rgba(1,1,1,0.7)] bg-opacity-50 flex justify-center items-center">
+                  <div className=" flex flex-col items-center bg-base-100 shadow-md rounded-xl py-6 px-5 md:w-[460px] w-[370px] border border-base-200">
+            <div className="flex items-center justify-center p-4 bg-red-100 rounded-full">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2.875 5.75h1.917m0 0h15.333m-15.333 0v13.417a1.917 1.917 0 0 0 1.916 1.916h9.584a1.917 1.917 0 0 0 1.916-1.916V5.75m-10.541 0V3.833a1.917 1.917 0 0 1 1.916-1.916h3.834a1.917 1.917 0 0 1 1.916 1.916V5.75m-5.75 4.792v5.75m3.834-5.75v5.75" stroke="#DC2626" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+            </div>
+            <h2 className="text-gray-900 font-semibold mt-4 text-xl">Are you sure?</h2>
+            <p className="text-sm text-gray-600 mt-2 text-center">
+                Do you really want to Delete? This action<br />cannot be undone.
+            </p>
+            <div className="flex items-center justify-center gap-4 mt-5 w-full">
+                <button onClick={()=>setShowDelete(false)} type="button" className="w-full md:w-36 h-10 rounded-md border border-gray-300 bg-white text-gray-600 font-medium text-sm hover:bg-gray-100 active:scale-95 transition cursor-pointer">
+                    Cancel
+                </button>
+                <button onClick={handleDeleteProduct} type="button" className="w-full md:w-36 h-10 rounded-md text-white bg-red-600 font-medium text-sm hover:bg-red-700 active:scale-95 transition  cursor-pointer ">
+                    Delete
+                </button>
+            </div>
+        </div>
+                </div>
+              )
+            }
         </div>
     );
 };
