@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import axios from "../axios";
 import { createContext, useEffect, useState } from "react";
 
@@ -5,6 +6,7 @@ import { createContext, useEffect, useState } from "react";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({children}) =>{
+    const navigate = useNavigate();
 
     const [user,setUser] = useState(null);
     const [message,setMessage] = useState(null);
@@ -48,10 +50,24 @@ export const AuthProvider = ({children}) =>{
         }
     }
 
+    const logout = async()=>{
+        try {
+            setLoading(true);
+            await axios.post('/auth/logout',{}, {withCredentials:true});
+            setUser(null);
+            navigate('/login');
+        } catch (error) {
+            console.log(error);
+        }
+        finally{
+            setLoading(false);
+        }
+    }
+
     useEffect(()=>{
         fetchUser();
     },[]);
 
-    return <AuthContext.Provider value={{user,loading,message,login}} >{children}</AuthContext.Provider>
+    return <AuthContext.Provider value={{user,loading,message,login,logout}} >{children}</AuthContext.Provider>
     
 }

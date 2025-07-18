@@ -6,13 +6,15 @@ import { Badge } from "primereact/badge";
 import { AuthContext } from "../Contexts/AuthContext";
 import { MdLogin } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
+import axios from '../axios';
 
 
 const Navbar = () => {
 
-    const {user} = useContext(AuthContext);
+    const {user,logout} = useContext(AuthContext);
     console.log(user); 
     const navigate = useNavigate(); 
+
 
     return (
         <div className="fixed top-0 bg-base-300 z-100 w-[100%] px-5 py-2 shadow-lg backdrop-blur-xl">
@@ -37,7 +39,10 @@ const Navbar = () => {
                         </li>
                         <li>
                             {user ? <p>{user.name}</p> :<Link to={'/login'} ><button className="btn btn-primary" ><MdLogin />Login</button></Link> }
-                        </li>   
+                        </li> 
+                        <li>
+                            {user ? <button className="btn btn-error" onClick={()=>logout()}>Logout</button> : <Link to={'/register'} ><button className="btn btn-primary" >Register</button></Link> }
+                        </li>  
                     </ul>
                 </div>
             </nav>
