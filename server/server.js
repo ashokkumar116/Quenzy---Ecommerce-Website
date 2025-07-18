@@ -7,6 +7,7 @@ const brandRoutes = require('./Routes/brandRoutes');
 const categoriesRoutes = require('./Routes/categoriesRoutes');
 const sellerRoutes = require('./Routes/sellerRoutes');
 const productRoutes = require('./Routes/productRoutes');
+const dashboardRoutes = require('./Routes/dashboardRoutes');
 const app = express();
 
 
@@ -24,7 +25,7 @@ app.use('/api/brands',brandRoutes);
 app.use('/api/categories',categoriesRoutes)
 app.use('/api/sellers',sellerRoutes);
 app.use('/api/products',productRoutes);
-
+app.use('/api/dashboard',dashboardRoutes)
 app.use('/uploads', express.static('Uploads'));
 
 
