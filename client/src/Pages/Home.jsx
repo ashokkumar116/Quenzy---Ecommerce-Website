@@ -11,6 +11,7 @@ import {
 import axios from "../axios";
 // import InfiniteScroll from "react-infinite-scroll-component";
 import MiniQuenzyLoader from "../Loader/MiniQuenzyLoader";
+import { asset } from "../assets/asset";
 
 
 const Home = () => {
@@ -52,7 +53,7 @@ const Home = () => {
         nextArrow: <NextArrow />,
     };
     return (
-        <div className="mt-25">
+        <div className="my-25">
             <CategoriesListing />
             <div className="carousal mt-5">
                 <Slider {...settings}>
@@ -63,12 +64,12 @@ const Home = () => {
             </div>
             <div className="products mt-10">
 
-                    <div className="grid grid-cols-4 gap-10 p-5">
+                    <div className="grid grid-cols-4 gap-5 px-20">
                       {products.length>0 && products.map((product)=>{
                         const offerPrice = product.price - (product.price * product.discount_percentage / 100);
-                        return  <div className="border border-gray-500/20 rounded-md md:px-4 px-3 py-2 bg-white min-w-56 max-w-56 w-full">
+                        return  <div className="border border-gray-500/20 rounded-md md:px-4 px-3 py-2 bg-base-100 min-w-66 max-w-86 w-full">
                         <div className="group cursor-pointer flex items-center justify-center px-2">
-                            <img className="group-hover:scale-105 transition max-w-26 md:max-w-46 h-50" src={`http://localhost:5000${product.images[0].image_url}`} alt={product.name} />
+                            <img className="group-hover:scale-105 transition max-w-26 md:max-w-46 h-40 mb-3" src={`${asset.imageBaseUrl}${product.images[0]?.image_url}`} alt={product.name} />
                         </div>
                         <div className="text-gray-500/60 text-sm">
                             <p>{product.category_name}</p>
@@ -89,7 +90,7 @@ const Home = () => {
                             </div>
                             <div className="flex items-end justify-between mt-3">
                                 <p className="md:text-xl text-base font-medium text-indigo-500">
-                                    ${offerPrice} <span className="text-gray-500/60 md:text-sm text-xs line-through">${product.price}</span>
+                                ₹{offerPrice} <span className="text-gray-500/60 md:text-sm text-xs line-through">₹{product.price}</span>
                                 </p>
                                 <div className="text-indigo-500">
                                     {count === 0 ? (
