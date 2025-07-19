@@ -51,40 +51,40 @@ const Dashboard = () => {
         <p className='text-3xl text-primary text-center'>Welcome <span className='font-bold uppercase'>{user.name}</span></p>
         <div className="cards-grid mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 md:px-10 lg:px-20">
           <div className="users-card ">
-          <div className="rounded-xl shadow-xl overflow-hidden transition-transform duration-200 ease-out cursor-pointer max-w-80 bg-white">
-            <h3 className="mt-3 px-4 pt-3 mb-1 text-lg font-semibold text-gray-800">
+          <div className="rounded-xl shadow-xl overflow-hidden transition-transform duration-200 ease-out cursor-pointer max-w-80 bg-base-100">
+            <h3 className="mt-3 px-4 pt-3 mb-1 text-lg font-semibold text-base-content">
                 Total Users
             </h3>
-            <p className="text-sm px-4 pb-6 text-gray-600 w-5/6">
+            <p className="text-sm px-4 pb-6 text-base-content w-5/6">
                 {userCount} Users registered on the platform.
             </p>
         </div>
         
           </div>
           <div className="products-card">
-          <div className="rounded-xl shadow-xl overflow-hidden transition-transform duration-200 ease-out cursor-pointer max-w-80 bg-white">
-            <h3 className="mt-3 px-4 pt-3 mb-1 text-lg font-semibold text-gray-800">
+          <div className="rounded-xl shadow-xl overflow-hidden transition-transform duration-200 ease-out cursor-pointer max-w-80 bg-base-100">
+            <h3 className="mt-3 px-4 pt-3 mb-1 text-lg font-semibold text-base-content">
                 Total Products
             </h3>
-            <p className="text-sm px-4 pb-6 text-gray-600 w-5/6">
+            <p className="text-sm px-4 pb-6 text-base-content w-5/6">
                 {productCount} Products available on the platform.
             </p>
         </div>
           </div>
           <div className="sellers-card">
-          <div className="rounded-xl shadow-xl overflow-hidden transition-transform duration-200 ease-out cursor-pointer max-w-80 bg-white">
-            <h3 className="mt-3 px-4 pt-3 mb-1 text-lg font-semibold text-gray-800">
+          <div className="rounded-xl shadow-xl overflow-hidden transition-transform duration-200 ease-out cursor-pointer max-w-80 bg-base-100">
+            <h3 className="mt-3 px-4 pt-3 mb-1 text-lg font-semibold text-base-content">
                 Total Sellers
             </h3>
-            <p className="text-sm px-4 pb-6 text-gray-600 w-5/6">
+            <p className="text-sm px-4 pb-6 text-base-content w-5/6">
                 {sellerCount} Sellers registered on the platform.
             </p>
             </div>
             </div>
             <div className="categorieswiseChart col-span-3">
-            <div className="rounded-xl shadow-xl p-5  overflow-hidden transition-transform duration-200 ease-out cursor-pointer bg-white">
+            <div className="rounded-xl shadow-xl p-5  overflow-hidden transition-transform duration-200 ease-out cursor-pointer bg-base-100">
               
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Categories Wise Product Count</h3>
+            <h3 className="text-lg font-semibold text-base-content mb-4">Categories Wise Product Count</h3>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={categoryData}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -92,7 +92,7 @@ const Dashboard = () => {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="productCount" fill="#8884d8" />
+                <Bar dataKey="productCount" className='fill-primary' />
               </BarChart>
             </ResponsiveContainer>
               
