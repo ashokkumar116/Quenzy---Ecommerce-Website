@@ -47,11 +47,26 @@ const addBrand = async (req, res) => {
 
 
 const getBrands = async (req,res)=>{
-    const sql = "SELECT * FROM brands";
 
-    const [brands] = await db.query(sql);
+    const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 5;
+      const offset = (page - 1) * limit;
+  
+      // Count total products for pagination
+      const [countResult] = await db.query("SELECT COUNT(*) AS total FROM brands");
+      const totalBrands = countResult[0].total;
+      const totalPages = Math.ceil(totalBrands / limit);
 
-    return res.json(brands);    
+    const sql = "SELECT * FROM brands LIMIT ? OFFSET ?";
+
+    const [brands] = await db.query(sql,[limit, offset]);
+
+    return res.json({
+        brands: brands,
+        currentPage: page,
+        totalPages,
+        totalBrands
+    });    
 } 
 
 const updateBrand = async (req,res)=>{

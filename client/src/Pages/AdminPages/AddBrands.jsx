@@ -17,10 +17,17 @@ const AddBrands = () => {
     const [editId,setEditId] = useState(null);
     const [deleteId,setDeleteId] = useState(null);
 
+    // Pagination state
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
+    const limit = 5;
+    
+
     const fetchBrands = async () => {
         try {
-            const res = await axios.get("/brands/getbrands");
-            setBrands(res.data);
+            const res = await axios.get(`/brands/getbrands?page=${page}&limit=${limit}`);
+            setBrands(res.data.brands);
+            setTotalPages(res.data.totalPages);
         } catch (error) {
             console.error("Error fetching brands:", error);
             toast.error(
@@ -128,9 +135,9 @@ const AddBrands = () => {
                     transition={Bounce}
                 />
             </form>
-            <div>
-                <h2 className="text-2xl font-bold mt-10 mb-5 text-primary">Brands List</h2>
-                <table className="pl-5 bg-base-100 transition-all duration-300 rounded-lg shadow-lg p-3 w-100 table text-center">
+            <div className="bg-base-100  shadow-lg rounded-lg">
+                <h2 className="text-2xl font-bold mt-10 mb-5 text-primary py-2 px-5">Brands List</h2>
+                <table className="pl-5  transition-all duration-300 rounded-lg p-3 w-full table text-center">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -161,6 +168,38 @@ const AddBrands = () => {
                         ))}
                     </tbody>
                 </table>
+                 {/* Pagination Buttons */}
+            <div className="flex justify-center mt-6 gap-2 pb-3">
+                    <button
+                        onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                        className="btn btn-sm"
+                        disabled={page === 1}
+                    >
+                        Prev
+                    </button>
+
+                    {[...Array(totalPages).keys()].map((num) => (
+                        <button
+                            key={num + 1}
+                            onClick={() => setPage(num + 1)}
+                            className={`btn btn-sm ${
+                                page === num + 1 ? "btn-primary" : "btn-ghost"
+                            }`}
+                        >
+                            {num + 1}
+                        </button>
+                    ))}
+
+                    <button
+                        onClick={() =>
+                            setPage((prev) => Math.min(prev + 1, totalPages))
+                        }
+                        className="btn btn-sm"
+                        disabled={page === totalPages}
+                    >
+                        Next
+                    </button>
+                </div>
             </div>
 
             {/* Modal component */}
