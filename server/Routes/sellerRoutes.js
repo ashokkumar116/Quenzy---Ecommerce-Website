@@ -16,5 +16,4 @@ router.get('/getsellerspage',adminAuth,getSellersPage)
 
 
 
-
 module.exports = router;

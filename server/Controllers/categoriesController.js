@@ -10,7 +10,7 @@ const getCategories = async(req,res)=>{
     const [countResult] = await db.query("SELECT COUNT(*) AS total FROM categories");
     const totalCategories = countResult[0].total;
     const totalPages = Math.ceil(totalCategories / limit);
-    
+
     const sql = "SELECT * FROM categories LIMIT ? OFFSET ?";
 
     const [categories] = await db.query(sql,[limit,offset]);
@@ -26,6 +26,10 @@ const getCategories = async(req,res)=>{
 
 const AddCategory = async(req,res)=>{
     const {name} = req.body;
+
+    if(!name){
+        return res.status(400).json({message:"All Fields Required"})
+    }
 
     const [checkAvailable] = await db.query("SELECT * FROM categories WHERE name = ?",[name]);
 
