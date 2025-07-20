@@ -2,6 +2,16 @@ const db = require("../db");
 
 const getAllProducts = async (req, res) => {
     try {
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 5;
+      const offset = (page - 1) * limit;
+  
+      // Count total products for pagination
+      const [countResult] = await db.query("SELECT COUNT(*) AS total FROM products");
+      const totalProducts = countResult[0].total;
+      const totalPages = Math.ceil(totalProducts / limit);
+  
+      // Paginated products query
       const productSql = `
         SELECT 
           p.id, p.name, p.slug, p.description, p.short_description, 
@@ -17,8 +27,9 @@ const getAllProducts = async (req, res) => {
         LEFT JOIN brands b ON p.brand_id = b.id
         LEFT JOIN sellers s ON p.seller_id = s.id
         ORDER BY p.created_at DESC
+        LIMIT ? OFFSET ?
       `;
-      const [products] = await db.query(productSql);
+      const [products] = await db.query(productSql, [limit, offset]);
   
       const imageSql = `SELECT product_id, image_url, is_main FROM product_images`;
       const [images] = await db.query(imageSql);
@@ -27,17 +38,23 @@ const getAllProducts = async (req, res) => {
         const productImages = images.filter(img => img.product_id === product.id);
         return {
           ...product,
-          images: productImages 
+          images: productImages
         };
       });
   
-      res.json(productsWithImages);
+      res.json({
+        products: productsWithImages,
+        currentPage: page,
+        totalPages,
+        totalProducts
+      });
   
     } catch (error) {
       console.error("Error fetching products:", error.message);
       res.status(500).json({ error: "Failed to get products with images" });
     }
   };
+  
   
 
 const addProduct = async (req, res) => {

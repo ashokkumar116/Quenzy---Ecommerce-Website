@@ -5,6 +5,7 @@ import { TiDelete } from "react-icons/ti";
 import { TbUpload } from "react-icons/tb";
 
 const AddProducts = () => {
+    // State variables for brands, categories, sellers, and products
     const [brands, setBrands] = useState([]);
     const [categories, setCategories] = useState([]);
     const [sellers, setSellers] = useState([]);
@@ -38,6 +39,11 @@ const AddProducts = () => {
     const [editIsActive, setEditIsActive] = useState("1");
     const [moreImages, setMoreImages] = useState([]);
 
+    // Pagination state
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
+    const limit = 5;
+
     // State for delete confirmation modal
     const [showDelete, setShowDelete] = useState(false);
     const [deleteProductId, setDeleteProductId] = useState(null);
@@ -59,15 +65,19 @@ const AddProducts = () => {
         setSelectedImages(updatedImages);
     };
 
+    // Fetch brands, categories, sellers, and products from the server
     const fetchDatas = async () => {
         const brandsres = await axios.get("/brands/getbrands");
         const categoriesres = await axios.get("/categories/getCategories");
         const sellersres = await axios.get("/sellers/getallsellers");
-        const productsres = await axios.get("/products/getproducts");
+        const productsres = await axios.get(
+            `/products/getproducts?page=${page}&limit=${limit}`
+        );
         setBrands(brandsres.data);
         setCategories(categoriesres.data);
         setSellers(sellersres.data);
-        setProducts(productsres.data);
+        setProducts(productsres.data.products);
+        setTotalPages(productsres.data.totalPages);
     };
 
     const handleSubmit = async (e) => {
@@ -120,7 +130,7 @@ const AddProducts = () => {
 
     useEffect(() => {
         fetchDatas();
-    }, []);
+    }, [page]);
 
     const truncateText = (text, maxLength) => {
         if (!text) return "";
@@ -184,7 +194,6 @@ const AddProducts = () => {
 
     const handleEditSHow = (product) => {
         setEditId(product.id);
-        console.log(product);
         setShowEditModal(true);
         setEditName(product.name);
         setEditShortDescription(product.short_description);
@@ -196,21 +205,18 @@ const AddProducts = () => {
         setEditBrandId(product.brand_id);
         setEditSellerId(product.seller_id);
         setEditIsActive(product.is_active ? "1" : "0");
-        console.log("Edit Category ID:", product.category_id);
-        console.log("Type:", typeof product.category_id);
     };
 
     const ShowDeleteModal = (productId) => {
         setShowDelete(true);
         setDeleteProductId(productId);
-    }
-
-
-
+    };
 
     const handleDeleteProduct = async () => {
         try {
-            const res = await axios.delete(`/products/deleteproduct/${deleteProductId}`);
+            const res = await axios.delete(
+                `/products/deleteproduct/${deleteProductId}`
+            );
             if (res.status === 200) {
                 toast.success("Product deleted successfully!");
                 setShowDelete(false);
@@ -222,7 +228,7 @@ const AddProducts = () => {
                 error.response?.data?.message || "Failed to delete product"
             );
         }
-    }
+    };
 
     return (
         <div className="pt-20 px-4 max-w-7xl mx-auto">
@@ -355,7 +361,7 @@ const AddProducts = () => {
                                         />
                                         <TiDelete
                                             onClick={() => handleDelete(index)}
-                                            className="absolute -right-2 -bottom-2 text-3xl text-error bg-white rounded-full cursor-pointer"
+                                            className="absolute -right-2 -bottom-2 text-3xl text-error bg-base-100 rounded-full cursor-pointer"
                                         />
                                     </div>
                                 ))
@@ -367,7 +373,7 @@ const AddProducts = () => {
                         </div>
 
                         {selectedImages.length > 0 && (
-                            <p className="mt-2 text-sm text-gray-700">
+                            <p className="mt-2 text-sm text-base-content">
                                 {selectedImages.length} image(s) selected
                             </p>
                         )}
@@ -388,14 +394,17 @@ const AddProducts = () => {
             />
 
             {/* Product Table */}
-            <div className="mt-10">
+            <div className="mt-10 bg-base-100 px-5 py-2 rounded-lg shadow-lg">
                 <h2 className="text-2xl font-bold mb-4 text-primary">
                     Available Products
                 </h2>
                 <div className="overflow-x-auto overflow-x-scroll">
-                    <table className="table w-full rounded-md ">
+                    <table
+                        className="table w-full rounded-md border-collapse"
+                        style={{ width: "2000px" }}
+                    >
                         <thead className="bg-base-300">
-                            <tr>
+                            <tr className="text-center">
                                 <th>Name</th>
                                 <th>Short Description</th>
                                 <th>Description</th>
@@ -414,7 +423,10 @@ const AddProducts = () => {
                         <tbody>
                             {products.length > 0 &&
                                 products.map((product) => (
-                                    <tr key={product.id} className="hover">
+                                    <tr
+                                        key={product.id}
+                                        className="hover text-center"
+                                    >
                                         <td>{product.name}</td>
                                         <td>
                                             {truncateText(
@@ -463,7 +475,12 @@ const AddProducts = () => {
                                             </button>
                                         </td>
                                         <td>
-                                            <button className="btn btn-sm btn-error" onClick={()=>ShowDeleteModal(product.id)}>
+                                            <button
+                                                className="btn btn-sm btn-error"
+                                                onClick={() =>
+                                                    ShowDeleteModal(product.id)
+                                                }
+                                            >
                                                 Delete
                                             </button>
                                         </td>
@@ -471,6 +488,38 @@ const AddProducts = () => {
                                 ))}
                         </tbody>
                     </table>
+                </div>
+                {/* Pagination Buttons */}
+                <div className="flex justify-center mt-6 gap-2">
+                    <button
+                        onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                        className="btn btn-sm"
+                        disabled={page === 1}
+                    >
+                        Prev
+                    </button>
+
+                    {[...Array(totalPages).keys()].map((num) => (
+                        <button
+                            key={num + 1}
+                            onClick={() => setPage(num + 1)}
+                            className={`btn btn-sm ${
+                                page === num + 1 ? "btn-primary" : "btn-ghost"
+                            }`}
+                        >
+                            {num + 1}
+                        </button>
+                    ))}
+
+                    <button
+                        onClick={() =>
+                            setPage((prev) => Math.min(prev + 1, totalPages))
+                        }
+                        className="btn btn-sm"
+                        disabled={page === totalPages}
+                    >
+                        Next
+                    </button>
                 </div>
             </div>
 
@@ -607,13 +656,14 @@ const AddProducts = () => {
                                 <div className="flex flex-wrap gap-3">
                                     {moreImages.length > 0 ? (
                                         moreImages.map((image, index) => (
-                                          
                                             <div
                                                 className="relative"
                                                 key={index}
                                             >
                                                 <img
-                                                    src={URL.createObjectURL(image)}
+                                                    src={URL.createObjectURL(
+                                                        image
+                                                    )}
                                                     alt={`Preview ${index}`}
                                                     className="h-20 w-20 object-cover rounded border"
                                                 />
@@ -662,31 +712,53 @@ const AddProducts = () => {
             )}
 
             {/*Delete Modal */}
-            {
-              showDelete && (
+            {showDelete && (
                 <div className="fixed top-20 inset-0 bg-[rgba(1,1,1,0.7)] bg-opacity-50 flex justify-center items-center">
-                  <div className=" flex flex-col items-center bg-base-100 shadow-md rounded-xl py-6 px-5 md:w-[460px] w-[370px] border border-base-200">
-            <div className="flex items-center justify-center p-4 bg-base-300 rounded-full">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M2.875 5.75h1.917m0 0h15.333m-15.333 0v13.417a1.917 1.917 0 0 0 1.916 1.916h9.584a1.917 1.917 0 0 0 1.916-1.916V5.75m-10.541 0V3.833a1.917 1.917 0 0 1 1.916-1.916h3.834a1.917 1.917 0 0 1 1.916 1.916V5.75m-5.75 4.792v5.75m3.834-5.75v5.75" stroke="#DC2626" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-            </div>
-            <h2 className="text-base-content font-semibold mt-4 text-xl">Are you sure?</h2>
-            <p className="text-sm text-base-content mt-2 text-center">
-                Do you really want to Delete? This action<br />cannot be undone.
-            </p>
-            <div className="flex items-center justify-center gap-4 mt-5 w-full">
-                <button onClick={()=>setShowDelete(false)} type="button" className="w-full md:w-36 h-10 rounded-md border border-gray-300 bg-white text-gray-600 font-medium text-sm hover:bg-gray-100 active:scale-95 transition cursor-pointer">
-                    Cancel
-                </button>
-                <button onClick={handleDeleteProduct} type="button" className="w-full md:w-36 h-10 rounded-md text-white bg-red-600 font-medium text-sm hover:bg-red-700 active:scale-95 transition  cursor-pointer ">
-                    Delete
-                </button>
-            </div>
-        </div>
+                    <div className=" flex flex-col items-center bg-base-100 shadow-md rounded-xl py-6 px-5 md:w-[460px] w-[370px] border border-base-200">
+                        <div className="flex items-center justify-center p-4 bg-base-300 rounded-full">
+                            <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M2.875 5.75h1.917m0 0h15.333m-15.333 0v13.417a1.917 1.917 0 0 0 1.916 1.916h9.584a1.917 1.917 0 0 0 1.916-1.916V5.75m-10.541 0V3.833a1.917 1.917 0 0 1 1.916-1.916h3.834a1.917 1.917 0 0 1 1.916 1.916V5.75m-5.75 4.792v5.75m3.834-5.75v5.75"
+                                    stroke="#DC2626"
+                                    strokeWidth="1.8"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                />
+                            </svg>
+                        </div>
+                        <h2 className="text-base-content font-semibold mt-4 text-xl">
+                            Are you sure?
+                        </h2>
+                        <p className="text-sm text-base-content mt-2 text-center">
+                            Do you really want to Delete? This action
+                            <br />
+                            cannot be undone.
+                        </p>
+                        <div className="flex items-center justify-center gap-4 mt-5 w-full">
+                            <button
+                                onClick={() => setShowDelete(false)}
+                                type="button"
+                                className="w-full md:w-36 h-10 rounded-md border border-gray-300 bg-white text-gray-600 font-medium text-sm hover:bg-gray-100 active:scale-95 transition cursor-pointer"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleDeleteProduct}
+                                type="button"
+                                className="w-full md:w-36 h-10 rounded-md text-white bg-red-600 font-medium text-sm hover:bg-red-700 active:scale-95 transition  cursor-pointer "
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    </div>
                 </div>
-              )
-            }
+            )}
         </div>
     );
 };

@@ -39,6 +39,9 @@ const CategoriesListing = () => {
         speed: 500,
         slidesToShow: slidesCount,
         slidesToScroll: 2,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        pauseOnHover: true, 
         prevArrow :<SamplePrevArrow /> ,
         nextArrow :<SampleNextArrow />
     };      
@@ -50,7 +53,7 @@ const CategoriesListing = () => {
                 <Slider {...settings}>
                     {categories.map((category, index) => (
                         <div key={index} className="px-2">
-                            <p className="bg-base-300 rounded p-2 text-center capitalize">
+                            <p className="bg-base-100 rounded p-2 text-center capitalize">
                                 {category.name}
                             </p>
                         </div>

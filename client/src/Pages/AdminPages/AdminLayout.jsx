@@ -19,9 +19,9 @@ function AdminLayout() {
   }
 
   return (
-    <div className="flex h-screen bg-base-200 text-base-content">
+    <div className="flex h-screen bg-base-300 text-base-content">
       {/* Sidebar */}
-      <aside className="w-64 bg-base-300 shadow-lg flex flex-col items-center pt-30 py-8 px-4">
+      <aside className="w-64 bg-base-100 shadow-lg flex flex-col items-center pt-30 py-8 px-4">
         {/* Profile */}
         <div className="flex flex-col items-center mb-10">
           <h1 className="text-2xl font-bold uppercase text-primary mb-4">Admin Panel</h1>
