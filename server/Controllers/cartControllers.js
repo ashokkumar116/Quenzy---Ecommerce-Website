@@ -27,28 +27,47 @@ const getCart = async (req, res) => {
     }
 }
 
-const addToCart = async(req,res)=>{
-
+const addToCart = async (req, res) => {
     const userId = req.user.id;
-    const cartItems = req.body.cart;
-    console.log(cartItems);
-
-  try {
-    await db.query("DELETE FROM cart_items WHERE user_id = ?", [userId]);
-
-    for (let item of cartItems) {
-      await db.query(
-        "INSERT INTO cart_items (user_id, product_id, quantity) VALUES (?, ?, ?)",
-        [userId, item.id, item.quantity]
+    const incomingCart = req.body.cart; // From localStorage
+    try {
+      // Step 1: Get existing DB cart
+      const [dbCart] = await db.query(
+        "SELECT product_id, quantity FROM cart_items WHERE user_id = ?",
+        [userId]
       );
+  
+      // Step 2: Merge incomingCart with dbCart
+      const mergedMap = new Map();
+  
+      // Add existing DB cart
+      for (let item of dbCart) {
+        mergedMap.set(item.product_id, item.quantity);
+      }
+  
+      // Merge incoming local cart
+      for (let item of incomingCart) {
+        mergedMap.set(item.id, item.quantity); // ✅ overwrite with latest
+      }
+      
+  
+      // Step 3: Replace DB cart with merged data
+      await db.query("DELETE FROM cart_items WHERE user_id = ?", [userId]);
+  
+      for (let [productId, quantity] of mergedMap) {
+        await db.query(
+          "INSERT INTO cart_items (user_id, product_id, quantity) VALUES (?, ?, ?)",
+          [userId, productId, quantity]
+        );
+      }
+  
+      res.status(200).json({ success: true });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Failed to sync cart" });
     }
-
-    res.status(200).json({ success: true });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to sync cart" });
-  }
-}
+  };
+  
 
 
 const removeFromCart = async(req,res)=>{
