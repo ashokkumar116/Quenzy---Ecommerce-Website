@@ -91,7 +91,7 @@ const ViewProduct = () => {
                                 </svg>
                             )
                         ))}
-                        <p className="text-base ml-2">({product.rating})</p>
+                        <p className="text-base ml-2">({product.rating || 0})</p>
                     </div>
 
                     <div className="mt-6">
