@@ -3,11 +3,23 @@ const db = require('../db');
 
 const getCategories = async(req,res)=>{
 
-    const sql = "SELECT * FROM categories";
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+    const offset = (page - 1) * limit;
 
-    const [categories] = await db.query(sql);
+    const sql = "SELECT * FROM categories LIMIT ? OFFSET ?";
+    const [countResult] = await db.query("SELECT COUNT(*) AS total FROM categories");
+    const totalCategories = countResult[0].total;
+    const totalPages = Math.ceil(totalCategories / limit);
 
-    return res.json(categories);
+    const [categories] = await db.query(sql,[limit,offset]);
+
+    return res.json({
+        categories:categories,
+        currentPage: page,
+        totalPages,
+        totalCategories
+    });
 
 }
 

@@ -403,7 +403,7 @@ const AddProducts = () => {
                         className="table w-full rounded-md border-collapse"
                         style={{ width: "2000px" }}
                     >
-                        <thead className="bg-base-300">
+                        <thead>
                             <tr className="text-center">
                                 <th>Name</th>
                                 <th>Short Description</th>
