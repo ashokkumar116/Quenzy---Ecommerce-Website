@@ -7,7 +7,7 @@ router.get('/getcategories',getCategories);
 router.post('/addcategory',adminAuth,AddCategory);
 router.put('/updatecategory/:id',adminAuth,updateCategory);
 router.delete('/deletecategory/:id',adminAuth,deleteCategory);
-router.get('/getcategoriespage',adminAuth,getCategoriesPage);
+router.get('/getcategoriespage',getCategoriesPage);
 
 
 

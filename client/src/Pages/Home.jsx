@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import CategoriesListing from "../Components/CategoriesListing";
 import Slider from "react-slick";
 import img1 from "../assets/sample1.webp";
@@ -11,10 +11,31 @@ import {
 import axios from "../axios";
 import InfiniteScroll from "react-infinite-scroll-component";
 import MiniQuenzyLoader from "../Loader/MiniQuenzyLoader";
+import QuenzyLoader from "../Loader/QuenzyLoader";
 import { asset } from "../assets/asset";
 
+import  {AuthContext}  from "../Contexts/AuthContext";
+import { ToastContainer, toast } from 'react-toastify';
+import { useCart } from "../Contexts/CartContext";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+
+    const {user , loading} =  useContext(AuthContext);
+    const [cartItems, setCartItems] = useState([]);
+    const {addToCart , cart} = useCart();
+    const navigate = useNavigate();
+
+    if(loading) return <QuenzyLoader />;
+
+    if(!user){
+        
+    }
+
+
+    
+      
+      
     const [products, setProducts] = useState([]);
     const [skip, setSkip] = useState(0);
     const [hasMore, setHasMore] = useState(true);
@@ -37,6 +58,8 @@ const Home = () => {
 
     useEffect(() => {
         fetchMoreProducts();
+        const storedCart = JSON.parse(localStorage.getItem("quenzy-cart")) || [];
+        setCartItems(storedCart);
     },[]);
 
     useEffect(()=>{
@@ -73,7 +96,7 @@ const Home = () => {
                     hasMore={hasMore}
                     loader={<MiniQuenzyLoader />}
                     endMessage={
-                        <p className="text-center text-neutral-content mt-4">
+                        <p className="text-center text-base-content/40 italic mt-4">
                             <b>No more products to show...</b>
                         </p>
                     }
@@ -82,6 +105,7 @@ const Home = () => {
                     <div className="grid grid-cols-4 gap-5 px-20">
                     
                       {products.length>0 && products.map((product)=>{
+                        const isInCart = cart.find(item => item.id === product.id);
                         const offerPrice = product.price - (product.price * product.discount_percentage / 100);
                         return  <div className="border border-primary/50 rounded-md md:px-4 px-3 py-2 bg-base-100 min-w-66 max-w-86 w-full hover:scale-101 transition duration-200 ease-in-out " key={product.id}>
                         <div className="group cursor-pointer flex items-center justify-center px-2">
@@ -106,27 +130,25 @@ const Home = () => {
                             </div>
                             <div className="flex items-end justify-between mt-3">
                                 <p className="md:text-xl text-base font-medium text-primary">
-                                ₹{offerPrice} <span className="text-neutral-content md:text-sm text-xs line-through">₹{product.price}</span>
+                                ₹{offerPrice} <span className="text-base-content/40 md:text-sm text-xs line-through">₹{product.price}</span>
                                 </p>
                                 <div className="text-primary ">
-                                    {count === 0 ? (
-                                        <button className="flex cursor-pointer items-center justify-center gap-1 border border-primary md:w-[80px] w-[64px] h-[34px] rounded text-primary font-medium" onClick={() => setCount(1)} >
+                                        {
+                                            isInCart ? 
+                                            <button onClick={()=>navigate('/cart')} className="flex cursor-pointer items-center justify-center gap-1 border border-secondary md:w-[100px] w-[64px] h-[34px] rounded text-secondary font-medium" >
+                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M.583.583h2.333l1.564 7.81a1.17 1.17 0 0 0 1.166.94h5.67a1.17 1.17 0 0 0 1.167-.94l.933-4.893H3.5m2.333 8.75a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0m6.417 0a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0" className="stroke-secondary" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                            Go to Cart
+                                        </button>
+                                        :
+                                        <button onClick={()=>addToCart(product)} className="flex cursor-pointer items-center justify-center gap-1 border border-primary md:w-[80px] w-[64px] h-[34px] rounded text-primary font-medium" >
                                             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M.583.583h2.333l1.564 7.81a1.17 1.17 0 0 0 1.166.94h5.67a1.17 1.17 0 0 0 1.167-.94l.933-4.893H3.5m2.333 8.75a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0m6.417 0a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0" className="stroke-primary" stroke-linecap="round" stroke-linejoin="round" />
                                             </svg>
                                             Add
                                         </button>
-                                    ) : (
-                                        <div className="flex items-center justify-center gap-2 md:w-20 w-16 h-[34px] border border-primary rounded select-none">
-                                            <button onClick={() => setCount((prev) => Math.max(prev - 1, 0))} className="cursor-pointer text-md px-2 h-full" >
-                                                -
-                                            </button>
-                                            <span className="w-5 text-center">{count}</span>
-                                            <button onClick={() => setCount((prev) => prev + 1)} className="cursor-pointer text-md px-2 h-full" >
-                                                +
-                                            </button>
-                                        </div>
-                                    )}
+                                        }
                                 </div>
                             </div>
                         </div>
@@ -138,6 +160,17 @@ const Home = () => {
                     {products.length === 0 && <MiniQuenzyLoader />}
                     
             </div>
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
         </div>
     );
 };

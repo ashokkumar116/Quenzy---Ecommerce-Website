@@ -7,6 +7,7 @@ import { AuthContext } from "../Contexts/AuthContext";
 import { MdLogin } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import axios from '../axios';
+import { useCart } from "../Contexts/CartContext";
 
 
 const Navbar = () => {
@@ -14,6 +15,7 @@ const Navbar = () => {
     const {user,logout} = useContext(AuthContext);
     console.log(user); 
     const navigate = useNavigate(); 
+    const {cart} = useCart();
 
 
     return (
@@ -33,9 +35,9 @@ const Navbar = () => {
                             <input type="text" className="outline-none p-2" placeholder="Search" />
                             
                         </li>
-                        <li className="flex justify-center items-center gap-2 p-overlay-badge">
+                        <li className="flex justify-center items-center gap-2 p-overlay-badge cursor-pointer" onClick={()=>navigate('/cart')}>
                         <IoCartOutline className="text-2xl" />
-                        <Badge value={3} severity="success" />
+                        <Badge value={cart.length || null} severity="success" />
                         </li>
                         <li>
                             {user ? <p>{user.name}</p> :<Link to={'/login'} ><button className="btn btn-primary" ><MdLogin />Login</button></Link> }
