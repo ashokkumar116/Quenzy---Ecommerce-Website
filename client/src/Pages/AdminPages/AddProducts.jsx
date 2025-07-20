@@ -67,9 +67,9 @@ const AddProducts = () => {
 
     // Fetch brands, categories, sellers, and products from the server
     const fetchDatas = async () => {
-        const brandsres = await axios.get("/brands/getbrands");
-        const categoriesres = await axios.get("/categories/getCategories");
-        const sellersres = await axios.get("/sellers/getallsellers");
+        const brandsres = await axios.get("/brands/getbrandspage");
+        const categoriesres = await axios.get("/categories/getcategoriespage");
+        const sellersres = await axios.get("/sellers/getsellerspage");
         const productsres = await axios.get(
             `/products/getproducts?page=${page}&limit=${limit}`
         );

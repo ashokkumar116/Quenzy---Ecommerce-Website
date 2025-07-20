@@ -3,11 +3,25 @@ const db = require('../db');
 
 
 const getAllSeller = async(req,res)=>{
-    const sql = "SELECT * FROM sellers";
 
-    const [sellers] = await db.query(sql);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+    const offset = (page - 1) * limit;
+    
+    const [countResult] = await db.query("SELECT COUNT(*) AS total FROM sellers");
+    const totalSellers = countResult[0].total;
+    const totalPages = Math.ceil(totalSellers / limit);
 
-    return res.json(sellers);
+    const sql = "SELECT * FROM sellers LIMIT ? OFFSET ?";
+
+    const [sellers] = await db.query(sql,[limit,offset]);
+
+    return res.json({
+        sellers: sellers,
+        currentPage: page,
+        totalPages,
+        totalSellers
+    });
 
 }
 
@@ -64,10 +78,17 @@ const deleteSeller = async(req,res)=>{
 }
 
 
+const getSellersPage = async(req,res)=> {
+    const sql = "SELECT * FROM sellers";
+    const [sellers] = await db.query(sql);
+    return res.json(sellers);
+}
+
 
 module.exports ={
     getAllSeller,
     addSeller,
     updateSeller,
-    deleteSeller
+    deleteSeller,
+    getSellersPage
 }

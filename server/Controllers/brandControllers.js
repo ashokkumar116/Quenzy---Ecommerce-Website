@@ -110,11 +110,19 @@ const deleteBrand = async (req, res) => {
     });
 }
 
+const getBrandsPage = async (req, res) => {
+    const sql = "SELECT * FROM brands";
+    const [brands] = await db.query(sql);
+    return res.json(brands);
+
+}
+
 
 module.exports = {
     addBrand,
     getBrands,
     updateBrand,
-    deleteBrand
+    deleteBrand,
+    getBrandsPage
 
 }

@@ -12,7 +12,7 @@ const CategoriesListing = () => {
     const [slidesCount,setSlidesCount] = useState(null);
 
     const fetchCategories = async () => {
-        const response = await axios.get('/categories/getcategories');
+        const response = await axios.get('/categories/getcategoriespage');
         console.log(response.data);
         setCategories(response.data);
     }

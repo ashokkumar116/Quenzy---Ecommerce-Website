@@ -6,11 +6,12 @@ const getCategories = async(req,res)=>{
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 5;
     const offset = (page - 1) * limit;
-
-    const sql = "SELECT * FROM categories LIMIT ? OFFSET ?";
+    
     const [countResult] = await db.query("SELECT COUNT(*) AS total FROM categories");
     const totalCategories = countResult[0].total;
     const totalPages = Math.ceil(totalCategories / limit);
+    
+    const sql = "SELECT * FROM categories LIMIT ? OFFSET ?";
 
     const [categories] = await db.query(sql,[limit,offset]);
 
@@ -96,11 +97,18 @@ const deleteCategory = async(req,res)=>{
 
 }
 
+const getCategoriesPage = async (req, res) => {
+    const sql = "SELECT * FROM categories";
+    const [categories] = await db.query(sql);
+    return res.json(categories);
+
+}
 
 
 module.exports = {
     getCategories,
     AddCategory,
     updateCategory,
-    deleteCategory
+    deleteCategory,
+    getCategoriesPage
 }
