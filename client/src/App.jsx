@@ -13,6 +13,7 @@ import { AuthContext } from "./Contexts/AuthContext";
 import QuenzyLoader from "./Loader/QuenzyLoader";
 import Dashboard from "./Pages/AdminPages/Dashboard";
 import Cart from "./Pages/Cart";
+import ViewProduct from "./Pages/ViewProduct";
 function App() {
 
     const {user , loading} = useContext(AuthContext);
@@ -28,6 +29,7 @@ function App() {
                 <Route path="/login" element={user ? <Navigate to={'/'} />: <Login/>} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/cart" element={<Cart />} />
+                <Route path="/viewproduct/:slug" element={<ViewProduct />} />
                 <Route path="/admin" element={<AdminProtectedRoutes />}>
                     <Route element={<AdminLayout />}>
                         <Route index element={<Navigate to="dashboard" replace />} />

@@ -193,9 +193,55 @@ const deleteProduct = async (req, res) => {
 
 }
 
+
+const getOneProduct = async (req, res) => {
+  const slug = req.params.slug;
+
+  try {
+    const [productResult] = await db.query(`
+      SELECT 
+        p.id, p.name, p.slug, p.description, p.short_description, 
+        p.price, p.discount_percentage, p.stock, p.is_active, p.created_at,
+        c.name AS category_name,
+        b.name AS brand_name,
+        s.name AS seller_name,
+        p.category_id,
+        p.brand_id,
+        p.seller_id
+      FROM products p
+      LEFT JOIN categories c ON p.category_id = c.id
+      LEFT JOIN brands b ON p.brand_id = b.id
+      LEFT JOIN sellers s ON p.seller_id = s.id
+      WHERE p.slug = ?
+      LIMIT 1
+    `, [slug]);
+
+    if (productResult.length === 0) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    const product = productResult[0];
+
+    const [images] = await db.query(
+      "SELECT image_url, is_main FROM product_images WHERE product_id = ?",
+      [product.id]
+    );
+
+    product.images = images;
+
+    res.json( product );
+
+  } catch (error) {
+    console.error("Error fetching product:", error.message);
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
+  }
+};
+
+
 module.exports = {
     getAllProducts,
     addProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getOneProduct
 };

@@ -108,7 +108,7 @@ const Home = () => {
                         const isInCart = cart.find(item => item.id === product.id);
                         const offerPrice = product.price - (product.price * product.discount_percentage / 100);
                         return  <div className="border border-primary/50 rounded-md md:px-4 px-3 py-2 bg-base-100 min-w-66 max-w-86 w-full hover:scale-101 transition duration-200 ease-in-out " key={product.id}>
-                        <div className="group cursor-pointer flex items-center justify-center px-2">
+                        <div className="group cursor-pointer flex items-center justify-center px-2" onClick={()=>navigate(`/viewproduct/${product.slug}`)}>
                             <img className="group-hover:scale-105 transition max-w-26 md:max-w-46 h-40 mb-3" src={`${asset.imageBaseUrl}${product.images[0]?.image_url}`} alt={product.name} />
                         </div>
                         <div className="text-base-content text-sm ">
