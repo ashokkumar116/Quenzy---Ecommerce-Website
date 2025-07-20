@@ -8,6 +8,7 @@ const categoriesRoutes = require('./Routes/categoriesRoutes');
 const sellerRoutes = require('./Routes/sellerRoutes');
 const productRoutes = require('./Routes/productRoutes');
 const dashboardRoutes = require('./Routes/dashboardRoutes');
+const cartRoutes = require('./Routes/cartRoutes');
 const app = express();
 
 
@@ -26,6 +27,7 @@ app.use('/api/categories',categoriesRoutes)
 app.use('/api/sellers',sellerRoutes);
 app.use('/api/products',productRoutes);
 app.use('/api/dashboard',dashboardRoutes)
+app.use('/api/carts',cartRoutes);
 app.use('/uploads', express.static('Uploads'));
 
 

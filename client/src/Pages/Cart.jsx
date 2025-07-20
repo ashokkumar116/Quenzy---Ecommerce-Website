@@ -36,6 +36,7 @@ const Cart = () => {
 
     useEffect(() => {
         calculateTotal();
+        console.log(cart);
     }, [cart]);
 
     return (
@@ -71,10 +72,11 @@ const Cart = () => {
                                             <img
                                                 className="max-w-full h-full object-cover"
                                                 src={`${asset.imageBaseUrl}${
-                                                    item.images?.[0]
-                                                        ?.image_url || ""
-                                                }`}
-                                                alt={item.name}
+                                                    Array.isArray(item.images)
+                                                      ? item.images?.[0]?.image_url
+                                                      : item.image_url || ""
+                                                  }`}
+                                                  
                                             />
                                         </div>
                                         <div>
