@@ -241,32 +241,62 @@ const getProductsByCategory = async (req, res) => {
   try {
     const slug = req.params.slug;
 
-    const sql = `
-      SELECT p.*, c.name AS category_name, c.slug AS category_slug 
-      FROM products p 
-      JOIN categories c ON p.category_id = c.id 
-      WHERE c.slug = ?
-    `;
-    const [products] = await db.query(sql, [slug]); 
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+    const offset = (page - 1) * limit;
 
-  
-    const imageSql = `SELECT * FROM product_images`;
+    const [categoryResult] = await db.query(
+      `SELECT id FROM categories WHERE slug = ?`,
+      [slug]
+    );
+
+    if (categoryResult.length === 0) {
+      return res.status(404).json({ message: "Category not found" });
+    }
+
+    const categoryId = categoryResult[0].id;
+
+    const [countResult] = await db.query(
+      `SELECT COUNT(*) AS total FROM products WHERE category_id = ?`,
+      [categoryId]
+    );
+
+    const totalProducts = countResult[0].total;
+    const totalPages = Math.ceil(totalProducts / limit);
+
+    const productSql = `
+      SELECT 
+        p.id, p.name, p.slug, p.description, p.short_description, 
+        p.price, p.discount_percentage, p.stock, p.is_active, p.created_at,
+        c.name AS category_name,
+        p.category_id
+      FROM products p
+      JOIN categories c ON p.category_id = c.id
+      WHERE c.id = ?
+      ORDER BY p.created_at DESC
+      LIMIT ? OFFSET ?
+    `;
+    const [products] = await db.query(productSql, [categoryId, limit, offset]);
+
+    const imageSql = `SELECT product_id, image_url, is_main FROM product_images`;
     const [images] = await db.query(imageSql);
 
-    const productsWithImages = products.map((product) => {
-      const productImages = images.filter(
-        (image) => image.product_id === product.id
-      );
-
+    const productsWithImages = products.map(product => {
+      const productImages = images.filter(img => img.product_id === product.id);
       return {
         ...product,
-        images: productImages,
+        images: productImages
       };
     });
 
-    res.json(productsWithImages);
-  } catch (err) {
-    console.error("Error fetching products by category:", err);
+    res.json({
+      products: productsWithImages,
+      currentPage: page,
+      totalPages,
+      totalProducts
+    });
+  } catch (error) {
+    console.error("Error fetching products by category:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
