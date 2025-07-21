@@ -15,6 +15,7 @@ import Dashboard from "./Pages/AdminPages/Dashboard";
 import Cart from "./Pages/Cart";
 import ViewProduct from "./Pages/ViewProduct";
 import ViewCategory from "./Pages/ViewCategory";
+import FourNotFour from "./Pages/FourNotFour";
 function App() {
 
     const {user , loading} = useContext(AuthContext);
@@ -42,6 +43,7 @@ function App() {
                         <Route path="add-seller" element={<AddSeller />} />
                     </Route>
                 </Route>
+                <Route path="*" element={<FourNotFour/>} /> 
             </Routes>
         </>
     );
