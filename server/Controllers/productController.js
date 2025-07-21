@@ -203,6 +203,7 @@ const getOneProduct = async (req, res) => {
         p.id, p.name, p.slug, p.description, p.short_description, 
         p.price, p.discount_percentage, p.stock, p.is_active, p.created_at,
         c.name AS category_name,
+        c.slug AS category_slug,
         b.name AS brand_name,
         s.name AS seller_name,
         p.category_id,

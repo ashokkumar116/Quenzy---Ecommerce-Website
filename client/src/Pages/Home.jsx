@@ -37,7 +37,6 @@ const Home = () => {
     const [skip, setSkip] = useState(0);
     const [hasMore, setHasMore] = useState(true);
     const limit = 10;
-    const [count, setCount] = useState(0);
 
     const fetchMoreProducts = async () => {
         const page = Math.floor(skip / limit) + 1;
@@ -94,7 +93,7 @@ const Home = () => {
                     loader={<MiniQuenzyLoader />}
                     endMessage={
                         <p className="text-center text-base-content/40 italic mt-4">
-                            <b>No more products to show...</b>
+                            <p>No more products to show...</p>
                         </p>
                     }
                 >

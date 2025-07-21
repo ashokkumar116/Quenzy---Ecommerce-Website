@@ -11,6 +11,7 @@ import Navbar from "./Components/Navbar";
 import { AuthProvider } from "./Contexts/AuthContext";
 import { BrowserRouter } from "react-router-dom";
 import { CartProvider } from "./Contexts/CartContext";
+import Footer from "./Components/Footer";
 
 createRoot(document.getElementById("root")).render(
     <BrowserRouter>
@@ -19,6 +20,7 @@ createRoot(document.getElementById("root")).render(
                 <CartProvider>
                 <Navbar/>
                 <App />
+                <Footer/>
                 </CartProvider>
             </AuthProvider>
         </PrimeReactProvider>

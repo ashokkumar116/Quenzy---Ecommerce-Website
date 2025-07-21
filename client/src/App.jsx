@@ -31,7 +31,7 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/viewproduct/:slug" element={<ViewProduct />} />
-                <Route path="/viewproduct/:slug" element={<ViewCategory />} />
+                <Route path="/viewproductbycategory/:slug" element={<ViewCategory />} />
                 <Route path="/admin" element={<AdminProtectedRoutes />}>
                     <Route element={<AdminLayout />}>
                         <Route index element={<Navigate to="dashboard" replace />} />

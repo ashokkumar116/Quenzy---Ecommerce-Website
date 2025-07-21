@@ -57,7 +57,7 @@ const ViewProduct = () => {
             <p>
                 <span onClick={()=>navigate('/')} className="cursor-pointer">Home</span> /
                 <span> Products</span> /
-                <span> {product.category_name}</span> /
+                <span className="cursor-pointer" onClick={()=>navigate(`/viewproductbycategory/${product.category_slug}`)}> {product.category_name}</span> /
                 <span className="text-primary cursor-pointer"> {product.name}</span>
             </p>
 

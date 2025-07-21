@@ -5,11 +5,14 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { SampleNextArrow, SamplePrevArrow } from './Arrows';
 import MiniQuenzyLoader from '../Loader/MiniQuenzyLoader';
+import { useNavigate } from 'react-router-dom';
 
 
 const CategoriesListing = () => {
     const [categories, setCategories] = useState([]);
     const [slidesCount,setSlidesCount] = useState(null);
+
+    const navigate = useNavigate();
 
     const fetchCategories = async () => {
         const response = await axios.get('/categories/getcategoriespage');
@@ -52,7 +55,7 @@ const CategoriesListing = () => {
             {categories.length > 0 ? (
                 <Slider {...settings}>
                     {categories.map((category, index) => (
-                        <div key={index} className="px-2">
+                        <div key={index} className="px-2 cursor-pointer" onClick={()=>navigate(`/viewproductbycategory/${category.slug}`)}>
                             <p className="bg-base-100 rounded p-2 text-center capitalize">
                                 {category.name}
                             </p>
