@@ -109,6 +109,8 @@ const getCategoriesPage = async (req, res) => {
 }
 
 
+
+
 module.exports = {
     getCategories,
     AddCategory,

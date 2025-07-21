@@ -12,4 +12,5 @@ router.get('/getcategoriespage',getCategoriesPage);
 
 
 
+
 module.exports = router;

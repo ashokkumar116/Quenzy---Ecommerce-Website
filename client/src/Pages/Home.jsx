@@ -28,9 +28,6 @@ const Home = () => {
 
     if(loading) return <QuenzyLoader />;
 
-    if(!user){
-        
-    }
 
 
     

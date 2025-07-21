@@ -14,6 +14,7 @@ import QuenzyLoader from "./Loader/QuenzyLoader";
 import Dashboard from "./Pages/AdminPages/Dashboard";
 import Cart from "./Pages/Cart";
 import ViewProduct from "./Pages/ViewProduct";
+import ViewCategory from "./Pages/ViewCategory";
 function App() {
 
     const {user , loading} = useContext(AuthContext);
@@ -30,6 +31,7 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/viewproduct/:slug" element={<ViewProduct />} />
+                <Route path="/viewproduct/:slug" element={<ViewCategory />} />
                 <Route path="/admin" element={<AdminProtectedRoutes />}>
                     <Route element={<AdminLayout />}>
                         <Route index element={<Navigate to="dashboard" replace />} />

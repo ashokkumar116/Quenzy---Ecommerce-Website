@@ -237,11 +237,47 @@ const getOneProduct = async (req, res) => {
   }
 };
 
+const getProductsByCategory = async (req, res) => {
+  try {
+    const slug = req.params.slug;
+
+    const sql = `
+      SELECT p.*, c.name AS category_name, c.slug AS category_slug 
+      FROM products p 
+      JOIN categories c ON p.category_id = c.id 
+      WHERE c.slug = ?
+    `;
+    const [products] = await db.query(sql, [slug]); 
+
+  
+    const imageSql = `SELECT * FROM product_images`;
+    const [images] = await db.query(imageSql);
+
+    const productsWithImages = products.map((product) => {
+      const productImages = images.filter(
+        (image) => image.product_id === product.id
+      );
+
+      return {
+        ...product,
+        images: productImages,
+      };
+    });
+
+    res.json(productsWithImages);
+  } catch (err) {
+    console.error("Error fetching products by category:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+ 
 
 module.exports = {
     getAllProducts,
     addProduct,
     updateProduct,
     deleteProduct,
-    getOneProduct
+    getOneProduct,
+    getProductsByCategory
 };
