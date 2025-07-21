@@ -16,6 +16,7 @@ import Cart from "./Pages/Cart";
 import ViewProduct from "./Pages/ViewProduct";
 import ViewCategory from "./Pages/ViewCategory";
 import FourNotFour from "./Pages/FourNotFour";
+import ContactUs from "./Pages/ContactUs";
 function App() {
 
     const {user , loading} = useContext(AuthContext);
@@ -43,6 +44,7 @@ function App() {
                         <Route path="add-seller" element={<AddSeller />} />
                     </Route>
                 </Route>
+                <Route path="/contact" element={<ContactUs/>} /> 
                 <Route path="*" element={<FourNotFour/>} /> 
             </Routes>
         </>
