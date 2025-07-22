@@ -9,6 +9,18 @@
 
 @theme{
   --font-poppins:"Poppins", sans-serif;
+  --animate-dropdown: slideDown 0.2s ease-in-out;
+  @keyframes slideDown {
+    from {
+      transform: translateY(-10px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    
+  }
 }
 
 @layer components{
@@ -23,7 +35,6 @@
   .options-prime{
     @apply bg-base-100 text-base-content border border-base-300 rounded-lg shadow-lg p-2
   }
-
 
 }
 
