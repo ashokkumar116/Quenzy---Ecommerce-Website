@@ -41,7 +41,9 @@ const Footer = () => {
             <div className="flex flex-col md:flex-row items-start justify-between gap-10 py-10 border-b border-primary/50 text-base-content/50">
                 <div>
                     <img className="w-34 md:w-70" src={logo} />
-                    <p className="max-w-[410px] mt-6">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rerum unde quaerat eveniet cumque accusamus atque qui error quo enim fugiat?</p>
+                    <p className="max-w-[410px] mt-6">Discover quality products at unbeatable prices. We’re on a mission to make online shopping easy, reliable, and joyful for everyone across India.
+
+</p>
                 </div>
                 <div className="flex flex-wrap justify-between w-full md:w-[45%] gap-5">
                     {linkSections.map((section, index) => (

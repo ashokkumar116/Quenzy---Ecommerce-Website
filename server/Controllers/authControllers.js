@@ -86,9 +86,30 @@ const logout =async (req,res)=>{
     return res.status(200).json({message:"Successfully logged out"});
 }
 
+const uploadProfile = async(req,res)=>{
+    const profile_pic = req.file;
+
+    if(!profile_pic){
+        return res.status(400).json({message: "No file uploaded"});
+    }
+    const id = req.user.id;
+
+    const sql = "UPDATE users SET profile_pic = ? WHERE id = ?";
+    const filePath = `/uploads/profiles/${profile_pic.filename}`;
+
+    try {
+        await db.query(sql, [filePath, id]);
+        return res.status(200).json({message: "Profile picture updated successfully"});
+    } catch (error) {
+        console.error("Error updating profile picture:", error);
+        return res.status(500).json({message: "Internal server error"});
+    }
+}
+
 module.exports = {
     loginUser,
     registerUser,
     getUser,
-    logout
+    logout,
+    uploadProfile
 }

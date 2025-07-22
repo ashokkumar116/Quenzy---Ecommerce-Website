@@ -11,6 +11,7 @@ const dashboardRoutes = require('./Routes/dashboardRoutes');
 const cartRoutes = require('./Routes/cartRoutes');
 const contactRoutes = require('./Routes/contactRoutes');
 const app = express();
+const path = require('path');
 
 
 app.use(express.json());
