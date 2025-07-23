@@ -7,6 +7,10 @@ import { FaUserCircle } from "react-icons/fa";
 const Profile = () => {
     const { user, loading } = useContext(AuthContext);
     const [disabledField,setDisabledField] = useState(true);
+    const [name,setName] = useState("");
+    const [contact,setContact] = useState("");
+
+    
 
     if (loading) {
         return <MiniQuenzyLoader />;
@@ -40,7 +44,7 @@ const Profile = () => {
                 </div>
             </div>
             <div className="flex-1 bg-base-100 p-5">
-                <form className="grid grid-cols-2 gap-5">
+                <form className="grid grid-cols-2 gap-5 mb-5">
                     <input type="text" className="input input-primary" placeholder="Name" value={user.name} disabled={disabledField} />
                     <input type="email" className="input input-primary" placeholder="Email" value={user.email} disabled />
                     <input type="number" className="input input-primary" placeholder="Contact" value={user.contact} disabled={disabledField} />

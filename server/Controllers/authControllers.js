@@ -106,10 +106,27 @@ const uploadProfile = async(req,res)=>{
     }
 }
 
+const editUser = async(req,res)=>{
+    const {name,contact} = req.body;
+    const id = req.user.id;
+    if(!contact){
+        contact = null;
+    }
+    const sql = "UPDATE users SET name = ? , contact = ? WHERE id = ?";
+    try {
+        await db.query(sql, [name, contact, id]);
+        return res.status(200).json({message: "User details updated successfully"});
+    } catch (error) {
+        console.error("Error updating user details:", error);
+        return res.status(500).json({message: "Internal server error"});
+    }
+}
+
 module.exports = {
     loginUser,
     registerUser,
     getUser,
     logout,
-    uploadProfile
+    uploadProfile,
+    editUser
 }
