@@ -3,14 +3,31 @@ import { AuthContext } from "../Contexts/AuthContext";
 import MiniQuenzyLoader from "../Loader/MiniQuenzyLoader";
 import { asset } from "../assets/asset";
 import { FaUserCircle } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
+import axios from "../axios";
 
 const Profile = () => {
-    const { user, loading } = useContext(AuthContext);
-    const [disabledField,setDisabledField] = useState(true);
-    const [name,setName] = useState("");
-    const [contact,setContact] = useState("");
+    const { user, loading,fetchUser } = useContext(AuthContext);
+    const [disabledField, setDisabledField] = useState(true);
+    const [name, setName] = useState(user.name || "");
+    const [contact, setContact] = useState(user.contact || "");
 
-    
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.put("/auth/edituser", {
+                name,
+                contact,
+            });
+            if (response.status === 200) {
+                fetchUser();
+                toast.success("Profile Updated Successfully!");
+            }
+        } catch (error) {
+            console.log("Error updating profile:", error);
+            toast.error("Failed to update profile. Please try again.");
+        }
+    };
 
     if (loading) {
         return <MiniQuenzyLoader />;
@@ -45,12 +62,73 @@ const Profile = () => {
             </div>
             <div className="flex-1 bg-base-100 p-5">
                 <form className="grid grid-cols-2 gap-5 mb-5">
-                    <input type="text" className="input input-primary" placeholder="Name" value={user.name} disabled={disabledField} />
-                    <input type="email" className="input input-primary" placeholder="Email" value={user.email} disabled />
-                    <input type="number" className="input input-primary" placeholder="Contact" value={user.contact} disabled={disabledField} />
+                    <input
+                        type="text"
+                        className="input input-primary"
+                        placeholder="Name"
+                        value={name}
+                        disabled={disabledField}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                    <input
+                        type="email"
+                        className="input input-primary"
+                        placeholder="Email"
+                        value={user.email}
+                        disabled
+                    />
+                    <input
+                        type="number"
+                        className="input input-primary"
+                        placeholder="Contact"
+                        value={contact}
+                        disabled={disabledField}
+                        onChange={(e) => setContact(e.target.value)}
+                    />
                 </form>
-                {disabledField ? (<button className="btn btn-error" onClick={()=>setDisabledField(false)} >Edit</button>): (<button className="btn btn-success" onClick={()=>setDisabledField(true)} >Save</button>)}
+                {disabledField ? (
+                    <button
+                        className="btn btn-error"
+                        type="submit"
+                        onClick={() => setDisabledField(false)}
+                    >
+                        Edit
+                    </button>
+                ) : (
+                    <>
+                        <button
+                        type="submit"
+                        className="btn btn-success mr-5"
+                        onClick={(e) => {
+                            handleSubmit(e);
+                            setDisabledField(true);
+                        }}
+                    >
+                        Save
+                    </button>
+                    <button
+                        className="btn btn-error"
+                        onClick={(e) => {
+                            setDisabledField(true);
+                        }}
+                    >
+                        Cancel
+                    </button>
+                    </>
+                    
+                )}
             </div>
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
         </div>
     );
 };
