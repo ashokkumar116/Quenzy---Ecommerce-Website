@@ -5,12 +5,16 @@ import { asset } from "../assets/asset";
 import { FaUserCircle } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "../axios";
+import { RiImageEditFill } from "react-icons/ri";
 
 const Profile = () => {
-    const { user, loading,fetchUser } = useContext(AuthContext);
+    const { user, loading, fetchUser } = useContext(AuthContext);
     const [disabledField, setDisabledField] = useState(true);
     const [name, setName] = useState(user.name || "");
     const [contact, setContact] = useState(user.contact || "");
+    const [profile_pic, setProfile_Pic] = useState(null);
+    const [showSaveButton, setShowSaveButton] = useState(false);
+    const [preview, setPreview] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,7 +24,7 @@ const Profile = () => {
                 contact,
             });
             if (response.status === 200) {
-                fetchUser();
+                await fetchUser();
                 toast.success("Profile Updated Successfully!");
             }
         } catch (error) {
@@ -29,20 +33,63 @@ const Profile = () => {
         }
     };
 
+    const handleImageEdit = async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append("profile_pic", profile_pic);
+
+        try {
+            const response = await axios.put(`/auth/profileupload`, formData);
+            if (response.status === 200) {
+                await fetchUser();
+                toast.success("Profile Image Updated Successfully!");
+            }
+        } catch (error) {
+            console.log("Error Uploading Profile pic", error);
+            toast.error(error?.response?.data?.message || "Failed to update profile image.");
+        }
+    };
+
     if (loading) {
         return <MiniQuenzyLoader />;
     }
 
     return (
-        <div className="py-25 flex bg-base-300 min-h-screen">
-            <div className="flex flex-wrap items-center justify-center gap-4 px-10">
-                <div className="bg-white rounded-2xl px-10 pt-10 pb-4 overflow-hidden border border-gray-500/30 h-115">
+        <div className="py-25 flex bg-base-300 min-h-screen px-10 gap-10">
+            <div className="flex flex-wrap items-center justify-center gap-4">
+                <div className="bg-base-100 rounded-2xl px-10 pt-10 pb-4 overflow-hidden border border-base-300 h-131 relative">
                     {user.profile_pic ? (
-                        <img
-                            src={`${asset.imageBaseUrl}${user.profile_pic}`}
-                            alt="User"
-                            className="w-64 h-75 object-cover object-top cursor-pointer"
-                        />
+                        <>
+                            {profile_pic ? (
+                                <img
+                                    src={URL.createObjectURL(profile_pic)}
+                                    alt="User"
+                                    className="w-64 h-75 object-cover object-top cursor-pointer"
+                                />
+                            ) : (
+                                <img
+                                    src={`${asset.imageBaseUrl}${user.profile_pic}`}
+                                    alt="User"
+                                    className="w-64 h-75 object-cover object-top cursor-pointer"
+                                />
+                            )}
+                            <input
+                                type="file"
+                                name="profile_pic"
+                                id="profile_pic_edit"
+                                className="hidden"
+                                onChange={(e) =>
+                                    setProfile_Pic(e.target.files[0])
+                                }
+                            />
+                            <label htmlFor="profile_pic_edit">
+                                <RiImageEditFill
+                                    size={35}
+                                    className="absolute bottom-43 right-7 rounded-full bg-base-100 p-1.5 cursor-pointer"
+                                />
+                            </label>
+                        </>
                     ) : (
                         <FaUserCircle
                             size={200}
@@ -51,16 +98,33 @@ const Profile = () => {
                     )}
                     <div className="flex flex-col items-center">
                         <p className="font-medium mt-3">{user.name}</p>
-                        <p className="text-gray-500 text-sm">{user.email}</p>
-                        <p className="text-gray-500 text-sm">
+                        <p className="text-base-content/60 text-sm">{user.email}</p>
+                        <p className="text-base-content/60 text-sm">
                             {user.contact
                                 ? `${user.contact}`
                                 : "No Contact Number Provided"}
                         </p>
                     </div>
+                    {/* {showSaveButton ? (
+                        <>
+                            <button className="btn btn-success">Save</button>
+                            <button className="btn btn-error">Cancel</button>
+                        </>
+                    ) : (
+                        <>
+
+                        </>
+                    )} */}
+
+                    {profile_pic && (
+                        <div className="flex justify-center items-center gap-4 mt-5">
+                            <button className="btn btn-success" onClick={handleImageEdit}>Save</button>
+                            <button className="btn btn-error" onClick={()=>setProfile_Pic(null)} >Cancel</button>
+                        </div>
+                    )}
                 </div>
             </div>
-            <div className="flex-1 bg-base-100 p-5">
+            <div className="flex-1 bg-base-100 p-5 rounded-lg border border-base-300/80">
                 <form className="grid grid-cols-2 gap-5 mb-5">
                     <input
                         type="text"
@@ -97,25 +161,24 @@ const Profile = () => {
                 ) : (
                     <>
                         <button
-                        type="submit"
-                        className="btn btn-success mr-5"
-                        onClick={(e) => {
-                            handleSubmit(e);
-                            setDisabledField(true);
-                        }}
-                    >
-                        Save
-                    </button>
-                    <button
-                        className="btn btn-error"
-                        onClick={(e) => {
-                            setDisabledField(true);
-                        }}
-                    >
-                        Cancel
-                    </button>
+                            type="submit"
+                            className="btn btn-success mr-5"
+                            onClick={(e) => {
+                                handleSubmit(e);
+                                setDisabledField(true);
+                            }}
+                        >
+                            Save
+                        </button>
+                        <button
+                            className="btn btn-error"
+                            onClick={(e) => {
+                                setDisabledField(true);
+                            }}
+                        >
+                            Cancel
+                        </button>
                     </>
-                    
                 )}
             </div>
             <ToastContainer
