@@ -1,11 +1,215 @@
-import React from 'react'
+import axios from "../axios";
+import React, { useEffect, useState } from "react";
+import { Slider } from "primereact/slider";
+import InfiniteScroll from "react-infinite-scroll-component";
+import MiniQuenzyLoader from "../Loader/MiniQuenzyLoader";
+// import ProductCard from "../Components/ProductCard";
+import { useCart } from "../Contexts/CartContext";
 
 const Products = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+    const [productsPg, setProductsPg] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [brands, setBrands] = useState([]);
+    const [priceRange, setPriceRange] = useState({ min: 0, max: 0 });
+    const [selectedPriceRange, setSelectedPriceRange] = useState([0, 10000]);
+    const [selectedCategories, setSelectedCategories] = useState([]);
+    const [selectedBrands, setSelectedBrands] = useState([]);
+    const [hasMore, setHasMore] = useState(true);
+    const [page, setPage] = useState(1);
 
-export default Products
+    const limit = 10;
+
+    const { cart } = useCart();
+
+    // Fetch filter data
+    const fetchFilters = async () => {
+        try {
+            const res = await axios.get("/filters/getfilters");
+            const { categories, brands, priceRange } = res.data;
+
+            setCategories(categories);
+            setBrands(brands);
+
+            const min = parseFloat(priceRange.min);
+            const max = parseFloat(priceRange.max);
+            setPriceRange({ min, max });
+            setSelectedPriceRange([min, max]);
+        } catch (err) {
+            console.error("Error fetching filters", err);
+        }
+    };
+
+    // Reset and refetch when filters change
+    useEffect(() => {
+        const fetchInitialProducts = async () => {
+            try {
+                const res = await axios.post("/filters/fetchproductsbyfilter", {
+                    categories: selectedCategories,
+                    brands: selectedBrands,
+                    priceRange: selectedPriceRange,
+                    limit,
+                    offset: 0,
+                });
+
+                setProductsPg(res.data.products);
+                setHasMore(res.data.length === limit);
+                setPage(1); // reset page
+            } catch (err) {
+                console.error("Error fetching products with filters", err);
+            }
+        };
+
+        fetchInitialProducts();
+    }, [selectedCategories, selectedBrands, selectedPriceRange]);
+
+    const loadMoreProducts = async () => {
+        try {
+            const nextPage = page + 1;
+            const offset = (nextPage - 1) * limit;
+
+            const res = await axios.post("/filters/fetchproductsbyfilter", {
+                categories: selectedCategories,
+                brands: selectedBrands,
+                priceRange: selectedPriceRange,
+                limit,
+                offset,
+            });
+
+            if (res.data.length < limit) {
+                setHasMore(false);
+            }
+
+            setProductsPg((prev) => [...prev, ...res.data]);
+            setPage(nextPage);
+        } catch (err) {
+            console.error("Error loading more products", err);
+        }
+    };
+
+    useEffect(() => {
+        fetchFilters();
+    }, []);
+
+    useEffect(() => {
+        console.log(productsPg);
+    }, [productsPg]);
+
+    return (
+        <div className="bg-base-300 min-h-screen py-20">
+            <h1 className="text-3xl font-bold text-center my-10">Products</h1>
+            <div className="flex gap-10 px-5 py-3">
+                {/* Filters Sidebar */}
+                <div className="filtersbar bg-base-100 shadow-lg px-5 py-3 pb-6 rounded-lg">
+                    <div className="flex flex-col gap-5">
+                        {/* Categories */}
+                        <div className="categories-listing">
+                            <h2 className="text-2xl font-semibold mb-3">
+                                Categories
+                            </h2>
+                            {categories.map((category) => (
+                                <label
+                                    key={category.id}
+                                    className="flex items-center gap-2 cursor-pointer"
+                                >
+                                    <input
+                                        type="checkbox"
+                                        value={category.id}
+                                        onChange={(e) => {
+                                            const value = Number(
+                                                e.target.value
+                                            );
+                                            setSelectedCategories((prev) =>
+                                                e.target.checked
+                                                    ? [...prev, value]
+                                                    : prev.filter(
+                                                          (item) =>
+                                                              item !== value
+                                                      )
+                                            );
+                                        }}
+                                    />
+                                    {category.name}
+                                </label>
+                            ))}
+                        </div>
+
+                        {/* Brands */}
+                        <div className="brands-listing">
+                            <h2 className="text-2xl font-semibold mb-3">
+                                Brands
+                            </h2>
+                            {brands.map((brand) => (
+                                <label
+                                    key={brand.id}
+                                    className="flex items-center gap-2 cursor-pointer"
+                                >
+                                    <input
+                                        type="checkbox"
+                                        value={brand.id}
+                                        onChange={(e) => {
+                                            const value = Number(
+                                                e.target.value
+                                            );
+                                            setSelectedBrands((prev) =>
+                                                e.target.checked
+                                                    ? [...prev, value]
+                                                    : prev.filter(
+                                                          (item) =>
+                                                              item !== value
+                                                      )
+                                            );
+                                        }}
+                                    />
+                                    {brand.name}
+                                </label>
+                            ))}
+                        </div>
+
+                        {/* Price Slider */}
+                        <div className="price-range">
+                            <h2 className="text-2xl font-semibold mb-2">
+                                Price Range
+                            </h2>
+                            <p className="mb-2">
+                                ₹{selectedPriceRange[0]} - ₹
+                                {selectedPriceRange[1]}
+                            </p>
+                            <Slider
+                                value={selectedPriceRange}
+                                onChange={(e) => setSelectedPriceRange(e.value)}
+                                range
+                                min={priceRange.min}
+                                max={priceRange.max}
+                                step={100}
+                                style={{ width: "100%" }}
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                {/* Product Grid */}
+                <div className="productsListing flex-1 bg-base-100 shadow-lg px-5 py-3 rounded-lg">
+                    {/* <InfiniteScroll
+                        dataLength={productsPg.length}
+                        next={loadMoreProducts}
+                        hasMore={hasMore}
+                        loader={<MiniQuenzyLoader />}
+                        scrollThreshold={0.8}
+                    >
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4">
+                            {productsPg.map((product) => {
+                                const isInCart = cart.find(item => item.id === product.id);
+                                // return <ProductCard
+                                // key={product.slug}
+                                //     product={product}
+                                //     isInCart={isInCart}
+                                // />;
+                            })}
+                    </InfiniteScroll> */}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default Products;

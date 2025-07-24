@@ -46,6 +46,12 @@ const Navbar = () => {
                             />
                         </li>
                         <li
+                             className="flex justify-center items-center gap-2 p-overlay-badge cursor-pointer bg-base-300 px-5 py-2 rounded-lg hover:bg-base-200 transition duration-150"
+                             onClick={() => navigate("/products")}
+                        >
+                        Products
+                        </li>
+                        <li
                             className="flex justify-center items-center gap-2 p-overlay-badge cursor-pointer"
                             onClick={() => navigate("/cart")}
                         >
