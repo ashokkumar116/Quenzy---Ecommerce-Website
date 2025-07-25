@@ -5,6 +5,7 @@ import axios from "../axios";
 import ProductCard from "../Components/ProductCard";
 import { useCart } from "../Contexts/CartContext";
 import { ToastContainer } from "react-toastify";
+import MiniQuenzyLoader from "../Loader/MiniQuenzyLoader";
 
 const SearchResults = () => {
     const [products, setProducts] = useState([]);
@@ -36,7 +37,7 @@ const SearchResults = () => {
             </h2>
 
             {loading ? (
-                <p>Loading...</p>
+                <MiniQuenzyLoader/>
             ) : products.length === 0 ? (
                 <p className="bg-base-100 p-5 rounded-lg shadow-lg">
                     No products found.

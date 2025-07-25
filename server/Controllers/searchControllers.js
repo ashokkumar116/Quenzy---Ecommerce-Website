@@ -1,4 +1,6 @@
 const db = require("../db");
+
+// Controller to handle search queries
 const searchByQuery = async (req, res) => {
     const query = req.query.query;
     const page = parseInt(req.query.page) || 1;
