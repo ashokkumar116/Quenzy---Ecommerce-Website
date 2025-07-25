@@ -5,23 +5,23 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import MiniQuenzyLoader from "../Loader/MiniQuenzyLoader";
 // import ProductCard from "../Components/ProductCard";
 import { useCart } from "../Contexts/CartContext";
+import ProductCard from "../Components/ProductCard";
+import { ToastContainer } from "react-toastify";
 
 const Products = () => {
-    const [productsPg, setProductsPg] = useState([]);
+    const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [brands, setBrands] = useState([]);
     const [priceRange, setPriceRange] = useState({ min: 0, max: 0 });
     const [selectedPriceRange, setSelectedPriceRange] = useState([0, 10000]);
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [selectedBrands, setSelectedBrands] = useState([]);
-    const [hasMore, setHasMore] = useState(true);
-    const [page, setPage] = useState(1);
 
-    const limit = 10;
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
 
     const { cart } = useCart();
 
-    // Fetch filter data
     const fetchFilters = async () => {
         try {
             const res = await axios.get("/filters/getfilters");
@@ -39,60 +39,46 @@ const Products = () => {
         }
     };
 
-    // Reset and refetch when filters change
-    useEffect(() => {
-        const fetchInitialProducts = async () => {
-            try {
-                const res = await axios.post("/filters/fetchproductsbyfilter", {
-                    categories: selectedCategories,
-                    brands: selectedBrands,
-                    priceRange: selectedPriceRange,
-                    limit,
-                    offset: 0,
-                });
-
-                setProductsPg(res.data.products);
-                setHasMore(res.data.length === limit);
-                setPage(1); // reset page
-            } catch (err) {
-                console.error("Error fetching products with filters", err);
-            }
-        };
-
-        fetchInitialProducts();
-    }, [selectedCategories, selectedBrands, selectedPriceRange]);
-
-    const loadMoreProducts = async () => {
+    const fetchFilteredProducts = async (pageNo = 1) => {
         try {
-            const nextPage = page + 1;
-            const offset = (nextPage - 1) * limit;
-
-            const res = await axios.post("/filters/fetchproductsbyfilter", {
-                categories: selectedCategories,
-                brands: selectedBrands,
-                priceRange: selectedPriceRange,
-                limit,
-                offset,
+            const res = await axios.get("/filters/fetchproductsbyfilter", {
+                params: {
+                    categories: selectedCategories.join(","),
+                    brands: selectedBrands.join(","),
+                    minPrice: selectedPriceRange[0],
+                    maxPrice: selectedPriceRange[1],
+                    page: pageNo,
+                    limit: 9,
+                },
             });
 
-            if (res.data.length < limit) {
-                setHasMore(false);
+            if (pageNo === 1) {
+                setProducts(res.data.products);
+            } else {
+                setProducts((prev) => [...prev, ...res.data.products]);
             }
 
-            setProductsPg((prev) => [...prev, ...res.data]);
-            setPage(nextPage);
+            setHasMore(res.data.hasMore);
         } catch (err) {
-            console.error("Error loading more products", err);
+            console.error("Error fetching products", err);
         }
+    };
+    useEffect(() => {
+        if (categories.length > 0 || brands.length > 0) {
+            setPage(1);
+            fetchFilteredProducts(1);
+        }
+    }, [selectedCategories, selectedBrands, selectedPriceRange]);
+
+    const fetchNext = () => {
+        const nextPage = page + 1;
+        setPage(nextPage);
+        fetchFilteredProducts(nextPage);
     };
 
     useEffect(() => {
         fetchFilters();
     }, []);
-
-    useEffect(() => {
-        console.log(productsPg);
-    }, [productsPg]);
 
     return (
         <div className="bg-base-300 min-h-screen py-20">
@@ -187,27 +173,52 @@ const Products = () => {
                     </div>
                 </div>
 
-                {/* Product Grid */}
                 <div className="productsListing flex-1 bg-base-100 shadow-lg px-5 py-3 rounded-lg">
-                    {/* <InfiniteScroll
-                        dataLength={productsPg.length}
-                        next={loadMoreProducts}
+                    <InfiniteScroll
+                        dataLength={products.length}
+                        next={fetchNext}
                         hasMore={hasMore}
                         loader={<MiniQuenzyLoader />}
-                        scrollThreshold={0.8}
+                        endMessage={
+                            <p className="text-center py-4 text-sm text-gray-500">
+                                No more products
+                            </p>
+                        }
                     >
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4">
-                            {productsPg.map((product) => {
-                                const isInCart = cart.find(item => item.id === product.id);
-                                // return <ProductCard
-                                // key={product.slug}
-                                //     product={product}
-                                //     isInCart={isInCart}
-                                // />;
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+                            {products.map((product) => {
+                                const isInCart = cart.find(
+                                    (item) => item.id === product.id
+                                );
+                                const offerPrice =
+                                    product.price -
+                                    (product.price *
+                                        product.discount_percentage) /
+                                        100;
+                                return (
+                                    <ProductCard
+                                        key={`product-${product.id}`}
+                                        product={product}
+                                        offerPrice={offerPrice}
+                                        isInCart={isInCart}
+                                    />
+                                );
                             })}
-                    </InfiniteScroll> */}
+                        </div>
+                    </InfiniteScroll>
                 </div>
             </div>
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
         </div>
     );
 };

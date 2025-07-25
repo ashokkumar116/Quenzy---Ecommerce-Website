@@ -4,7 +4,7 @@ const router = express.Router();
 
 
 router.get('/getfilters',getFilters);
-router.post('/fetchproductsbyfilter',fetchProductsByFilter);
+router.get('/fetchproductsbyfilter',fetchProductsByFilter);
 
 
 

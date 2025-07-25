@@ -104,7 +104,7 @@
                 <div className='px-7 py-7'>
                 <p>
                     <span onClick={()=>navigate('/')} className="cursor-pointer">Home</span> /
-                    <span> Products</span> /
+                    <span className="cursor-pointer" onClick={()=>navigate('/products')} > Products</span> /
                     <span className="text-primary cursor-pointer capitalize"> {products[0]?.category_name || slug }</span>
                 </p>
                 </div>
