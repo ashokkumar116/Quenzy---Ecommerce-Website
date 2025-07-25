@@ -18,6 +18,15 @@ const Navbar = () => {
     const { cart } = useCart();
     const [showDropdown, setShowDropdown] = useState(false);
 
+    const [query, setQuery] = useState("");
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        if (query.trim()) {
+            navigate(`/search?query=${encodeURIComponent(query)}`);
+        }
+    };
+
     const handleToggle = () => {
         setShowDropdown(!showDropdown);
     };
@@ -38,18 +47,25 @@ const Navbar = () => {
                 <div className="menus">
                     <ul className="flex justify-center items-center gap-6">
                         <li className="flex justify-center items-center border-b border-primary ">
-                            <GoSearch />
-                            <input
-                                type="text"
-                                className="outline-none p-2"
-                                placeholder="Search"
-                            />
+                            <form
+                                className="flex justify-center items-center border-b border-primary"
+                                onSubmit={handleSearch}
+                            >
+                                <GoSearch />
+                                <input
+                                    type="text"
+                                    value={query}
+                                    onChange={(e) => setQuery(e.target.value)}
+                                    className="outline-none p-2"
+                                    placeholder="Search"
+                                />
+                            </form>
                         </li>
                         <li
-                             className="flex justify-center items-center gap-2 p-overlay-badge cursor-pointer bg-base-300 px-5 py-2 rounded-lg hover:bg-base-200 transition duration-150"
-                             onClick={() => navigate("/products")}
+                            className="flex justify-center items-center gap-2 p-overlay-badge cursor-pointer bg-base-300 px-5 py-2 rounded-lg hover:bg-base-200 transition duration-150"
+                            onClick={() => navigate("/products")}
                         >
-                        Products
+                            Products
                         </li>
                         <li
                             className="flex justify-center items-center gap-2 p-overlay-badge cursor-pointer"
@@ -65,18 +81,18 @@ const Navbar = () => {
                             {user ? (
                                 user.profile_pic ? (
                                     <img
-                                      src={`${asset.imageBaseUrl}${user.profile_pic}`}
-                                      alt="User"
-                                      onClick={handleToggle}
-                                      className="h-10 w-10 rounded-full border border-primary cursor-pointer"
+                                        src={`${asset.imageBaseUrl}${user.profile_pic}`}
+                                        alt="User"
+                                        onClick={handleToggle}
+                                        className="h-10 w-10 rounded-full border border-primary cursor-pointer"
                                     />
-                                  ) : (
+                                ) : (
                                     <FaUserCircle
-                                      size={40}
-                                      onClick={handleToggle}
-                                      className="text-primary cursor-pointer"
+                                        size={40}
+                                        onClick={handleToggle}
+                                        className="text-primary cursor-pointer"
                                     />
-                                  )
+                                )
                             ) : (
                                 <Link to={"/login"}>
                                     <button className="btn btn-primary">

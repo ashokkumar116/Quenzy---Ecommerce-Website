@@ -19,6 +19,7 @@ import FourNotFour from "./Pages/FourNotFour";
 import ContactUs from "./Pages/ContactUs";
 import Profile from "./Pages/Profile";
 import Products from "./Pages/Products";
+import SearchResults from "./Pages/SearchResults";
 function App() {
 
     const {user , loading} = useContext(AuthContext);
@@ -38,6 +39,7 @@ function App() {
                 <Route path="/viewproductbycategory/:slug" element={<ViewCategory />} />
                 <Route path="/profile" element={<Profile/>} />
                 <Route path="/products" element={<Products/>} />
+                <Route path="/search" element={<SearchResults/>} />
                 <Route path="/admin" element={<AdminProtectedRoutes />}>
                     <Route element={<AdminLayout />}>
                         <Route index element={<Navigate to="dashboard" replace />} />
