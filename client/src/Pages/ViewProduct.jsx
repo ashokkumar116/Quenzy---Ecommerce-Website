@@ -6,7 +6,8 @@ import MiniQuenzyLoader from "../Loader/MiniQuenzyLoader";
 import { useCart } from "../Contexts/CartContext";
 import { ToastContainer } from "react-toastify";
 import QuenzyLoader from "../Loader/QuenzyLoader";
-
+import { FiHome } from "react-icons/fi";
+import { AiOutlineProduct } from "react-icons/ai";
 const ViewProduct = () => {
 
     const [product,setProduct] = useState([]);
@@ -54,9 +55,9 @@ const ViewProduct = () => {
         
        <div className="bg-base-300 px-10 py-30">
          <div className="w-full bg-base-100 p-5 shadow-lg rounded-lg">
-            <p>
-                <span onClick={()=>navigate('/')} className="cursor-pointer">Home</span> /
-                <span className="cursor-pointer" onClick={()=>navigate('/products')} > Products</span> /
+            <p className="flex items-center gap-1 ">
+                <span onClick={()=>navigate('/')} className="cursor-pointer flex justify-center items-center gap-1"><FiHome/><span>Home</span></span> /
+                <span className="cursor-pointer flex justify-center items-center gap-1" onClick={()=>navigate('/products')} ><AiOutlineProduct/> <span>Products</span></span> /
                 <span className="cursor-pointer" onClick={()=>navigate(`/viewproductbycategory/${product.category_slug}`)}> {product.category_name}</span> /
                 <span className="text-primary cursor-pointer"> {product.name}</span>
             </p>

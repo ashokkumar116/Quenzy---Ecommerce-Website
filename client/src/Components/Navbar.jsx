@@ -10,6 +10,7 @@ import axios from "../axios";
 import { useCart } from "../Contexts/CartContext";
 import { asset } from "../assets/asset";
 import { FaUserCircle } from "react-icons/fa";
+import { AiOutlineProduct } from "react-icons/ai";
 
 const Navbar = () => {
     const { user, logout } = useContext(AuthContext);
@@ -62,9 +63,10 @@ const Navbar = () => {
                             </form>
                         </li>
                         <li
-                            className="flex justify-center items-center gap-2 p-overlay-badge cursor-pointer bg-base-300 px-5 py-2 rounded-lg hover:bg-base-200 transition duration-150"
+                            className="flex justify-center text-primary items-center gap-2 p-overlay-badge cursor-pointer bg-base-300 px-5 py-2 rounded-lg hover:bg-base-200 transition duration-150"
                             onClick={() => navigate("/products")}
                         >
+                            <AiOutlineProduct className="text-primary" />
                             Products
                         </li>
                         <li

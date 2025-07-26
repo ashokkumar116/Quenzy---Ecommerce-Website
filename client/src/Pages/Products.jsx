@@ -82,7 +82,7 @@ const Products = () => {
 
     return (
         <div className="bg-base-300 min-h-screen py-20">
-            <h1 className="text-3xl font-bold text-center my-10">Products</h1>
+            <h1 className="text-3xl font-bold text-center my-10 text-primary">Products</h1>
             <div className="flex gap-10 px-5 py-3">
                 {/* Filters Sidebar */}
                 <div className="filtersbar bg-base-100 shadow-lg px-5 py-3 pb-6 rounded-lg">
