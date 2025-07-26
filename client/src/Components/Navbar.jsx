@@ -73,9 +73,9 @@ const Navbar = () => {
                             className="flex justify-center items-center gap-2 p-overlay-badge cursor-pointer"
                             onClick={() => navigate("/cart")}
                         >
-                            <IoCartOutline className="text-2xl" />
+                            <IoCartOutline className="text-2xl text-primary" />
                             <Badge
-                                value={cart.length || null}
+                                value={cart.length || 0}
                                 severity="success"
                             />
                         </li>

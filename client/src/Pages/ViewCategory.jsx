@@ -13,6 +13,7 @@
     import { asset } from '../assets/asset';
 import { FiHome } from 'react-icons/fi';
 import { AiOutlineProduct } from 'react-icons/ai';
+import { IoIosArrowForward } from 'react-icons/io';
 
     const ViewCategory = () => {
 
@@ -105,8 +106,8 @@ import { AiOutlineProduct } from 'react-icons/ai';
                 <div className='bg-base-100 m-6 rounded-lg shadow-lg'>
                 <div className='px-7 py-7'>
                 <p className='flex items-center gap-1'>
-                <span onClick={()=>navigate('/')} className="cursor-pointer flex justify-center items-center gap-1"><FiHome/><span>Home</span></span> /
-                <span className="cursor-pointer flex justify-center items-center gap-1" onClick={()=>navigate('/products')} ><AiOutlineProduct/> <span>Products</span></span> /
+                <span onClick={()=>navigate('/')} className="cursor-pointer flex justify-center items-center gap-1"><FiHome/><span>Home</span></span> <IoIosArrowForward/>
+                <span className="cursor-pointer flex justify-center items-center gap-1" onClick={()=>navigate('/products')} ><AiOutlineProduct/> <span>Products</span></span> <IoIosArrowForward/>
                     <span className="text-primary cursor-pointer capitalize"> {products[0]?.category_name || slug }</span>
                 </p>
                 </div>
