@@ -12,15 +12,18 @@ import { AuthProvider } from "./Contexts/AuthContext";
 import { BrowserRouter } from "react-router-dom";
 import { CartProvider } from "./Contexts/CartContext";
 import Footer from "./Components/Footer";
+import { OrdersProvider } from "./Contexts/OrdersContext";
 
 createRoot(document.getElementById("root")).render(
     <BrowserRouter>
         <PrimeReactProvider>
             <AuthProvider>
                 <CartProvider>
-                <Navbar/>
-                <App />
-                <Footer/>
+                    <OrdersProvider>
+                        <Navbar />
+                        <App />
+                        <Footer />
+                    </OrdersProvider>
                 </CartProvider>
             </AuthProvider>
         </PrimeReactProvider>

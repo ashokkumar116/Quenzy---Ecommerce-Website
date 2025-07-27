@@ -52,6 +52,11 @@ const ViewProduct = () => {
     if (!product) return <div className="p-10">?<QuenzyLoader/></div>;
 
 
+    const handleOrder = async()=>{
+        
+    }
+
+
 
     return product && (
         
@@ -118,7 +123,7 @@ const ViewProduct = () => {
                             Add to Cart
                         </button>
                         }
-                        <button  className="w-full py-3.5 cursor-pointer font-medium bg-primary text-base-content hover:bg-primary/90 transition" >
+                        <button onClick={()=>{handleOrder(product)}}  className="w-full py-3.5 cursor-pointer font-medium bg-primary text-base-content hover:bg-primary/90 transition" >
                             Buy now
                         </button>
                     </div>

@@ -20,6 +20,7 @@ import ContactUs from "./Pages/ContactUs";
 import Profile from "./Pages/Profile";
 import Products from "./Pages/Products";
 import SearchResults from "./Pages/SearchResults";
+import OrderSummary from "./Pages/OrderSummary";
 function App() {
 
     const {user , loading} = useContext(AuthContext);
@@ -33,6 +34,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={user ? <Navigate to={'/'} />: <Login/>} />
+                <Route path="/ordersummary" element={user?<OrderSummary/> : <Navigate to={'/login'} />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/viewproduct/:slug" element={<ViewProduct />} />
