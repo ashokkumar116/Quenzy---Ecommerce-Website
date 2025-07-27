@@ -11,6 +11,10 @@ export const OrdersProvider = ({children})=>{
         setOrderProducts([product]);
     }
 
+    const addToOrdersFromCart = (products)=>{
+        setOrderProducts(products);
+    }
+
     const clearOrders = () => {
         setOrderProducts([]);
     };
