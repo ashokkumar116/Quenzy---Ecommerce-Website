@@ -22,6 +22,7 @@ import Products from "./Pages/Products";
 import SearchResults from "./Pages/SearchResults";
 import OrderSummary from "./Pages/OrderSummary";
 import OrderSuccess from "./Components/OrderSuccess";
+import MyOrders from "./Pages/MyOrders";
 function App() {
 
     const {user , loading} = useContext(AuthContext);
@@ -44,6 +45,7 @@ function App() {
                 <Route path="/products" element={<Products/>} />
                 <Route path="/search" element={<SearchResults/>} />
                 <Route path="/order-success" element={<OrderSuccess />} />
+                <Route path="/my-orders" element={<MyOrders/>} />
                 <Route path="/admin" element={<AdminProtectedRoutes />}>
                     <Route element={<AdminLayout />}>
                         <Route index element={<Navigate to="dashboard" replace />} />

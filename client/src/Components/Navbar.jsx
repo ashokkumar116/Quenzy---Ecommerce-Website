@@ -119,7 +119,7 @@ const Navbar = () => {
                                     <li
                                         className="py-2 px-10 rounded-md hover:bg-primary/60 cursor-pointer transition-all duration-120 "
                                         onClick={() => {
-                                            navigate("/orders");
+                                            navigate("/my-orders");
                                             setShowDropdown(false);
                                         }}
                                     >

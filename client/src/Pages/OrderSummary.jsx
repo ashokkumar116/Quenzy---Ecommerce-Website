@@ -7,12 +7,15 @@ import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from 'react-toastify';
 import axios from "../axios";
 import OrderSuccess from "../Components/OrderSuccess";
+import { useCart } from "../Contexts/CartContext";
 
 const OrderSummary = () => {
     const { orderProducts } = useOrders();
     const { user, loading } = useContext(AuthContext);
     const [quantities, setQuantities] = useState({});
     const [address, setAddress] = useState("");
+
+    const {cart ,removeFromCart} = useCart();
 
     const [showSuccess, setShowSuccess] = useState(false);
 
@@ -99,6 +102,7 @@ const OrderSummary = () => {
             const res = await axios.post("/orders/placeorder", payload);
             toast.success("Order Placed! ID: " + res.data.orderUUID);
             setShowSuccess(true);
+
         } catch (err) {
             toast.error("Failed to place order");
         }
@@ -106,7 +110,7 @@ const OrderSummary = () => {
 
     return (
         <div className="py-25 bg-base-300">
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-5 px-10">
                 <h1 className="text-2xl font-bold mb-3">Order Summary</h1>
                 <div className="formfororder bg-base-100 p-5 rounded-lg shadow-lg">
                     <form className="grid grid-cols-2 gap-5">
