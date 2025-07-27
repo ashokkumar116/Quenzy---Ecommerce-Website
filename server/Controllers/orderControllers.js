@@ -54,33 +54,38 @@ const getMyOrders = async (req, res) => {
     try {
         const [rows] = await db.query(
             `
-  SELECT 
-  o.id AS order_id,
-  o.order_uuid,
-  o.user_id,
-  o.total_price,
-  o.payment_method,
-  o.status,
-  o.shipping_address,
-  o.created_at AS order_created_at,
+            SELECT 
+              o.id AS order_id,
+              o.order_uuid,
+              o.user_id,
+              o.total_price,
+              o.payment_method,
+              o.status,
+              o.shipping_address,
+              o.created_at AS order_created_at,
 
-  oi.product_id,
-  oi.quantity,
-  oi.price AS item_price,
+              oi.product_id,
+              oi.quantity,
+              oi.price AS item_price,
 
-  p.name AS product_name,
+              p.name AS product_name,
 
-  (SELECT image_url FROM product_images WHERE product_id = p.id LIMIT 1) AS image_url
+              (SELECT image_url FROM product_images WHERE product_id = p.id LIMIT 1) AS image_url,
 
-FROM orders o
-JOIN order_items oi ON o.id = oi.order_id
-JOIN products p ON oi.product_id = p.id
+              EXISTS (
+                SELECT 1 FROM reviews r 
+                WHERE r.product_id = oi.product_id 
+                  AND r.order_id = oi.order_id 
+                  AND r.user_id = ?
+              ) AS reviewed
 
-WHERE o.user_id = ?
-ORDER BY o.created_at DESC;
-
-      `,
-            [userId]
+            FROM orders o
+            JOIN order_items oi ON o.id = oi.order_id
+            JOIN products p ON oi.product_id = p.id
+            WHERE o.user_id = ?
+            ORDER BY o.created_at DESC;
+            `,
+            [userId, userId] // Note: userId used twice for query placeholders
         );
 
         // Group by order
@@ -102,13 +107,13 @@ ORDER BY o.created_at DESC;
                 };
             }
 
-            // Push product to items list
             groupedOrders[orderId].items.push({
                 product_id: row.product_id,
                 product_name: row.product_name,
                 quantity: row.quantity,
                 price: row.item_price,
                 image_url: row.image_url,
+                reviewed: !!row.reviewed, // true if user has reviewed
             });
         }
 
@@ -118,6 +123,7 @@ ORDER BY o.created_at DESC;
         res.status(500).json({ message: "Failed to fetch orders" });
     }
 };
+
 
 const cancelOrder = async(req,res)=>{
   const {order_id} = req.body;

@@ -49,6 +49,7 @@ const MyOrders = () => {
                 comment,
             });
             toast.success("Review submitted!");
+            fetchMyOrders();
             setShowReviewModal(false);
         } catch (err) {
             console.error(err);
@@ -189,7 +190,11 @@ const MyOrders = () => {
                                         ₹{item.price}
                                     </p>
                                     {order.status === "delivered" &&
-                                        !item.reviewed && (
+                                        (item.reviewed ? (
+                                            <span className="text-green-600 font-medium text-sm">
+                                                Review Added
+                                            </span>
+                                        ) : (
                                             <button
                                                 onClick={() =>
                                                     handleOpenReview(
@@ -201,7 +206,7 @@ const MyOrders = () => {
                                             >
                                                 Add Review
                                             </button>
-                                        )}
+                                        ))}
                                 </div>
                             ))}
                         </div>
