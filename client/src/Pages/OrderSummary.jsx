@@ -109,11 +109,14 @@ const OrderSummary = () => {
     };
 
     return (
-        <div className="py-25 bg-base-300">
-            <div className="flex flex-col gap-5 px-10">
+        <div className="py-20 bg-base-300">
+            <div className="w-full py-2.5 font-medium text-sm text-primary-content text-center bg-primary fixed top-20 z-30">
+            <p>⚠️ Only Cash on Delivery is available for now. 💳 Online payment will be available very soon. Thank you for your support!</p>
+        </div>
+            <div className="flex flex-col gap-5 px-10 pt-15">
                 <h1 className="text-2xl font-bold mb-3">Order Summary</h1>
                 <div className="formfororder bg-base-100 p-5 rounded-lg shadow-lg">
-                    <form className="grid grid-cols-2 gap-5">
+                    <form className="grid grid-cols-3 gap-5">
                         <label htmlFor="username">
                             Name :
                             <input
@@ -136,18 +139,31 @@ const OrderSummary = () => {
                                 disabled
                             />
                         </label>
+                        <label htmlFor="phone">
+                            Phone :
+                            <input
+                                type="text"
+                                value={user.contact}
+                                name="name"
+                                id="phone"
+                                className="input input-primary"
+                                disabled
+                            />
+                        </label>
                         <label htmlFor="address" className="">
                             Address :
                             <textarea
                                 type="text"
                                 value={address}
+                                placeholder="Address"
                                 onChange={(e) => setAddress(e.target.value)}
                                 name="name"
                                 id="username"
                                 required
-                                className="input input-primary w-full mt-2"
+                                className="textarea textarea-primary w-full mt-2 h-20"
                             />
                         </label>
+                        
                     </form>
                 </div>
                 <div className="grid gap-6 bg-base-100 p-5 rounded-lg shadow-lg">
@@ -248,8 +264,11 @@ const OrderSummary = () => {
                     </div>
                 </div>
             </div>
-            <div className="buttons w-full bg-base-100 p-5 flex justify-around mt-5 rounded-lg shadow-lg">
-                <button
+
+
+            <div className=" w-full bg-base-300 mt-5 px-10">
+               <div className=" p-5 bg-base-100 grid grid-cols-2 place-items-center rounded-lg shadow-lg">
+                 <button
                     className="btn w-100 btn-outline"
                     onClick={() => navigate("/")}
                 >
@@ -258,6 +277,7 @@ const OrderSummary = () => {
                 <button className="btn btn-success w-100" onClick={handlePlaceOrder}>
                     Place Order
                 </button>
+               </div>
             </div>
             {showSuccess && <div className="fixed top-0 flex justify-center items-center bg-[rgba(0,0,0,0.9)] w-full z-200"><OrderSuccess /></div>}
             <ToastContainer
