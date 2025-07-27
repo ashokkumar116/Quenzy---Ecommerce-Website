@@ -44,10 +44,8 @@ const ProductCard = ({ product, isInCart ,offerPrice }) => {
                                         .fill("")
                                         .map(
                                             (_, i) => (
-                                                {
-                                                    /*product.rating*/
-                                                },
-                                                4 > i ? (
+                                                    product.avg_rating
+                                                 > i ? (
                                                     <svg
                                                         key={i}
                                                         width="14"
@@ -78,7 +76,7 @@ const ProductCard = ({ product, isInCart ,offerPrice }) => {
                                                 )
                                             )
                                         )}
-                                    <p>({4})</p>
+                                    <p>({product.avg_rating || 0})</p>
                                 </div>
                                 <div className="flex items-end justify-between mt-3">
                                     <p className="md:text-xl text-base font-medium text-primary">

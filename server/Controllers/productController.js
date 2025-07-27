@@ -21,11 +21,14 @@ const getAllProducts = async (req, res) => {
           s.name AS seller_name,
           p.category_id,
           p.brand_id,
-          p.seller_id
+          p.seller_id,
+          ROUND(AVG(r.rating), 1) AS avg_rating
         FROM products p
         LEFT JOIN categories c ON p.category_id = c.id
         LEFT JOIN brands b ON p.brand_id = b.id
         LEFT JOIN sellers s ON p.seller_id = s.id
+        LEFT JOIN reviews r ON p.id = r.product_id
+        GROUP BY p.id
         ORDER BY p.created_at DESC
         LIMIT ? OFFSET ?
       `;
@@ -208,12 +211,16 @@ const getOneProduct = async (req, res) => {
         s.name AS seller_name,
         p.category_id,
         p.brand_id,
-        p.seller_id
+        p.seller_id,
+        ROUND(AVG(r.rating), 1) AS avg_rating
       FROM products p
       LEFT JOIN categories c ON p.category_id = c.id
       LEFT JOIN brands b ON p.brand_id = b.id
       LEFT JOIN sellers s ON p.seller_id = s.id
+      LEFT JOIN reviews r ON p.id = r.product_id
+      
       WHERE p.slug = ?
+      GROUP BY p.id
       LIMIT 1
     `, [slug]);
 
@@ -222,11 +229,23 @@ const getOneProduct = async (req, res) => {
     }
 
     const product = productResult[0];
+    
 
     const [images] = await db.query(
       "SELECT image_url, is_main FROM product_images WHERE product_id = ?",
       [product.id]
     );
+
+    const [reviews] = await db.query(
+  `SELECT r.id, r.rating, r.comment, r.created_at, u.name AS user_name,u.profile_pic AS profile_pic
+   FROM reviews r
+   JOIN users u ON r.user_id = u.id
+   WHERE r.product_id = ?`,
+  [product.id]
+);
+
+product.reviews = reviews;
+
 
     product.images = images;
 
@@ -270,10 +289,13 @@ const getProductsByCategory = async (req, res) => {
         p.id, p.name, p.slug, p.description, p.short_description, 
         p.price, p.discount_percentage, p.stock, p.is_active, p.created_at,
         c.name AS category_name,
-        p.category_id
+        p.category_id,
+        ROUND(AVG(r.rating), 1) AS avg_rating
       FROM products p
       JOIN categories c ON p.category_id = c.id
+      LEFT JOIN reviews r ON p.id = r.product_id
       WHERE c.id = ?
+      GROUP BY p.id
       ORDER BY p.created_at DESC
       LIMIT ? OFFSET ?
     `;

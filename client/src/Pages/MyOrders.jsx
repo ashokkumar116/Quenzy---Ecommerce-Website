@@ -18,6 +18,43 @@ const MyOrders = () => {
     const [orders, setOrders] = useState([]);
     const [showCancel, setShowCancel] = useState(false);
     const [cancelId, setCancelId] = useState(null);
+    const [showReviewModal, setShowReviewModal] = useState(false);
+    const [reviewProduct, setReviewProduct] = useState(null);
+    const [rating, setRating] = useState(5);
+    const [comment, setComment] = useState("");
+
+    const checkIfReviewed = async (orderId, productId) => {
+        try {
+            const res = await axios.get(`/reviews/check`, {
+                params: { orderId, productId },
+            });
+            return res.data.exists;
+        } catch (err) {
+            console.error("Error checking review", err);
+            return false;
+        }
+    };
+
+    const handleOpenReview = (product, order_id) => {
+        setReviewProduct({ ...product, order_id });
+        setShowReviewModal(true);
+    };
+
+    const handleSubmitReview = async () => {
+        try {
+            await axios.post("/reviews/add-review", {
+                productId: reviewProduct.product_id,
+                orderId: reviewProduct.order_id,
+                rating,
+                comment,
+            });
+            toast.success("Review submitted!");
+            setShowReviewModal(false);
+        } catch (err) {
+            console.error(err);
+            toast.error("Failed to submit review.");
+        }
+    };
 
     const fetchMyOrders = async () => {
         try {
@@ -151,6 +188,20 @@ const MyOrders = () => {
                                     <p className="text-md font-bold text-base-content/80">
                                         ₹{item.price}
                                     </p>
+                                    {order.status === "delivered" &&
+                                        !item.reviewed && (
+                                            <button
+                                                onClick={() =>
+                                                    handleOpenReview(
+                                                        item,
+                                                        order.order_id
+                                                    )
+                                                }
+                                                className="btn btn-sm btn-primary mt-2"
+                                            >
+                                                Add Review
+                                            </button>
+                                        )}
                                 </div>
                             ))}
                         </div>
@@ -215,6 +266,50 @@ const MyOrders = () => {
                     </div>
                 </div>
             )}
+
+            {showReviewModal && (
+                <div className="fixed inset-0 bg-black/70 flex justify-center items-center z-50">
+                    <div className="bg-base-100 p-6 rounded-xl w-[90%] max-w-md">
+                        <h2 className="text-xl font-semibold mb-4 text-primary">
+                            Review {reviewProduct?.product_name}
+                        </h2>
+
+                        <label className="block mb-2">Rating (1-5)</label>
+                        <input
+                            type="number"
+                            min="1"
+                            max="5"
+                            value={rating}
+                            onChange={(e) => setRating(e.target.value)}
+                            className="input input-bordered w-full mb-4"
+                        />
+
+                        <label className="block mb-2">Comment</label>
+                        <textarea
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                            className="textarea textarea-bordered w-full"
+                            rows="4"
+                        />
+
+                        <div className="flex justify-end mt-4 gap-3">
+                            <button
+                                onClick={() => setShowReviewModal(false)}
+                                className="btn btn-ghost"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleSubmitReview}
+                                className="btn btn-primary"
+                            >
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <ToastContainer
                 position="top-right"
                 autoClose={3000}

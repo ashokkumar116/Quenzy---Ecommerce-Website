@@ -15,6 +15,7 @@ const contactRoutes = require('./Routes/contactRoutes');
 const filtersRoutes = require('./Routes/filtersRoutes');
 const searchRoutes = require('./Routes/searchRoutes');
 const orderRoutes = require('./Routes/orderRoutes');
+const reviewRoutes = require('./Routes/reviewRoutes');
 
 //Express App Initialization
 const app = express();
@@ -41,7 +42,8 @@ app.use('/api/carts',cartRoutes);
 app.use('/api/contactus',contactRoutes);
 app.use('/api/filters',filtersRoutes);
 app.use('/api/searchbar',searchRoutes);
-app.use('/api/orders',orderRoutes)
+app.use('/api/orders',orderRoutes);
+app.use('/api/reviews',reviewRoutes)
 
 // Serve static files from the React app
 app.use('/uploads', express.static('Uploads'));
