@@ -4,7 +4,7 @@ import { AuthContext } from "../Contexts/AuthContext";
 import QuenzyLoader from "../Loader/QuenzyLoader";
 import { asset } from "../assets/asset";
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from "react-toastify";
 import axios from "../axios";
 import OrderSuccess from "../Components/OrderSuccess";
 import { useCart } from "../Contexts/CartContext";
@@ -15,7 +15,7 @@ const OrderSummary = () => {
     const [quantities, setQuantities] = useState({});
     const [address, setAddress] = useState("");
 
-    const {cart ,removeFromCart} = useCart();
+    const { cart, removeFromCart } = useCart();
 
     const [showSuccess, setShowSuccess] = useState(false);
 
@@ -81,7 +81,7 @@ const OrderSummary = () => {
     }, [quantities, orderProducts]);
 
     const handlePlaceOrder = async () => {
-        if(!address){
+        if (!address) {
             toast.error("Address Required");
             return;
         }
@@ -102,7 +102,9 @@ const OrderSummary = () => {
             const res = await axios.post("/orders/placeorder", payload);
             toast.success("Order Placed! ID: " + res.data.orderUUID);
             setShowSuccess(true);
-
+            orderProducts.forEach((p) => {
+                removeFromCart(p.id);
+            });
         } catch (err) {
             toast.error("Failed to place order");
         }
@@ -111,8 +113,12 @@ const OrderSummary = () => {
     return (
         <div className="py-20 bg-base-300">
             <div className="w-full py-2.5 font-medium text-sm text-primary-content text-center bg-primary fixed top-20 z-30">
-            <p>⚠️ Only Cash on Delivery is available for now. 💳 Online payment will be available very soon. Thank you for your support!</p>
-        </div>
+                <p>
+                    ⚠️ Only Cash on Delivery is available for now. 💳 Online
+                    payment will be available very soon. Thank you for your
+                    support!
+                </p>
+            </div>
             <div className="flex flex-col gap-5 px-10 pt-15">
                 <h1 className="text-2xl font-bold mb-3">Order Summary</h1>
                 <div className="formfororder bg-base-100 p-5 rounded-lg shadow-lg">
@@ -163,7 +169,6 @@ const OrderSummary = () => {
                                 className="textarea textarea-primary w-full mt-2 h-20"
                             />
                         </label>
-                        
                     </form>
                 </div>
                 <div className="grid gap-6 bg-base-100 p-5 rounded-lg shadow-lg">
@@ -265,21 +270,27 @@ const OrderSummary = () => {
                 </div>
             </div>
 
-
             <div className=" w-full bg-base-300 mt-5 px-10">
-               <div className=" p-5 bg-base-100 grid grid-cols-2 place-items-center rounded-lg shadow-lg">
-                 <button
-                    className="btn w-100 btn-outline"
-                    onClick={() => navigate("/")}
-                >
-                    Return to Shopping
-                </button>
-                <button className="btn btn-success w-100" onClick={handlePlaceOrder}>
-                    Place Order
-                </button>
-               </div>
+                <div className=" p-5 bg-base-100 grid grid-cols-2 place-items-center rounded-lg shadow-lg">
+                    <button
+                        className="btn w-100 btn-outline"
+                        onClick={() => navigate("/")}
+                    >
+                        Return to Shopping
+                    </button>
+                    <button
+                        className="btn btn-success w-100"
+                        onClick={handlePlaceOrder}
+                    >
+                        Place Order
+                    </button>
+                </div>
             </div>
-            {showSuccess && <div className="fixed top-0 flex justify-center items-center bg-[rgba(0,0,0,0.9)] w-full z-200"><OrderSuccess /></div>}
+            {showSuccess && (
+                <div className="fixed top-0 flex justify-center items-center bg-[rgba(0,0,0,0.9)] w-full z-200">
+                    <OrderSuccess />
+                </div>
+            )}
             <ToastContainer
                 position="top-right"
                 autoClose={3000}

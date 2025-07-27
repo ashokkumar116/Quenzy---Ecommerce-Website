@@ -23,6 +23,7 @@ import SearchResults from "./Pages/SearchResults";
 import OrderSummary from "./Pages/OrderSummary";
 import OrderSuccess from "./Components/OrderSuccess";
 import MyOrders from "./Pages/MyOrders";
+import ManageOrders from "./Pages/AdminPages/ManageOrders";
 function App() {
 
     const {user , loading} = useContext(AuthContext);
@@ -54,6 +55,7 @@ function App() {
                         <Route path="add-category" element={<AddCategories />} />
                         <Route path="add-brand" element={<AddBrands />} />
                         <Route path="add-seller" element={<AddSeller />} />
+                        <Route path="manage-orders" element={<ManageOrders />} />
                     </Route>
                 </Route>
                 <Route path="/contact" element={<ContactUs/>} /> 

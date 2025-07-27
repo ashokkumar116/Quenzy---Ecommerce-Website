@@ -7,6 +7,7 @@ import { MdOutlineCategory } from "react-icons/md";
 import { HiOutlineTag } from "react-icons/hi";
 import { MdOutlineAddBusiness } from "react-icons/md";
 import QuenzyLoader from '../../Loader/QuenzyLoader';
+import { RiShoppingBasket2Line } from "react-icons/ri";
 
 
 
@@ -85,6 +86,17 @@ function AdminLayout() {
           >
             <MdOutlineAddBusiness/>
             Manage Sellers
+          </NavLink>
+          <NavLink
+            to="/admin/manage-orders"
+            className={({ isActive }) =>
+              `px-4 py-2 rounded-md text-sm font-medium transition flex items-center gap-1 ${
+                isActive ? 'bg-primary text-white' : 'hover:bg-base-100'
+              }`
+            }
+          >
+            <RiShoppingBasket2Line/>
+            Manage Orders
           </NavLink>
         </nav>
       </aside>
