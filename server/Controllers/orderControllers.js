@@ -128,12 +128,43 @@ const cancelOrder = async(req,res)=>{
 
 }
 
-const updateOrderStatus = async(req,res)=>{
-    const {order_id , status} = req.body;
-    const sql = "UPDATE orders SET status = ? WHERE id = ?";
-    await db.query(sql,[status,order_id]);
-    res.status(200).json({message:"Order Status updated successfully!"});
-}
+const updateOrderStatus = async (req, res) => {
+    const { order_id, status } = req.body;
+
+    const connection = await db.getConnection();
+    try {
+        await connection.beginTransaction();
+
+        // Update order status
+        const sql = "UPDATE orders SET status = ? WHERE id = ?";
+        await connection.query(sql, [status, order_id]);
+
+        // If delivered, reduce stock for each item
+        if (status === "delivered") {
+            const [items] = await connection.query(
+                `SELECT product_id, quantity FROM order_items WHERE order_id = ?`,
+                [order_id]
+            );
+
+            for (const item of items) {
+                await connection.query(
+                    `UPDATE products SET stock = stock - ? WHERE id = ?`,
+                    [item.quantity, item.product_id]
+                );
+            }
+        }
+
+        await connection.commit();
+        res.status(200).json({ message: "Order status updated successfully!" });
+    } catch (err) {
+        await connection.rollback();
+        console.error("updateOrderStatus error:", err);
+        res.status(500).json({ message: "Failed to update order status" });
+    } finally {
+        connection.release();
+    }
+};
+
 
 const getAllOrders = async (req, res) => {
     try {
