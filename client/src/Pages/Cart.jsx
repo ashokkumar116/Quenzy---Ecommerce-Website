@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { useCart } from "../Contexts/CartContext";
 import { asset } from "../assets/asset";
 import { useNavigate } from "react-router-dom";
+import { useOrders } from "../Contexts/OrdersContext";
 
 const Cart = () => {
     const [showAddress, setShowAddress] = useState(false);
 
     const [cartItems, setCartItems] = useState([]);
+
+    const {addToOrdersFromCart} = useOrders();
 
     const navigate = useNavigate();
 
@@ -38,6 +41,11 @@ const Cart = () => {
         calculateTotal();
         console.log(cart);
     }, [cart]);
+
+    const handleOrder = ()=>{
+        addToOrdersFromCart(cart);
+        navigate('/ordersummary');
+    }
 
     return (
         <div className="py-35 bg-base-300">
@@ -228,7 +236,7 @@ const Cart = () => {
                     </p>
                 </div>
 
-                <button className="w-full py-3 mt-6 cursor-pointer bg-primary/80 text-base-content font-medium hover:bg-primary/70 transition">
+                <button onClick={()=>{handleOrder()}} className="w-full py-3 mt-6 cursor-pointer bg-primary/80 text-base-content font-medium hover:bg-primary/70 transition">
                     Place Order
                 </button>
             </div>
