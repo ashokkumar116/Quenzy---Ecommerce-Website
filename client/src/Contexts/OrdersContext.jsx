@@ -1,13 +1,20 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const OrdersContext = createContext();
 
 export const useOrders = ()=> useContext(OrdersContext);
 
 export const OrdersProvider = ({children})=>{
-    const [orderProducts,setOrderProducts] = useState([]);
+    const [orderProducts,setOrderProducts] = useState(()=>{
+        const storedOrders = localStorage.getItem("orderProducts");
+        return storedOrders ? JSON.parse(storedOrders) : []
+    });
+
+    useEffect(()=>{
+        localStorage.setItem("orderProducts",JSON.stringify(orderProducts));
+    },[orderProducts]);
     
-    const addToOrders = ({product})=>{
+    const addToOrders = (product)=>{
         setOrderProducts([product]);
     }
 
@@ -17,9 +24,8 @@ export const OrdersProvider = ({children})=>{
 
     const clearOrders = () => {
         setOrderProducts([]);
+        localStorage.removeItem("orderProducts");
     };
 
-
-    return <OrdersContext.Provider value={{addToOrders,orderProducts,clearOrders}}>{children}</OrdersContext.Provider>
-
+    return <OrdersContext.Provider value={{addToOrders,orderProducts,clearOrders,addToOrdersFromCart}}>{children}</OrdersContext.Provider>
 }

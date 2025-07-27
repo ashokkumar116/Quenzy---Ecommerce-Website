@@ -9,6 +9,7 @@ import QuenzyLoader from "../Loader/QuenzyLoader";
 import { FiHome } from "react-icons/fi";
 import { AiOutlineProduct } from "react-icons/ai";
 import { IoIosArrowForward } from "react-icons/io";
+import { useOrders } from "../Contexts/OrdersContext";
 
 const ViewProduct = () => {
 
@@ -17,6 +18,7 @@ const ViewProduct = () => {
     const [offerPrice,setOfferPrice] = useState(0);
 
     const { addToCart, cart } = useCart();
+    const {addToOrders} = useOrders();
 
 
     const navigate = useNavigate();
@@ -52,8 +54,9 @@ const ViewProduct = () => {
     if (!product) return <div className="p-10">?<QuenzyLoader/></div>;
 
 
-    const handleOrder = async()=>{
-        
+    const handleOrder = (product)=>{
+        addToOrders(product);
+        navigate('/ordersummary');
     }
 
 
