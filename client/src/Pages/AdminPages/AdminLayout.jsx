@@ -8,6 +8,7 @@ import { HiOutlineTag } from "react-icons/hi";
 import { MdOutlineAddBusiness } from "react-icons/md";
 import QuenzyLoader from '../../Loader/QuenzyLoader';
 import { RiShoppingBasket2Line } from "react-icons/ri";
+import { asset } from '../../assets/asset';
 
 
 
@@ -26,7 +27,7 @@ function AdminLayout() {
         {/* Profile */}
         <div className="flex flex-col items-center mb-10">
           <h1 className="text-2xl font-bold uppercase text-primary mb-4">Admin Panel</h1>
-          <img src="https://placehold.co/100x100" alt="Admin" className="rounded-full border-2 border-primary" />
+          <img src={`${asset.imageBaseUrl}${user.profile_pic}`} alt="Admin" className="rounded-full border-2 border-primary w-30 h-30" />
           <h2 className="mt-2 font-semibold text-lg">{user?.name}</h2>
         </div>
 

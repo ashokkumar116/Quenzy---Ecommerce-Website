@@ -91,10 +91,36 @@ const Profile = () => {
                             </label>
                         </>
                     ) : (
-                        <FaUserCircle
-                            size={200}
-                            className="text-primary cursor-pointer"
-                        />
+                        <>
+                        {profile_pic ? (
+                                <img
+                                    src={URL.createObjectURL(profile_pic)}
+                                    alt="User"
+                                    className="w-64 h-75 object-cover object-top cursor-pointer"
+                                />
+                            ) : (
+                                <div className="w-64 h-75 bg-base-300 cursor-pointer flex justify-center items-center">
+                                    <p className="text-base-content/30">No Profile Pic Added</p>
+                                </div>
+                            )}
+                            
+                        <input
+                                type="file"
+                                name="profile_pic"
+                                id="profile_pic_edit"
+                                className="hidden"
+                                onChange={(e) =>
+                                    setProfile_Pic(e.target.files[0])
+                                }
+                            />
+                        <label htmlFor="profile_pic_edit">
+                                <RiImageEditFill
+                                    size={35}
+                                    className="absolute bottom-43 right-7 rounded-full bg-base-100 p-1.5 cursor-pointer"
+                                />
+                        </label>
+                        </>
+                        
                     )}
                     <div className="flex flex-col items-center">
                         <p className="font-medium mt-3">{user.name}</p>
