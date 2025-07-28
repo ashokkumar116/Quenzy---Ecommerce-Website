@@ -267,7 +267,7 @@ const ViewProduct = () => {
                     {product?.reviews?.length > 0 && (
                         <div className="mt-10">
                             <p className="text-base font-medium">
-                                Customer Reviews
+                                Customer Reviews ({product.reviews.length})
                             </p>
                             <div className="mt-2 space-y-4">
                                 {product.reviews.map((review, index) => (
