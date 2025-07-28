@@ -415,7 +415,7 @@ const AddProducts = () => {
                                 <th>Brand</th>
                                 <th>Seller</th>
                                 <th>Status</th>
-                                <th colSpan={3} className="text-center">
+                                <th colSpan={2} className="text-center">
                                     Actions
                                 </th>
                             </tr>
@@ -458,11 +458,6 @@ const AddProducts = () => {
                                                     ? "Active"
                                                     : "Inactive"}
                                             </span>
-                                        </td>
-                                        <td>
-                                            <button className="btn btn-sm btn-primary mr-2">
-                                                View
-                                            </button>
                                         </td>
                                         <td>
                                             <button

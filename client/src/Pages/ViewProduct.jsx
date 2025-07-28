@@ -171,19 +171,26 @@ const ViewProduct = () => {
                             </div>
 
                             <div className="mt-4">
-                                {product.stock >5 ? (
+                                {!product.is_active ? (
+                                    <p className="text-error text-sm">
+                                        Not Available
+                                    </p>
+                                ) : product.stock > 5 ? (
                                     <p className="text-success text-sm">
                                         In Stock
                                     </p>
-                                ) : product.stock < 5 && product.stock>1 ? (
+                                ) : product.stock > 1 ? (
                                     <p className="text-warning text-sm">
                                         Only {product.stock} left
+                                    </p>
+                                ) : product.stock === 1 ? (
+                                    <p className="text-warning text-sm">
+                                        Only 1 left
                                     </p>
                                 ) : (
                                     <p className="text-error text-sm">
                                         Out of Stock
                                     </p>
-
                                 )}
                             </div>
 
@@ -207,7 +214,14 @@ const ViewProduct = () => {
                             </ul>
 
                             <div className="flex items-center mt-10 gap-4 text-base">
-                                {product.stock > 0 ? (
+                                {!product.is_active ? (
+                                    <button
+                                        disabled
+                                        className="w-full py-3.5 cursor-not-allowed font-medium bg-error text-error-content opacity-70"
+                                    >
+                                        Not Available
+                                    </button>
+                                ) : product.stock > 0 ? (
                                     isInCart ? (
                                         <button
                                             onClick={() => navigate("/cart")}
@@ -232,19 +246,19 @@ const ViewProduct = () => {
                                     </button>
                                 )}
 
-                                {product.stock > 0 ? (
-                                    <button
-                                        onClick={() => handleOrder(product)}
-                                        className="w-full py-3.5 cursor-pointer font-medium bg-primary text-primary-content hover:bg-primary/90 transition"
-                                    >
-                                        Buy now
-                                    </button>
-                                ) : (
+                                {!product.is_active || product.stock <= 0 ? (
                                     <button
                                         disabled
                                         className="w-full py-3.5 cursor-not-allowed font-medium bg-base-200 text-base-content/50"
                                     >
                                         Not Available
+                                    </button>
+                                ) : (
+                                    <button
+                                        onClick={() => handleOrder(product)}
+                                        className="w-full py-3.5 cursor-pointer font-medium bg-primary text-primary-content hover:bg-primary/90 transition"
+                                    >
+                                        Buy now
                                     </button>
                                 )}
                             </div>
