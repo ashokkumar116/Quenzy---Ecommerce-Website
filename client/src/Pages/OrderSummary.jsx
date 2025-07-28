@@ -188,6 +188,7 @@ const OrderSummary = () => {
                                     <h1>{product.name}</h1>
                                     <div className="font-normal text-primary">
                                         <div className="flex items-center justify-center gap-2 md:w-20 w-16 h-[34px] bg-base-100 border border-primary rounded select-none">
+                                        
                                             <button
                                                 onClick={() =>
                                                     setQuantities((prev) => ({
@@ -199,19 +200,35 @@ const OrderSummary = () => {
                                                         ),
                                                     }))
                                                 }
+                                                disabled={
+                                                    quantities[product.id] <= 1
+                                                }
+                                                className="disabled:opacity-50"
                                             >
                                                 -
                                             </button>
-                                            {quantities[product.id]}
+
+                                            {quantities[product.id] >
+                                            product.stock
+                                                ? product.stock
+                                                : quantities[product.id]}
+
                                             <button
                                                 onClick={() =>
                                                     setQuantities((prev) => ({
                                                         ...prev,
-                                                        [product.id]:
+                                                        [product.id]: Math.min(
+                                                            product.stock,
                                                             (prev[product.id] ||
-                                                                1) + 1,
+                                                                1) + 1
+                                                        ),
                                                     }))
                                                 }
+                                                disabled={
+                                                    quantities[product.id] >=
+                                                    product.stock
+                                                }
+                                                className="disabled:opacity-50"
                                             >
                                                 +
                                             </button>
