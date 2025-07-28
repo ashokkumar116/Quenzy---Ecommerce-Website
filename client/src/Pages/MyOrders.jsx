@@ -51,6 +51,9 @@ const MyOrders = () => {
             toast.success("Review submitted!");
             fetchMyOrders();
             setShowReviewModal(false);
+            setReviewProduct(null);
+            setRating(5);
+            setComment("");
         } catch (err) {
             console.error(err);
             toast.error("Failed to submit review.");

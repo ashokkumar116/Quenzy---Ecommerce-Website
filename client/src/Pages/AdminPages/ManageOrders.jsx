@@ -30,7 +30,7 @@ const ManageOrders = () => {
         status: newStatus,
       });
       toast.success("Order status updated");
-      fetchOrders(); // Refresh data
+      fetchOrders();
     } catch (err) {
       toast.error("Failed to update status");
     }
@@ -123,8 +123,6 @@ const ManageOrders = () => {
                 ))}
               </div>
             </div>
-
-            {/* Footer: Total */}
             <div className="mt-4 text-right font-bold text-lg">
               Total: ₹ {order.total_price}
             </div>

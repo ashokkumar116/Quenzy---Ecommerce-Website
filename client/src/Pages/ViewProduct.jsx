@@ -170,6 +170,23 @@ const ViewProduct = () => {
                                 </p>
                             </div>
 
+                            <div className="mt-4">
+                                {product.stock >5 ? (
+                                    <p className="text-success text-sm">
+                                        In Stock
+                                    </p>
+                                ) : product.stock < 5 && product.stock>1 ? (
+                                    <p className="text-warning text-sm">
+                                        Only {product.stock} left
+                                    </p>
+                                ) : (
+                                    <p className="text-error text-sm">
+                                        Out of Stock
+                                    </p>
+
+                                )}
+                            </div>
+
                             <div className="mt-6">
                                 <p className="text-base-content/50 line-through">
                                     MRP: ₹{product.price}
@@ -190,29 +207,46 @@ const ViewProduct = () => {
                             </ul>
 
                             <div className="flex items-center mt-10 gap-4 text-base">
-                                {isInCart ? (
+                                {product.stock > 0 ? (
+                                    isInCart ? (
+                                        <button
+                                            onClick={() => navigate("/cart")}
+                                            className="w-full py-3.5 cursor-pointer font-medium bg-base-300 text-base-content/80 hover:bg-base-200 transition"
+                                        >
+                                            Go to Cart
+                                        </button>
+                                    ) : (
+                                        <button
+                                            onClick={() => addToCart(product)}
+                                            className="w-full py-3.5 cursor-pointer font-medium bg-base-300 text-base-content/80 hover:bg-base-200 transition"
+                                        >
+                                            Add to Cart
+                                        </button>
+                                    )
+                                ) : (
                                     <button
-                                        onClick={() => navigate("/cart")}
-                                        className="w-full py-3.5 cursor-pointer font-medium bg-base-300 text-base-content/80 hover:bg-base-200 transition"
+                                        disabled
+                                        className="w-full py-3.5 cursor-not-allowed font-medium bg-error text-error-content opacity-70"
                                     >
-                                        Go to Cart
+                                        Out of Stock
+                                    </button>
+                                )}
+
+                                {product.stock > 0 ? (
+                                    <button
+                                        onClick={() => handleOrder(product)}
+                                        className="w-full py-3.5 cursor-pointer font-medium bg-primary text-primary-content hover:bg-primary/90 transition"
+                                    >
+                                        Buy now
                                     </button>
                                 ) : (
                                     <button
-                                        onClick={() => addToCart(product)}
-                                        className="w-full py-3.5 cursor-pointer font-medium bg-base-300 text-base-content/80 hover:bg-base-200 transition"
+                                        disabled
+                                        className="w-full py-3.5 cursor-not-allowed font-medium bg-base-200 text-base-content/50"
                                     >
-                                        Add to Cart
+                                        Not Available
                                     </button>
                                 )}
-                                <button
-                                    onClick={() => {
-                                        handleOrder(product);
-                                    }}
-                                    className="w-full py-3.5 cursor-pointer font-medium bg-primary text-primary-content hover:bg-primary/90 transition"
-                                >
-                                    Buy now
-                                </button>
                             </div>
                         </div>
                     </div>

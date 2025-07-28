@@ -39,6 +39,20 @@ const ProductCard = ({ product, isInCart ,offerPrice }) => {
                                 <p className="text-base-content font-medium text-lg truncate w-full">
                                     {product.name}
                                 </p>
+                                {product.stock >5 ? (
+                                    <p className="text-success text-xs">
+                                        In Stock
+                                    </p>
+                                ) : product.stock < 5 && product.stock>1 ? (
+                                    <p className="text-warning text-xs">
+                                        Only {product.stock} left
+                                    </p>
+                                ) : (
+                                    <p className="text-error text-xs">
+                                        Out of Stock
+                                    </p>
+
+                                )}
                                 <div className="flex items-center gap-0.5">
                                     {Array(5)
                                         .fill("")
@@ -86,7 +100,8 @@ const ProductCard = ({ product, isInCart ,offerPrice }) => {
                                         </span>
                                     </p>
                                     <div className="text-primary ">
-                                        {isInCart ? (
+                                        {product.stock > 0 ? (
+                                            isInCart ? (
                                             <button
                                                 onClick={() =>
                                                     navigate("/cart")
@@ -131,6 +146,14 @@ const ProductCard = ({ product, isInCart ,offerPrice }) => {
                                                     />
                                                 </svg>
                                                 Add
+                                            </button>
+                                        )
+                                        ) : (
+                                            <button
+                                                disabled
+                                                className="flex cursor-not-allowed items-center justify-center gap-1 border border-error md:w-[100px] w-[64px] h-[34px] rounded text-error font-medium"
+                                            >
+                                                Out of Stock
                                             </button>
                                         )}
                                     </div>

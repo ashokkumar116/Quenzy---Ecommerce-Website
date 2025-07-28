@@ -132,6 +132,20 @@ import { IoIosArrowForward } from 'react-icons/io';
                             <div className="text-base-content text-sm ">
                                 <p>{product.category_name}</p>
                                 <p className="text-base-content font-medium text-lg truncate w-full">{product.name}</p>
+                                {product.stock >5 ? (
+                                    <p className="text-success text-xs">
+                                        In Stock
+                                    </p>
+                                ) : product.stock < 5 && product.stock>1 ? (
+                                    <p className="text-warning text-xs">
+                                        Only {product.stock} left
+                                    </p>
+                                ) : (
+                                    <p className="text-error text-xs">
+                                        Out of Stock
+                                    </p>
+
+                                )}
                                 <div className="flex items-center gap-0.5">
                                     {Array(5).fill('').map((_, i) => (
                                         product.avg_rating > i ? (
@@ -151,22 +165,62 @@ import { IoIosArrowForward } from 'react-icons/io';
                                     ₹{offerPrice} <span className="text-base-content/40 md:text-sm text-xs line-through">₹{product.price}</span>
                                     </p>
                                     <div className="text-primary ">
-                                            {
-                                                isInCart ? 
-                                                <button onClick={()=>navigate('/cart')} className="flex cursor-pointer items-center justify-center gap-1 border border-secondary md:w-[100px] w-[64px] h-[34px] rounded text-secondary font-medium" >
-                                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M.583.583h2.333l1.564 7.81a1.17 1.17 0 0 0 1.166.94h5.67a1.17 1.17 0 0 0 1.167-.94l.933-4.893H3.5m2.333 8.75a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0m6.417 0a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0" className="stroke-secondary" stroke-linecap="round" stroke-linejoin="round" />
+                                        {product.stock > 0 ? (
+                                            isInCart ? (
+                                            <button
+                                                onClick={() =>
+                                                    navigate("/cart")
+                                                }
+                                                className="flex cursor-pointer items-center justify-center gap-1 border border-secondary md:w-[100px] w-[64px] h-[34px] rounded text-secondary font-medium"
+                                            >
+                                                <svg
+                                                    width="14"
+                                                    height="14"
+                                                    viewBox="0 0 14 14"
+                                                    fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path
+                                                        d="M.583.583h2.333l1.564 7.81a1.17 1.17 0 0 0 1.166.94h5.67a1.17 1.17 0 0 0 1.167-.94l.933-4.893H3.5m2.333 8.75a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0m6.417 0a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0"
+                                                        className="stroke-secondary"
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                    />
                                                 </svg>
                                                 Go to Cart
                                             </button>
-                                            :
-                                            <button onClick={()=>addToCart(product)} className="flex cursor-pointer items-center justify-center gap-1 border border-primary md:w-[80px] w-[64px] h-[34px] rounded text-primary font-medium" >
-                                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M.583.583h2.333l1.564 7.81a1.17 1.17 0 0 0 1.166.94h5.67a1.17 1.17 0 0 0 1.167-.94l.933-4.893H3.5m2.333 8.75a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0m6.417 0a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0" className="stroke-primary" stroke-linecap="round" stroke-linejoin="round" />
+                                        ) : (
+                                            <button
+                                                onClick={() =>
+                                                    addToCart(product)
+                                                }
+                                                className="flex cursor-pointer items-center justify-center gap-1 border border-primary md:w-[80px] w-[64px] h-[34px] rounded text-primary font-medium"
+                                            >
+                                                <svg
+                                                    width="14"
+                                                    height="14"
+                                                    viewBox="0 0 14 14"
+                                                    fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path
+                                                        d="M.583.583h2.333l1.564 7.81a1.17 1.17 0 0 0 1.166.94h5.67a1.17 1.17 0 0 0 1.167-.94l.933-4.893H3.5m2.333 8.75a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0m6.417 0a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0"
+                                                        className="stroke-primary"
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                    />
                                                 </svg>
                                                 Add
                                             </button>
-                                            }
+                                        )
+                                        ) : (
+                                            <button
+                                                disabled
+                                                className="flex cursor-not-allowed items-center justify-center gap-1 border border-error md:w-[100px] w-[64px] h-[34px] rounded text-error font-medium"
+                                            >
+                                                Out of Stock
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
                             </div>
