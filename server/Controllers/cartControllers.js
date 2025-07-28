@@ -9,13 +9,15 @@ const getCart = async (req, res) => {
         cart_items.quantity,
         products.name,
         products.price,
+        products.stock,
+        products.is_active,
         products.discount_percentage,
         product_images.image_url
       FROM cart_items
       JOIN products ON cart_items.product_id = products.id
       LEFT JOIN product_images ON products.id = product_images.product_id
       WHERE cart_items.user_id = ?
-      GROUP BY cart_items.product_id      
+      GROUP BY cart_items.product_id
 `, [userId]);
 
         res.status(200).json({
