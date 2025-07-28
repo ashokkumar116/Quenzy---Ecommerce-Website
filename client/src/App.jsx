@@ -24,6 +24,7 @@ import OrderSummary from "./Pages/OrderSummary";
 import OrderSuccess from "./Components/OrderSuccess";
 import MyOrders from "./Pages/MyOrders";
 import ManageOrders from "./Pages/AdminPages/ManageOrders";
+import Faq from "./Pages/Faq";
 function App() {
 
     const {user , loading} = useContext(AuthContext);
@@ -58,6 +59,7 @@ function App() {
                         <Route path="manage-orders" element={<ManageOrders />} />
                     </Route>
                 </Route>
+                <Route path="/faq" element={<Faq/>} />
                 <Route path="/contact" element={<ContactUs/>} /> 
                 <Route path="*" element={<FourNotFour/>} /> 
             </Routes>

@@ -11,7 +11,7 @@ const Footer = () => {
             { name: "Best Sellers", href: "/best-sellers" },
             { name: "Offers & Deals", href: "/offers" },
             { name: "Contact Us", href: "/contact" },
-            { name: "FAQs", href: "/faqs" }
+            { name: "FAQs", href: "/faq" }
           ]
         },
         {
