@@ -30,12 +30,15 @@ const searchByQuery = async (req, res) => {
           s.name AS seller_name,
           p.category_id,
           p.brand_id,
-          p.seller_id
+          p.seller_id,
+          ROUND(AVG(r.rating), 1) AS avg_rating
         FROM products p
         LEFT JOIN categories c ON p.category_id = c.id
         LEFT JOIN brands b ON p.brand_id = b.id
         LEFT JOIN sellers s ON p.seller_id = s.id
+        LEFT JOIN reviews r ON p.id = r.product_id
         WHERE p.name LIKE ? OR p.description LIKE ?
+        GROUP BY p.id
         ORDER BY p.created_at DESC
         LIMIT ? OFFSET ?
       `;
