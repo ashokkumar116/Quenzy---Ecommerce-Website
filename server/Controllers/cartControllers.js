@@ -49,7 +49,7 @@ const addToCart = async (req, res) => {
   
       // Merge incoming local cart
       for (let item of incomingCart) {
-        mergedMap.set(item.id, item.quantity); // ✅ overwrite with latest
+        mergedMap.set(item.id, item.quantity); // overwrite with latest
       }
       
   

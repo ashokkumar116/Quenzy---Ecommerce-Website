@@ -6,7 +6,7 @@ const addReview = async (req, res) => {
     const userId = req.user.id;
 
     try {
-        // Step 1: Verify if the order is delivered and belongs to the user
+        // Verify if the order is delivered and belongs to the user
         const [orderCheck] = await db.execute(`
             SELECT o.status
             FROM orders o
@@ -18,7 +18,7 @@ const addReview = async (req, res) => {
             return res.status(400).json({ message: 'You can only review delivered products.' });
         }
 
-        // Step 2: Check if user already reviewed this product in this order
+        // Check if user already reviewed this product in this order
         const [existing] = await db.execute(`
             SELECT * FROM reviews
             WHERE user_id = ? AND product_id = ? AND order_id = ?
@@ -28,7 +28,7 @@ const addReview = async (req, res) => {
             return res.status(400).json({ message: 'You have already reviewed this product.' });
         }
 
-        // Step 3: Insert review
+        // Insert review
         await db.execute(`
             INSERT INTO reviews (user_id, product_id, order_id, rating, comment)
             VALUES (?, ?, ?, ?, ?)

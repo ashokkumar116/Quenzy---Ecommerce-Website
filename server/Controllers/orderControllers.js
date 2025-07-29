@@ -14,7 +14,7 @@ const placeOrder = async (req, res) => {
         // Start transaction
         await connection.beginTransaction();
 
-        // 1. Insert into orders table
+        // Insert into orders table
         const [orderResult] = await connection.query(
             `INSERT INTO orders (order_uuid, user_id, total_price, payment_method, status, shipping_address)
        VALUES (?, ?, ?, ?, ?, ?)`,
@@ -23,7 +23,7 @@ const placeOrder = async (req, res) => {
 
         const orderId = orderResult.insertId;
 
-        // 2. Insert into order_items table for each product
+        // Insert into order_items table for each product
         for (const item of items) {
             await connection.query(
                 `INSERT INTO order_items (order_id, product_id, quantity, price)
@@ -85,7 +85,7 @@ const getMyOrders = async (req, res) => {
             WHERE o.user_id = ?
             ORDER BY o.created_at DESC;
             `,
-            [userId, userId] // Note: userId used twice for query placeholders
+            [userId, userId] 
         );
 
         // Group by order
