@@ -11,6 +11,11 @@ import { useCart } from "../Contexts/CartContext";
 import { asset } from "../assets/asset";
 import { FaUserCircle } from "react-icons/fa";
 import { AiOutlineProduct } from "react-icons/ai";
+import { FaRegUser } from "react-icons/fa";
+import { FiShoppingBag } from "react-icons/fi";
+import { FaRegHeart } from "react-icons/fa";
+import { BiLogOut } from "react-icons/bi";
+
 
 const Navbar = () => {
     const { user, logout } = useContext(AuthContext);
@@ -108,40 +113,40 @@ const Navbar = () => {
                             <div className="fixed bg-base-100 top-23 right-5 transition-all duration-300 ease-in-out w-50 rounded-lg animate-dropdown">
                                 <ul className="shadow-lg rounded-md p-4 flex flex-col gap-2 justify-center items-center">
                                     <li
-                                        className="py-2 px-10 rounded-md hover:bg-primary/60 cursor-pointer transition-all duration-120 "
+                                        className="py-2 px-10 text-center flex justify-center items-center rounded-md hover:bg-primary hover:text-primary-content cursor-pointer transition-all duration-120 w-full "
                                         onClick={() => {
                                             navigate("/profile");
                                             setShowDropdown(false);
                                         }}
                                     >
-                                        Profile
+                                        <FaRegUser/> &nbsp; Profile
                                     </li>
                                     <li
-                                        className="py-2 px-10 rounded-md hover:bg-primary/60 cursor-pointer transition-all duration-120 "
+                                        className="py-2 px-10 text-center flex justify-center items-center rounded-md hover:bg-primary hover:text-primary-content cursor-pointer transition-all duration-120 w-full "
                                         onClick={() => {
                                             navigate("/my-orders");
                                             setShowDropdown(false);
                                         }}
                                     >
-                                        Orders
+                                        <FiShoppingBag/> &nbsp;Orders
                                     </li>
                                     <li
-                                        className="py-2 px-10 rounded-md hover:bg-primary/60 cursor-pointer transition-all duration-120 "
+                                        className="py-2 px-10 text-center flex justify-center items-center rounded-md hover:bg-primary hover:text-primary-content cursor-pointer transition-all duration-120 w-full "
                                         onClick={() => {
                                             navigate("/wishlist");
                                             setShowDropdown(false);
                                         }}
                                     >
-                                        Wishlist
+                                       <FaRegHeart/> &nbsp;Wishlist
                                     </li>
                                     <li
-                                        className="py-2 px-10 rounded-md btn btn-error cursor-pointer transition-all duration-120 "
+                                        className="py-2 px-10 rounded-md btn btn-error cursor-pointer transition-all duration-120 w-full "
                                         onClick={() => {
                                             logout();
                                             setShowDropdown(false);
                                         }}
                                     >
-                                        Logout
+                                        <BiLogOut/> Logout
                                     </li>
                                 </ul>
                             </div>
