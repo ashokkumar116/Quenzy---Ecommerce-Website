@@ -16,6 +16,15 @@ const Register = () => {
 
     const handleSubmit = async(e) => {
         e.preventDefault();
+        if(values.password.length < 8){
+            setMessage("Password must be at least 8 characters long");
+            return;
+        }
+        const emailregex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if(!emailregex.test(values.email)){
+            setMessage("Please enter a valid email address");
+            return;
+        }
         try {
             const response = await axios.post('/auth/register',values);
             if(response.status === 201){
@@ -38,7 +47,7 @@ const Register = () => {
                 <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center gap-6">
                     <input className="input-prime" placeholder="Name" name="name" onChange={handleChange} />
                     <input className="input-prime" placeholder="Email" name="email" onChange={handleChange} />
-                    <input className="input-prime " placeholder="Mobile Number (Optional)" name="contact" onChange={handleChange} />
+                    <input className="input-prime " placeholder="Mobile Number (Optional)" name="contact" type="number" onChange={handleChange} />
                     <input className="input-prime " placeholder="Password" name="password" type="password" onChange={handleChange} />
                     <button type="submit" className="btn btn-primary">Register</button>
                     <p className="text-primary">Already have an account? <Link to={'/login'} className="underline font-bold">Sign In</Link></p>
