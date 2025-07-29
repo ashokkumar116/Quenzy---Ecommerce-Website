@@ -213,7 +213,7 @@ const MyOrders = () => {
                                 </div>
                             ))}
                         </div>
-                        {order.status !== "delivered" &&
+                        {order.status !== "delivered" && order.status !== "shipped" &&
                             order.status !== "cancelled" && (
                                 <button
                                     className="btn btn-error"
