@@ -33,11 +33,9 @@ export const AuthProvider = ({children}) =>{
             if(response.status === 200){
                 fetchUser();
                 return true;
-
             }
             return false;
         } catch (error) {
-
             setMessage(error.response.data.message);
             console.log(error);
             setUser(null);
@@ -46,7 +44,6 @@ export const AuthProvider = ({children}) =>{
         }
         finally{
             setLoading(false);
-
         }
     }
 
