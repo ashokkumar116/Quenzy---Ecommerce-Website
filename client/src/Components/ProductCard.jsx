@@ -95,65 +95,64 @@ const ProductCard = ({ product, isInCart, offerPrice }) => {
                     </p>
                     <div className="text-primary ">
                         {!product.is_active ? (
-    <button
-        disabled
-        className="flex cursor-not-allowed items-center justify-center gap-1 border border-error md:w-[100px] w-[64px] h-[34px] rounded text-error font-medium"
-    >
-        Not Available
-    </button>
-) : product.stock > 0 ? (
-    isInCart ? (
-        <button
-            onClick={() => navigate("/cart")}
-            className="flex cursor-pointer items-center justify-center gap-1 border border-secondary md:w-[100px] w-[64px] h-[34px] rounded text-secondary font-medium"
-        >
-            <svg
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path
-                    d="M.583.583h2.333l1.564 7.81a1.17 1.17 0 0 0 1.166.94h5.67a1.17 1.17 0 0 0 1.167-.94l.933-4.893H3.5m2.333 8.75a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0m6.417 0a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0"
-                    className="stroke-secondary"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                />
-            </svg>
-            Go to Cart
-        </button>
-    ) : (
-        <button
-            onClick={() => addToCart(product)}
-            className="flex cursor-pointer items-center justify-center gap-1 border border-primary md:w-[80px] w-[64px] h-[34px] rounded text-primary font-medium"
-        >
-            <svg
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path
-                    d="M.583.583h2.333l1.564 7.81a1.17 1.17 0 0 0 1.166.94h5.67a1.17 1.17 0 0 0 1.167-.94l.933-4.893H3.5m2.333 8.75a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0m6.417 0a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0"
-                    className="stroke-primary"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                />
-            </svg>
-            Add
-        </button>
-    )
-) : (
-    <button
-        disabled
-        className="flex cursor-not-allowed items-center justify-center gap-1 border border-error md:w-[100px] w-[64px] h-[34px] rounded text-error font-medium"
-    >
-        Out of Stock
-    </button>
-)}
-
+                            <button
+                                disabled
+                                className="flex cursor-not-allowed items-center justify-center gap-1 border border-error md:w-[100px] w-[64px] h-[34px] rounded text-error font-medium max-md:w-30"
+                            >
+                                Not Available
+                            </button>
+                        ) : product.stock > 0 ? (
+                            isInCart ? (
+                                <button
+                                    onClick={() => navigate("/cart")}
+                                    className="flex cursor-pointer items-center justify-center gap-1 border border-secondary md:w-[100px] w-[64px] h-[34px] rounded text-secondary font-medium max-md:w-30"
+                                >
+                                    <svg
+                                        width="14"
+                                        height="14"
+                                        viewBox="0 0 14 14"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M.583.583h2.333l1.564 7.81a1.17 1.17 0 0 0 1.166.94h5.67a1.17 1.17 0 0 0 1.167-.94l.933-4.893H3.5m2.333 8.75a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0m6.417 0a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0"
+                                            className="stroke-secondary"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        />
+                                    </svg>
+                                    Go to Cart
+                                </button>
+                            ) : (
+                                <button
+                                    onClick={() => addToCart(product)}
+                                    className="flex cursor-pointer items-center justify-center gap-1 border border-primary md:w-[80px] w-[64px] h-[34px] rounded text-primary font-medium max-md:w-30"
+                                >
+                                    <svg
+                                        width="14"
+                                        height="14"
+                                        viewBox="0 0 14 14"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M.583.583h2.333l1.564 7.81a1.17 1.17 0 0 0 1.166.94h5.67a1.17 1.17 0 0 0 1.167-.94l.933-4.893H3.5m2.333 8.75a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0m6.417 0a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0"
+                                            className="stroke-primary"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        />
+                                    </svg>
+                                    Add
+                                </button>
+                            )
+                        ) : (
+                            <button
+                                disabled
+                                className="flex cursor-not-allowed items-center justify-center gap-1 border border-error md:w-[100px] w-[64px] h-[34px] rounded text-error font-medium"
+                            >
+                                Out of Stock
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
