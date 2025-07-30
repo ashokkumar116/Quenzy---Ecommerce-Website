@@ -113,7 +113,7 @@ const Home = () => {
                     }
                 >
 
-                    <div className="grid md:grid-cols-2 place-items-center lg:grid-cols-3 xl:grid-cols-4 gap-5 px-20">
+                    <div className="grid md:grid-cols-2 place-items-center lg:grid-cols-3 xl:grid-cols-4 gap-5 lg:px-20">
                     
                       {products.length>0 && products.map((product)=>{
                         const isInCart = cart.find(
