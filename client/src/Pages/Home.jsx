@@ -94,9 +94,9 @@ const Home = () => {
             <CategoriesListing />
             <div className="carousal mt-5">
                 <Slider {...settings}>
-                    <img src={img1} alt="Slide 1" />
-                    <img src={img2} alt="Slide 2" />
-                    <img src={img3} alt="Slide 3" />
+                    <img src={img1} alt="Slide 1" className="max-md:h-40 object-cover" />
+                    <img src={img2} alt="Slide 2" className="max-md:h-40 object-cover" />
+                    <img src={img3} alt="Slide 3" className="max-md:h-40 object-cover" />
                 </Slider>
             </div>
 
