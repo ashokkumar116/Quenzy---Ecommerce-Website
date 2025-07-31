@@ -6,6 +6,10 @@ import { FaUserCircle } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "../axios";
 import { RiImageEditFill } from "react-icons/ri";
+import { FaRegEdit } from "react-icons/fa";
+import { FaRegSave } from "react-icons/fa";
+import { MdCancelPresentation } from "react-icons/md";
+
 
 const Profile = () => {
     const { user, loading, fetchUser } = useContext(AuthContext);
@@ -144,8 +148,8 @@ const Profile = () => {
 
                     {profile_pic && (
                         <div className="flex justify-center items-center gap-4 mt-5">
-                            <button className="btn btn-success" onClick={handleImageEdit}>Save</button>
-                            <button className="btn btn-error" onClick={()=>setProfile_Pic(null)} >Cancel</button>
+                            <button className="btn btn-success" onClick={handleImageEdit}><FaRegSave/> Save</button>
+                            <button className="btn btn-error" onClick={()=>setProfile_Pic(null)} ><MdCancelPresentation/> Cancel</button>
                         </div>
                     )}
                 </div>
@@ -182,7 +186,7 @@ const Profile = () => {
                         type="submit"
                         onClick={() => setDisabledField(false)}
                     >
-                        Edit
+                        <FaRegEdit/> Edit
                     </button>
                 ) : (
                     <>
@@ -194,7 +198,7 @@ const Profile = () => {
                                 setDisabledField(true);
                             }}
                         >
-                            Save
+                            <FaRegSave/> Save
                         </button>
                         <button
                             className="btn btn-error"
@@ -202,7 +206,7 @@ const Profile = () => {
                                 setDisabledField(true);
                             }}
                         >
-                            Cancel
+                            <MdCancelPresentation/> Cancel
                         </button>
                     </>
                 )}
