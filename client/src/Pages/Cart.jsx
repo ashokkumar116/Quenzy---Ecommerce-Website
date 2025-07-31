@@ -3,6 +3,8 @@ import { useCart } from "../Contexts/CartContext";
 import { asset } from "../assets/asset";
 import { useNavigate } from "react-router-dom";
 import { useOrders } from "../Contexts/OrdersContext";
+import { GrClear } from "react-icons/gr";
+
 
 const Cart = () => {
     const [showAddress, setShowAddress] = useState(false);
@@ -203,7 +205,7 @@ const Cart = () => {
                                     className="group cursor-pointer flex items-center mt-8 gap-2 text-error font-medium"
                                     onClick={() => clearCart()}
                                 >
-                                    Clear Cart
+                                    <GrClear/> Clear
                                 </button>
                             </div>
                         </>
@@ -240,6 +242,7 @@ const Cart = () => {
                 </div>
 
                 <div className="max-w-[360px] w-full bg-base-300 p-5 max-md:mt-16 border border-primary/50 flex flex-col justify-end">
+                <p className="text-base-content/60 text-justify mb-4">You're one step away from getting these items delivered to your doorstep. Double-check your cart and enjoy a smooth and secure checkout experience. We're excited to deliver happiness your way!</p>
                     <h2 className="text-xl md:text-xl font-medium">
                         Order Summary
                     </h2>
