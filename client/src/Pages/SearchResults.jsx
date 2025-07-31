@@ -40,7 +40,7 @@ const SearchResults = () => {
                 <MiniQuenzyLoader/>
             ) : products.length === 0 ? (
                 <p className="bg-base-100 p-5 rounded-lg shadow-lg">
-                    No products found.
+                    😕 No products found. Try searching with a different keyword or check back later.
                 </p>
             ) : (
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-base-100 p-5 rounded-lg shadow-lg">
