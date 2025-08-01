@@ -39,11 +39,9 @@ const Footer = () => {
     return (
         <div className="px-6 md:px-16 lg:px-24 xl:px-32 mt-10">
             <div className="flex flex-col md:flex-row items-start justify-between gap-10 py-10 border-b border-primary/50 text-base-content/50">
-                <div>
-                    <img className="w-34 md:w-70" src={logo} />
-                    <p className="max-w-[410px] mt-6">Discover quality products at unbeatable prices. We’re on a mission to make online shopping easy, reliable, and joyful for everyone across India.
-
-</p>
+                <div className='flex flex-col justify-center items-center'>
+                    <img className="w-44 md:w-70" src={logo} />
+                    <p className="max-w-[410px] mt-6">Discover quality products at unbeatable prices. We’re on a mission to make online shopping easy, reliable, and joyful for everyone across India.</p>
                 </div>
                 <div className="flex flex-wrap justify-between w-full md:w-[45%] gap-5">
                     {linkSections.map((section, index) => (
