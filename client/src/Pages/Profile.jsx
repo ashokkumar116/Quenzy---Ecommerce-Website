@@ -60,7 +60,7 @@ const Profile = () => {
     }
 
     return (
-        <div className="py-25 flex bg-base-300 min-h-screen px-10 gap-10">
+        <div className="py-25 flex bg-base-300 min-h-screen px-10 gap-10 max-md:flex-col">
             <div className="flex flex-wrap items-center justify-center gap-4">
                 <div className="bg-base-100 rounded-2xl px-10 pt-10 pb-4 overflow-hidden border border-base-300 h-131 relative">
                     {user.profile_pic ? (
@@ -154,8 +154,8 @@ const Profile = () => {
                     )}
                 </div>
             </div>
-            <div className="flex-1 bg-base-100 p-5 rounded-lg border border-base-300/80">
-                <form className="grid grid-cols-2 gap-5 mb-5">
+            <div className="flex-1 bg-base-100 p-5 rounded-lg border border-base-300/80 mt-10 lg:h-150">
+                <form className="grid lg:grid-cols-2 gap-5 mb-5">
                     <input
                         type="text"
                         className="input input-primary"
