@@ -14,6 +14,7 @@
 import { FiHome } from 'react-icons/fi';
 import { AiOutlineProduct } from 'react-icons/ai';
 import { IoIosArrowForward } from 'react-icons/io';
+import { IoCheckmarkCircleOutline } from 'react-icons/io5';
 
     const ViewCategory = () => {
 
@@ -133,8 +134,8 @@ import { IoIosArrowForward } from 'react-icons/io';
                                 <p>{product.category_name}</p>
                                 <p className="text-base-content font-medium text-lg truncate w-full">{product.name}</p>
                                 {product.stock >5 ? (
-                                    <p className="text-success text-xs">
-                                        In Stock
+                                    <p className="text-success text-xs flex items-center">
+                                        <IoCheckmarkCircleOutline/> In Stock
                                     </p>
                                 ) : product.stock < 5 && product.stock>1 ? (
                                     <p className="text-warning text-xs">

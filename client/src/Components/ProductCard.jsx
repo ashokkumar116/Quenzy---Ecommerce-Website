@@ -4,6 +4,8 @@ import { AuthContext } from "../Contexts/AuthContext";
 import { useCart } from "../Contexts/CartContext";
 import { useNavigate } from "react-router-dom";
 import QuenzyLoader from "../Loader/QuenzyLoader";
+import { IoCheckmarkCircleOutline } from "react-icons/io5";
+
 
 const ProductCard = ({ product, isInCart, offerPrice }) => {
     const { user, loading } = useContext(AuthContext);
@@ -39,7 +41,7 @@ const ProductCard = ({ product, isInCart, offerPrice }) => {
                 {!product.is_active ? (
                     <p className="text-error text-sm">Not Available</p>
                 ) : product.stock > 5 ? (
-                    <p className="text-success text-sm">In Stock</p>
+                    <p className="text-success text-sm flex items-center"><IoCheckmarkCircleOutline/>In Stock</p>
                 ) : product.stock > 1 ? (
                     <p className="text-warning text-sm">
                         Only {product.stock} left

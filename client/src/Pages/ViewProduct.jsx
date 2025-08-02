@@ -11,6 +11,7 @@ import { AiOutlineProduct } from "react-icons/ai";
 import { IoIosArrowForward } from "react-icons/io";
 import { useOrders } from "../Contexts/OrdersContext";
 import { FaUserCircle } from "react-icons/fa";
+import { IoCheckmarkCircleOutline } from "react-icons/io5";
 
 const ViewProduct = () => {
     const [product, setProduct] = useState([]);
@@ -176,8 +177,8 @@ const ViewProduct = () => {
                                         Not Available
                                     </p>
                                 ) : product.stock > 5 ? (
-                                    <p className="text-success text-sm">
-                                        In Stock
+                                    <p className="text-success text-sm flex items-center">
+                                        <IoCheckmarkCircleOutline/> In Stock
                                     </p>
                                 ) : product.stock > 1 ? (
                                     <p className="text-warning text-sm">
