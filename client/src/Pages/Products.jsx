@@ -7,6 +7,10 @@ import MiniQuenzyLoader from "../Loader/MiniQuenzyLoader";
 import { useCart } from "../Contexts/CartContext";
 import ProductCard from "../Components/ProductCard";
 import { ToastContainer } from "react-toastify";
+import { BiCategory } from "react-icons/bi";
+import { HiOutlineTag } from "react-icons/hi";
+import { HiOutlineCurrencyRupee } from "react-icons/hi";
+
 
 const Products = () => {
     const [products, setProducts] = useState([]);
@@ -89,8 +93,8 @@ const Products = () => {
                     <div className="flex flex-col gap-5">
                         {/* Categories */}
                         <div className="categories-listing">
-                            <h2 className="text-2xl font-semibold mb-3">
-                                Categories
+                            <h2 className="text-2xl font-semibold mb-3 flex items-center">
+                                <BiCategory/> Categories
                             </h2>
                             {categories.map((category) => (
                                 <label
@@ -121,8 +125,8 @@ const Products = () => {
 
                         {/* Brands */}
                         <div className="brands-listing">
-                            <h2 className="text-2xl font-semibold mb-3">
-                                Brands
+                            <h2 className="text-2xl font-semibold mb-3 flex items-center">
+                                <HiOutlineTag />Brands
                             </h2>
                             {brands.map((brand) => (
                                 <label
@@ -153,8 +157,8 @@ const Products = () => {
 
                         {/* Price Slider */}
                         <div className="price-range">
-                            <h2 className="text-2xl font-semibold mb-2">
-                                Price Range
+                            <h2 className="text-2xl font-semibold mb-2 flex items-center">
+                                <HiOutlineCurrencyRupee/> Price Range
                             </h2>
                             <p className="mb-2">
                                 ₹{selectedPriceRange[0]} - ₹
