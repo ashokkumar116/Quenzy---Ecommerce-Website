@@ -9,6 +9,7 @@ import { MdOutlineAddBusiness } from "react-icons/md";
 import QuenzyLoader from '../../Loader/QuenzyLoader';
 import { RiShoppingBasket2Line } from "react-icons/ri";
 import { asset } from '../../assets/asset';
+import { GrUserAdmin } from "react-icons/gr";
 
 
 
@@ -26,7 +27,7 @@ function AdminLayout() {
       <aside className="w-64 bg-base-100 shadow-lg flex flex-col items-center pt-30 py-8 px-4">
         {/* Profile */}
         <div className="flex flex-col items-center mb-10">
-          <h1 className="text-2xl font-bold uppercase text-primary mb-4">Admin Panel</h1>
+          <h1 className="text-2xl font-bold uppercase text-primary mb-4 flex items-center"><GrUserAdmin/> &nbsp; Admin Panel</h1>
           <img src={`${asset.imageBaseUrl}${user.profile_pic}`} alt="Admin" className="rounded-full border-2 border-primary w-30 h-30" />
           <h2 className="mt-2 font-semibold text-lg">{user?.name}</h2>
         </div>
