@@ -12,6 +12,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { useOrders } from "../Contexts/OrdersContext";
 import { FaUserCircle } from "react-icons/fa";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
+import { IoMdInformationCircleOutline } from "react-icons/io";
 
 const ViewProduct = () => {
     const [product, setProduct] = useState([]);
@@ -63,9 +64,9 @@ const ViewProduct = () => {
 
     return (
         product && (
-            <div className="bg-base-300 px-10 py-30">
+            <div className="bg-base-300 px-2 md:px-10 py-30">
                 <div className="w-full bg-base-100 p-5 shadow-lg rounded-lg">
-                    <p className="flex items-center gap-1 ">
+                    <p className="flex items-center gap-1 max-md:text-sm">
                         <span
                             onClick={() => navigate("/")}
                             className="cursor-pointer flex justify-center items-center gap-1"
@@ -93,15 +94,15 @@ const ViewProduct = () => {
                             {product.category_name}
                         </span>{" "}
                         <IoIosArrowForward />
-                        <span className="text-primary cursor-pointer">
+                        <span className="text-primary cursor-pointer max-md:text-xs">
                             {" "}
                             {product.name}
                         </span>
                     </p>
 
                     <div className="flex flex-col md:flex-row gap-16 mt-4">
-                        <div className="flex gap-3">
-                            <div className="flex flex-col gap-3">
+                        <div className="flex gap-3 max-lg:flex-col max-lg:flex-col-reverse items-center">
+                            <div className="flex flex-col gap-3 max-lg:flex-row justify-center">
                                 {product.images?.map((image, index) => (
                                     <div
                                         key={index}
@@ -207,8 +208,8 @@ const ViewProduct = () => {
                                 </span>
                             </div>
 
-                            <p className="text-base font-medium mt-6">
-                                About Product
+                            <p className="text-base font-medium mt-6 flex items-center">
+                                <IoMdInformationCircleOutline/> About Product
                             </p>
                             <ul className="list-disc ml-4 text-base-content/70">
                                 <p>{product.description}</p>
