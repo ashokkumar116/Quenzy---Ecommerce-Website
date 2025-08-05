@@ -94,7 +94,7 @@ import { IoCheckmarkCircleOutline } from 'react-icons/io5';
                 <CategoriesListing />
                 <div className='bg-base-100 m-6 rounded-lg shadow-lg'>
                 <div className='px-7 py-7'>
-                <p className='flex items-center gap-1'>
+                <p className='flex items-center gap-1 max-md:text-sm'>
                 <span onClick={()=>navigate('/')} className="cursor-pointer flex justify-center items-center gap-1"><FiHome/><span>Home</span></span> <IoIosArrowForward/>
                 <span className="cursor-pointer flex justify-center items-center gap-1" onClick={()=>navigate('/products')} ><AiOutlineProduct/> <span>Products</span></span> <IoIosArrowForward/>
                     <span className="text-primary cursor-pointer capitalize"> {products[0]?.category_name || slug }</span>
@@ -121,7 +121,7 @@ import { IoCheckmarkCircleOutline } from 'react-icons/io5';
                           }
                     >
 
-                        <div className="grid grid-cols-4 gap-5 px-20">
+                        <div className="grid place-items-center md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 px-2 lg:px-20">
                         
                         {products.length>0 && products.map((product)=>{
                             const isInCart = cart.find(item => item.id === product.id);
@@ -172,7 +172,7 @@ import { IoCheckmarkCircleOutline } from 'react-icons/io5';
                                                 onClick={() =>
                                                     navigate("/cart")
                                                 }
-                                                className="flex cursor-pointer items-center justify-center gap-1 border border-secondary md:w-[100px] w-[64px] h-[34px] rounded text-secondary font-medium"
+                                                className="flex cursor-pointer items-center justify-center gap-1 border border-secondary md:w-[100px] w-[64px] h-[34px] max-md:w-30 rounded text-secondary font-medium"
                                             >
                                                 <svg
                                                     width="14"
@@ -195,7 +195,7 @@ import { IoCheckmarkCircleOutline } from 'react-icons/io5';
                                                 onClick={() =>
                                                     addToCart(product)
                                                 }
-                                                className="flex cursor-pointer items-center justify-center gap-1 border border-primary md:w-[80px] w-[64px] h-[34px] rounded text-primary font-medium"
+                                                className="flex cursor-pointer items-center justify-center gap-1 border border-primary md:w-[80px] w-[64px] h-[34px] max-md:w-30 rounded text-primary font-medium"
                                             >
                                                 <svg
                                                     width="14"
