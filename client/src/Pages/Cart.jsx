@@ -69,7 +69,7 @@ const Cart = () => {
     };
 
     return (
-        <div className="py-35 bg-base-300">
+        <div className="py-35 bg-base-300 max-md:px-3">
             <div className="flex flex-col md:flex-row max-w-6xl w-full px-6 mx-auto bg-base-100 px-5 py-5 rounded-lg ">
                 <div className="flex-1 max-w-4xl">
                     <h1 className="text-3xl font-medium mb-6">
@@ -119,7 +119,7 @@ const Cart = () => {
                                                     {item.name}
                                                 </p>
                                                 <div className="font-normal text-primary">
-                                                    <div className="flex items-center justify-center gap-2 md:w-20 w-16 h-[34px] bg-base-100 border border-primary rounded select-none">
+                                                    <div className="flex items-center max-md:flex-col justify-center gap-2 max-md:h-20 md:w-20 w-12 h-[34px] bg-base-100 border border-primary rounded select-none">
                                                         <button
                                                             onClick={() =>
                                                                 removeQuantity(
@@ -130,7 +130,7 @@ const Cart = () => {
                                                         >
                                                             -
                                                         </button>
-                                                        <span className="w-5 text-center">
+                                                        <span className="w-5 text-center text-md">
                                                             {item.quantity}
                                                         </span>
                                                         <button
@@ -147,8 +147,8 @@ const Cart = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <p className="text-center">
-                                            ₹{" "}
+                                        <p className="text-center max-md:text-xs">
+                                            ₹
                                             {(
                                                 offerPrice * item.quantity
                                             ).toFixed(2)}
