@@ -87,13 +87,13 @@ const Products = () => {
     return (
         <div className="bg-base-300 min-h-screen py-20">
             <h1 className="text-3xl font-bold text-center my-10 text-primary">Products</h1>
-            <div className="flex gap-10 px-5 py-3">
+            <div className="flex gap-10 px-5 py-3 max-md:text-sm">
                 {/* Filters Sidebar */}
                 <div className="filtersbar bg-base-100 shadow-lg px-5 py-3 pb-6 rounded-lg">
                     <div className="flex flex-col gap-5">
                         {/* Categories */}
                         <div className="categories-listing">
-                            <h2 className="text-2xl font-semibold mb-3 flex items-center">
+                            <h2 className="text-2xl max-md:text-lg font-semibold mb-3 flex items-center">
                                 <BiCategory/> Categories
                             </h2>
                             {categories.map((category) => (
@@ -125,7 +125,7 @@ const Products = () => {
 
                         {/* Brands */}
                         <div className="brands-listing">
-                            <h2 className="text-2xl font-semibold mb-3 flex items-center">
+                            <h2 className="text-2xl max-md:text-lg font-semibold mb-3 flex items-center">
                                 <HiOutlineTag />Brands
                             </h2>
                             {brands.map((brand) => (
@@ -157,7 +157,7 @@ const Products = () => {
 
                         {/* Price Slider */}
                         <div className="price-range">
-                            <h2 className="text-2xl font-semibold mb-2 flex items-center">
+                            <h2 className="text-2xl max-md:text-[16px] font-semibold mb-2 flex items-center">
                                 <HiOutlineCurrencyRupee/> Price Range
                             </h2>
                             <p className="mb-2">
@@ -189,7 +189,7 @@ const Products = () => {
                             </p>
                         }
                     >
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+                        <div className="grid md:grid-cols-1 place-items-center lg:grid-cols-2 xl:grid-cols-3 gap-5 lg:px-5">
                             {products.map((product) => {
                                 const isInCart = cart.find(
                                     (item) => item.id === product.id
