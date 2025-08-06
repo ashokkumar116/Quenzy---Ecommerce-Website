@@ -43,7 +43,7 @@ const SearchResults = () => {
                     😕 No products found. Try searching with a different keyword or check back later.
                 </p>
             ) : (
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-base-100 p-5 rounded-lg shadow-lg">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 bg-base-100 p-5 rounded-lg shadow-lg place-items-center">
                     {products.map((product) => {
                         const isInCart = cart.find(
                             (item) => item.id === product.id
