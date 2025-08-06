@@ -40,6 +40,7 @@ const Cart = () => {
         setTotalAmount(total + totalTax);
     };
 
+
     useEffect(() => {
         calculateTotal();
         console.log(cart);
@@ -268,7 +269,16 @@ const Cart = () => {
                         </p>
                     </div>
 
-                    <button
+                    {
+                        cart.length === 0 &&(
+                            <p className="mt-2 text-error text-sm font-medium text-center">
+                                {cartError || "Your cart is empty. Please add items to proceed."}  
+                            </p>         
+                        )
+                    }
+
+                    { cart.length > 0 && (
+                        <button
                         onClick={handleOrder}
                         disabled={!!cartError}
                         className={`w-full py-3 mt-6 font-medium transition ${
@@ -279,6 +289,7 @@ const Cart = () => {
                     >
                         {cartError ? "Cannot Place Order" : "Place Order"}
                     </button>
+                    )}
                     {cartError && (
                         <p className="mt-2 text-error text-sm font-medium">
                             {cartError}
