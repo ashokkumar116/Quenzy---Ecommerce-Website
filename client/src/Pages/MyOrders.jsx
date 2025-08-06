@@ -105,7 +105,7 @@ const MyOrders = () => {
                 orders.map((order) => (
                     <div
                         key={order.order_id}
-                        className="bg-base-100 rounded-2xl p-6 mb-8 shadow-md hover:shadow-xl transition duration-300"
+                        className="bg-base-100 rounded-2xl p-6 mb-8 shadow-md hover:shadow-xl transition duration-300 max-md:flex max-md:flex-col"
                     >
                         <div className="mb-5">
                             <div className="flex flex-wrap justify-between text-sm text-base-content/80 mb-2">
@@ -117,7 +117,7 @@ const MyOrders = () => {
                                 </span>
                                 <span>{formatDate(order.created_at)}</span>
                             </div>
-                            <div className="flex flex-wrap justify-between text-sm text-base-content/80 mb-2">
+                            <div className="flex flex-wrap gap-2 justify-between text-sm text-base-content/80 mb-2">
                                 <span className="truncate max-w-[70%]">
                                     <span className="font-medium text-base-content/80">
                                         Order UUID:
@@ -131,7 +131,7 @@ const MyOrders = () => {
                                     {order.shipping_address}
                                 </span>
                             </div>
-                            <div className="flex flex-wrap justify-between text-sm text-base-content/80">
+                            <div className="flex flex-wrap max-md:flex-col gap-3 justify-between text-sm text-base-content/80">
                                 <span>
                                     Payment:{" "}
                                     <span className="uppercase">
@@ -174,14 +174,14 @@ const MyOrders = () => {
                             {order.items.map((item, index) => (
                                 <div
                                     key={index}
-                                    className="flex gap-4 items-center rounded-xl p-3 hover:bg-base-200 transition"
+                                    className="flex gap-4 max-md:flex-col items-center rounded-xl p-3 hover:bg-base-200 transition"
                                 >
                                     <img
                                         src={`${asset.imageBaseUrl}${item.image_url}`}
                                         alt={item.product_name}
                                         className="w-16 h-16 object-cover rounded-xl border border-gray-200"
                                     />
-                                    <div className="flex-1">
+                                    <div className="flex-1 max-md:text-center">
                                         <h2 className="text-md font-semibold text-base-content/80">
                                             {item.product_name}
                                         </h2>
