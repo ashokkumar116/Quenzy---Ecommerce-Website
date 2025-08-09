@@ -65,8 +65,8 @@ function AdminLayout() {
             key={link.to}
             to={link.to}
             className={({ isActive }) =>
-              `px-4 py-2 rounded-md text-sm font-medium transition flex items-center gap-2 ${
-                isActive ? "bg-primary text-white" : "hover:bg-base-200"
+              `px-4 py-2 rounded-md text-sm font-medium transition flex items-center gap-2 ${isExpanded ? "": "justify-center"} ${
+                isActive ? "bg-primary text-white" : "hover:bg-base-200" 
               }`
             }
           >
