@@ -45,7 +45,7 @@ const Navbar = () => {
             <nav className="flex justify-between items-center">
                 {/* Logo */}
                 <div className="cursor-pointer" onClick={() => navigate("/")}>
-                    <img className="w-60" src={logo} alt="Logo" />
+                    <img className="w-60 max-md:w-40" src={logo} alt="Logo" />
                 </div>
 
                 {/* Desktop Menu */}
