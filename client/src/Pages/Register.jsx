@@ -44,7 +44,7 @@ const Register = () => {
   return (
     <div className="h-[100vh] flex justify-center items-center mt-20 bg-base-300">
             <div className="form flex justify-center items-center gap-7 bg-base-100 shadow-lg rounded-lg w-[70%] max-md:w-100">
-                <div className="p-20 rounded-md flex flex-col justify-center items-center gap-6">
+                <div className="p-20 rounded-md flex flex-col justify-center items-center gap-6 max-sm:p-10">
                 <h1 className="text-3xl text-primary font-bold">Register</h1>
                 <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center gap-6">
                     <input className="input-prime max-md:w-90 max-sm:w-70 " placeholder="Name" name="name" onChange={handleChange} />

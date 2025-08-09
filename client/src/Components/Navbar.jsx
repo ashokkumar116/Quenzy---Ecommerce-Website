@@ -41,7 +41,7 @@ const Navbar = () => {
     };
 
     return (
-        <div className="fixed top-0 left-0 w-full z-50 bg-base-100 px-5 py-2 shadow-lg backdrop-blur-xl">
+        <div className="fixed top-0 left-0 w-full z-50 bg-base-100 px-5 py-2 max-md:py-6 shadow-lg backdrop-blur-xl">
             <nav className="flex justify-between items-center">
                 {/* Logo */}
                 <div className="cursor-pointer" onClick={() => navigate("/")}>
