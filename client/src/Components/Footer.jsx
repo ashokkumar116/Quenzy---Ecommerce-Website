@@ -50,7 +50,7 @@ const Footer = () => {
                             <ul className="text-sm space-y-1">
                                 {section.links.map((link, i) => (
                                     <li key={i}>
-                                        <a href={link.href} className="hover:underline transition">{link.name}</a>
+                                        <Link to={link.href} className="hover:underline transition">{link.name}</Link>
                                     </li>
                                 ))}
                             </ul>
