@@ -82,9 +82,9 @@ const Dashboard = () => {
             {/* Sections */}
             <div className="mt-10 space-y-8">
                 {/* Categories Chart */}
-                <div className="rounded-xl shadow-xl p-5 bg-base-100">
+                <div className="rounded-xl shadow-xl p-5 bg-base-100 overflow-x-scroll">
                     <h3 className="text-lg font-semibold mb-4">Categories Wise Product Count</h3>
-                    <div className="w-full h-64 sm:h-80">
+                    <div className="w-full h-64 sm:h-80 min-w-200 ">
                         <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={categoryData}>
                                 <CartesianGrid strokeDasharray="3 3" />
@@ -141,9 +141,9 @@ const Dashboard = () => {
                 </div>
 
                 {/* Orders Chart */}
-                <div className="rounded-xl shadow-xl p-5 bg-base-100">
+                <div className="rounded-xl shadow-xl p-5 bg-base-100 overflow-x-scroll">
                     <h3 className="text-lg font-semibold mb-4">Orders (Last 7 Days)</h3>
-                    <div className="w-full h-64 sm:h-80">
+                    <div className="w-full h-64 sm:h-80 min-w-200">
                         <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={orderChartData}>
                                 <CartesianGrid strokeDasharray="3 3" />
@@ -158,9 +158,9 @@ const Dashboard = () => {
                 </div>
 
                 {/* Revenue Chart */}
-                <div className="rounded-xl shadow-xl p-5 bg-base-100">
+                <div className="rounded-xl shadow-xl p-5 bg-base-100 overflow-x-scroll">
                     <h3 className="text-lg font-semibold mb-4">Revenues (Last 7 Days)</h3>
-                    <div className="w-full h-64 sm:h-80">
+                    <div className="w-full h-64 sm:h-80 min-w-200">
                         <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={revenueChartData}>
                                 <CartesianGrid strokeDasharray="3 3" />
