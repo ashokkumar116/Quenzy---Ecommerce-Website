@@ -35,7 +35,7 @@ function AdminLayout() {
     >
       {/* Toggle button inside sidebar */}
       <button
-        className="absolute top-[50%] -right-3 bg-base-200 rounded-full p-1 shadow"
+        className="absolute top-[50%] -right-3 bg-base-200 rounded-full p-1 shadow max-lg:hidden"
         onClick={() => setIsExpanded(!isExpanded)}
       >
         {isExpanded ? <FaChevronLeft /> : <FaChevronRight />}
@@ -81,7 +81,7 @@ function AdminLayout() {
   return (
     <div className="flex flex-col h-screen bg-base-300 text-base-content">
       {/* Top Navbar */}
-      <div className="w-full bg-base-100 shadow-md mt-25 flex items-center justify-between px-4 py-3 lg:hidden">
+      <div className="w-full bg-base-100 shadow-md mt-25 flex items-center justify-between px-4 py-3 sticky-top lg:hidden">
         <h1 className="text-xl font-bold">Admin Panel</h1>
         <button className="lg:hidden text-2xl" onClick={() => setMobileSidebarOpen(true)}>
           <FiMenu />
