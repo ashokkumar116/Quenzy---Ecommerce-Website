@@ -25,7 +25,7 @@ const path = require('path');
 app.use(express.json());
 app.use(cors(
     {
-        origin:"https://quenzy.netlify.app/",
+        origin:"https://quenzy.netlify.app",
         credentials: true,
     }
 ));
