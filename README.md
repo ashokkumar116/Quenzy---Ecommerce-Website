@@ -136,6 +136,24 @@ Quenzy/
 
 ---
 
+## 🖼️ UI Preview
+
+### 🏡 Home Page
+
+### 🛒 Products Page
+
+### 👥 Users Profile and orders
+
+### 🛍️ Cart and Orders
+
+### 🔐 Admin pages
+
+### 🔐 Other pages
+
+
+
+---
+
 ## 🤝 Contributing
 
 Feel free to fork the project and open pull requests!
