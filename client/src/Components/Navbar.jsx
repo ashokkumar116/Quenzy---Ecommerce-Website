@@ -15,7 +15,7 @@ import { FiShoppingBag } from "react-icons/fi";
 import { FaRegHeart } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
 import { FaBars } from "react-icons/fa";
-import logo from "../assets/navlogo.png"; // ✅ Proper logo import
+import logo from "../assets/navlogo.png";
 
 const Navbar = () => {
     const { user, logout } = useContext(AuthContext);
@@ -192,7 +192,7 @@ const Navbar = () => {
                         <li
                             className="flex items-center gap-2 p-2 rounded hover:bg-primary hover:text-white cursor-pointer"
                             onClick={() => {
-                                navigate("/wishlist");
+                                navigate("/comingsoon");
                                 setShowDropdown(false);
                             }}
                         >
