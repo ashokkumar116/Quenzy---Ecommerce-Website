@@ -180,6 +180,17 @@ const Navbar = () => {
                         >
                             <FaRegUser /> Profile
                         </li>
+                        {user.id === 1 && (
+                            <li
+                            className="flex items-center gap-2 p-2 rounded hover:bg-primary hover:text-white cursor-pointer"
+                            onClick={() => {
+                                navigate("/admin");
+                                setShowDropdown(false);
+                            }}
+                        >
+                            <FaRegUser /> Admin Panel
+                        </li>
+                        )}
                         <li
                             className="flex items-center gap-2 p-2 rounded hover:bg-primary hover:text-white cursor-pointer"
                             onClick={() => {
