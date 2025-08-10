@@ -139,17 +139,55 @@ Quenzy/
 ## 🖼️ UI Preview
 
 ### 🏡 Home Page
+<p float="left">
+<img width="300" alt="Screenshot 2025-08-10 123902" src="https://github.com/user-attachments/assets/4c64c245-d289-4099-a508-9585d911f553" />
+</p>
 
 ### 🛒 Products Page
 
+<p float="left">
+<img width="300" alt="Screenshot 2025-08-10 220028" src="https://github.com/user-attachments/assets/afd068d6-74e0-45c6-b2ca-88f56b7cdfc5" />
+<img width="300" alt="Screenshot 2025-08-10 220109" src="https://github.com/user-attachments/assets/a5b0616c-0eed-4576-8abc-b817be184745" />
+<img width="300" alt="Screenshot 2025-08-10 220136" src="https://github.com/user-attachments/assets/92372070-e9d5-4610-9709-b4da1a4babc6" />
+<img width="300" alt="Screenshot 2025-08-10 220158" src="https://github.com/user-attachments/assets/69949539-915a-43e2-8f59-d90b694d2eb2" />
+
+</p>
+
 ### 👥 Users Profile and orders
+
+<p float="left">
+<img width="300" alt="Screenshot 2025-08-10 220234" src="https://github.com/user-attachments/assets/59c93ee0-e2a2-4b14-bb8f-7da86a3a0b7e" />
+<img width="300" alt="Screenshot 2025-08-10 220401" src="https://github.com/user-attachments/assets/50b11056-997b-4cec-9c18-392702fcd0c2" />
+
+</p>
 
 ### 🛍️ Cart and Orders
 
+<p float="left">
+<img width="300" alt="Screenshot 2025-08-10 220433" src="https://github.com/user-attachments/assets/f6d33706-234d-444e-8cf6-a5abd64f5553" />
+<img width="300" alt="Screenshot 2025-08-10 220458" src="https://github.com/user-attachments/assets/5ab9fc5b-e578-4526-bc44-356949d7770f" />
+
+</p>
+
 ### 🔐 Admin pages
 
-### 🔐 Other pages
+<p float="left">
+<img width="300" alt="Screenshot 2025-08-10 220602" src="https://github.com/user-attachments/assets/f3e9983d-0216-4337-b6aa-55c6f03ea6fd" />
+<img width="300" alt="Screenshot 2025-08-10 220619" src="https://github.com/user-attachments/assets/69144b3f-3ee8-465b-b992-0c7a41a5130b" />
+<img width="300" alt="Screenshot 2025-08-10 220648" src="https://github.com/user-attachments/assets/51065c7b-b386-4f13-859c-4626a7d9c036" />
+<img width="300" alt="Screenshot 2025-08-10 220719" src="https://github.com/user-attachments/assets/abaced28-ef86-4c23-9ee4-de3b758ea38b" />
+<img width="300" alt="Screenshot 2025-08-10 220808" src="https://github.com/user-attachments/assets/e1112909-9a40-48c6-a728-48994db46272" />
 
+
+</p>
+
+### Other pages
+
+<p float="left">
+   <img width="300" alt="Screenshot 2025-08-10 220907" src="https://github.com/user-attachments/assets/4b3a063d-deb8-4ccd-9040-bc437eeac0ab" />
+   <img width="300" alt="Screenshot 2025-08-10 220925" src="https://github.com/user-attachments/assets/de8e7a4b-c1f3-4d18-875c-faf5bb3cbf0e" />
+   <img width="300" alt="Screenshot 2025-08-10 220940" src="https://github.com/user-attachments/assets/53c5516b-c54b-433a-ac2c-f9e7f28adc95" />
+</p>
 
 
 ---
