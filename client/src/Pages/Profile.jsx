@@ -9,7 +9,7 @@ import { FaRegEdit, FaRegSave } from "react-icons/fa";
 import { MdCancelPresentation } from "react-icons/md";
 
 const Profile = () => {
-  const { user, loading, fetchUser } = useContext(AuthContext);
+  const {user, loading, fetchUser} = useContext(AuthContext);
   const [disabledField, setDisabledField] = useState(true);
   const [name, setName] = useState(user.name || "");
   const [contact, setContact] = useState(user.contact || "");

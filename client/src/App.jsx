@@ -25,6 +25,7 @@ import OrderSuccess from "./Components/OrderSuccess";
 import MyOrders from "./Pages/MyOrders";
 import ManageOrders from "./Pages/AdminPages/ManageOrders";
 import Faq from "./Pages/Faq";
+import DeliveryInfo from "./Pages/DeliveryInfo";
 function App() {
 
     const {user , loading} = useContext(AuthContext);
@@ -61,6 +62,7 @@ function App() {
                 </Route>
                 <Route path="/faq" element={<Faq/>} />
                 <Route path="/contact" element={<ContactUs/>} /> 
+                <Route path="/delivery" element={<DeliveryInfo/>} /> 
                 <Route path="*" element={<FourNotFour/>} /> 
             </Routes>
         </>
