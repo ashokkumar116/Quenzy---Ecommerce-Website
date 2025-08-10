@@ -110,7 +110,7 @@ Quenzy/
    npm start
 
    # Frontend
-   cd ../client
+   cd client
    npm run dev
    ```
 
@@ -153,4 +153,4 @@ Feel free to fork the project and open pull requests!
 
 ## 👨‍💻 Developed by
 
-Ashok Kumar – [@ashokkumar116]([https://github.com/yourusername](https://github.com/ashokkumar116))
+Ashok Kumar – [@ashokkumar116]([https://github.com/ashokkumar116])
