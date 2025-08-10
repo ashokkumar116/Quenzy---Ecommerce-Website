@@ -135,7 +135,7 @@ const AddBrands = () => {
                     transition={Bounce}
                 />
             </form>
-            <div className="bg-base-100  shadow-lg rounded-lg overflow-x-scroll">
+            <div className="bg-base-100  shadow-lg rounded-lg overflow-x-scroll mt-5">
                 <h2 className="text-2xl font-bold mt-10 mb-5 text-primary py-2 px-5">Brands List</h2>
                 <table className="pl-5  transition-all duration-300 rounded-lg p-3 w-full table text-center">
                     <thead>
@@ -206,11 +206,11 @@ const AddBrands = () => {
 
             {showModal && (
                 <div className="fixed top-0 left-0 w-full h-full bg-[rgba(1,1,1,0.8)] flex items-center justify-center z-50">
-                    <div className="bg-white p-5 rounded-lg shadow-lg w-1/3 z-80 flex flex-col gap-5">
+                    <div className="bg-white p-5 rounded-lg shadow-lg w-1/3 z-80 flex flex-col gap-5 max-md:w-90 max-lg:w-150 lg:w-[80%]">
                         <h1 className="text-2xl font-bold uppercase text-primary">Edit Brand</h1>
                         <form onSubmit={handleEditSave} className="flex flex-col gap-5 items-center">
                             <input type="text" className="input-prime" placeholder="Name " value={editName} onChange={(e)=>setEditName(e.target.value)} />
-                            <div className="flex gap-3">
+                            <div className="flex gap-3 max-md:flex-col">
                             <button type="submit" className="btn btn-success"> <FaRegSave/> Save Changes</button>
                             <button className="btn btn-outline btn-error" onClick={()=>setShowModal(false)} ><IoMdCloseCircleOutline/>Close</button>
                             </div>
@@ -222,10 +222,10 @@ const AddBrands = () => {
             {showDeleteModal && 
                 <div>
                     <div className="fixed top-0 left-0 w-full h-full bg-[rgba(1,1,1,0.8)] flex items-center justify-center z-50">
-                        <div className="bg-white p-5 rounded-lg shadow-lg w-1/3 z-80 flex flex-col gap-5 items-center">
+                        <div className="bg-white p-5 rounded-lg shadow-lg w-1/3 z-80 flex flex-col gap-5 items-center max-md:w-90 max-lg:w-150 lg:w-[80%]">
                             <h1 className="text-2xl font-bold uppercase text-primary">Delete Brand</h1>
                             <p>Are you sure you want to delete this brand?</p>
-                            <div className="flex gap-3">
+                            <div className="flex gap-3 max-md:flex-col">
                                 <button className="btn btn-success" onClick={handleDelete}><SiTicktick/>Yes</button>
                                 <button className="btn btn-outline btn-error" onClick={()=>setShowDeleteModal(false)}><CiNoWaitingSign/>No</button>
                             </div>
