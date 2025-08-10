@@ -8,8 +8,8 @@ const Footer = () => {
           title: "Quick Links",
           links: [
             { name: "Home", href: "/" },
-            { name: "Best Sellers", href: "/best-sellers" },
-            { name: "Offers & Deals", href: "/offers" },
+            { name: "Best Sellers", href: "/comingsoon" },
+            { name: "Offers & Deals", href: "/comingsoon" },
             { name: "Contact Us", href: "/contact" },
             { name: "FAQs", href: "/faq" }
           ]
@@ -18,9 +18,9 @@ const Footer = () => {
           title: "Need Help?",
           links: [
             { name: "Delivery Information", href: "/delivery" },
-            { name: "Return & Refund Policy", href: "/returns" },
-            { name: "Payment Methods", href: "/payments" },
-            { name: "Track your Order", href: "/track-order" },
+            { name: "Return & Refund Policy", href: "/comingsoon" },
+            { name: "Payment Methods", href: "/comingsoon" },
+            { name: "Track your Order", href: "/comingsoon" },
             { name: "Contact Us", href: "/contact" }
           ]
         },
