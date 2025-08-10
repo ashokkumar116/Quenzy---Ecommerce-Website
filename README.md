@@ -26,7 +26,7 @@ Built with a focus on **scalability**, **security**, and **modern UI**.
 
 ### Frontend
 - **React.js**
-- **PrimeReact** – UI components
+- **PrimeReact && DaisyUI**  – UI components
 - **Tailwind CSS** – Styling
 - **Axios** – API calls
 
@@ -46,18 +46,21 @@ Quenzy/
 │
 ├── client/          # React frontend
 │   ├── src/
+│   │   ├── assets/
 │   │   ├── components/
+│   │   ├── contexts/
+│   │   ├── Loader/
 │   │   ├── pages/
-│   │   ├── context/
-│   │   ├── services/
+│   │   ├── ProtectedRoutes/
+│   │   ├── /
 │   │   └── App.js
 │   └── package.json
 │
 ├── server/          # Node.js backend
-│   ├── routes/
 │   ├── controllers/
-│   ├── models/
 │   ├── middleware/
+│   ├── routes/
+│   ├── Uploads/
 │   └── server.js
 │
 └── README.md
@@ -69,8 +72,8 @@ Quenzy/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/quenzy.git
-   cd quenzy
+   git clone https://github.com/ashokkumar116/Quenzy---Ecommerce-Website.git
+   cd Quenzy---Ecommerce-Website
    ```
 
 2. **Install dependencies**
@@ -80,7 +83,7 @@ Quenzy/
    npm install
 
    # Backend
-   cd ../server
+   cd server
    npm install
    ```
 
@@ -104,11 +107,11 @@ Quenzy/
    ```bash
    # Backend
    cd server
-   npm run dev
+   npm start
 
    # Frontend
    cd ../client
-   npm start
+   npm run dev
    ```
 
 ---
@@ -128,18 +131,26 @@ Quenzy/
 ## 🌐 Deployment
 - **Frontend**: Netlify
 - **Backend**: Render
-- **Database**: MySQL (Hostinger/Local)
+- **Database**: Cleaver Cloud
 - **Images**: Cloudinary
 
 ---
 
-## 📜 License
-This project is licensed under the **MIT License**.
+## 🤝 Contributing
+
+Feel free to fork the project and open pull requests!
 
 ---
 
+## 🌐 Live Demo
+
+🔗 [View Live Demo Here](https://quenzy.netlify.app/)
+
 ## 💡 Future Improvements
 - Payment gateway integration
-- Product reviews & ratings
 - Wishlist feature
 - Order invoice downloads
+
+## 👨‍💻 Developed by
+
+Ashok Kumar – [@ashokkumar116]([https://github.com/yourusername](https://github.com/ashokkumar116))
