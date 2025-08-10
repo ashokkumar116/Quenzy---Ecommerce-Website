@@ -57,7 +57,7 @@ const ManageOrders = () => {
 
   return (
     <div className="pt-20 px-6 pb-10 bg-base-300 min-h-screen">
-      <h1 className="text-3xl text-primary uppercase font-bold mb-6">Manage Orders</h1>
+      <h1 className="text-3xl text-primary uppercase font-bold mb-6 text-center">Manage Orders</h1>
 
       {orders.length === 0 ? (
         <p>No orders found</p>
@@ -68,8 +68,8 @@ const ManageOrders = () => {
             className="mb-6 p-6 bg-base-100 rounded-xl shadow-lg border border-base-300"
           >
             {/* Header: Basic Order Info */}
-            <div className="flex flex-col md:flex-row md:justify-between gap-3">
-              <div className="text-sm">
+            <div className="flex flex-col md:flex-row md:justify-between gap-3 overflow-x-scroll">
+              <div className="text-sm max-md:text-xs">
                 <p><span className="font-semibold">Order ID:</span> {order.order_uuid}</p>
                 <p><span className="font-semibold">User:</span> {order.user_name} ({order.user_email})</p>
                 <p><span className="font-semibold">Address:</span> {order.shipping_address}</p>
