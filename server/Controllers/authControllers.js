@@ -86,25 +86,30 @@ const logout =async (req,res)=>{
     return res.status(200).json({message:"Successfully logged out"});
 }
 
-const uploadProfile = async(req,res)=>{
-    const profile_pic = req.file;
+const uploadProfile = async (req, res) => {
+    const profile_pic = req.file; // Cloudinary gives file info here
 
-    if(!profile_pic){
-        return res.status(400).json({message: "No file uploaded"});
+    if (!profile_pic) {
+        return res.status(400).json({ message: "No file uploaded" });
     }
-    const id = req.user.id;
 
+    const id = req.user.id;
     const sql = "UPDATE users SET profile_pic = ? WHERE id = ?";
-    const filePath = `/uploads/profiles/${profile_pic.filename}`;
 
     try {
-        await db.query(sql, [filePath, id]);
-        return res.status(200).json({message: "Profile picture updated successfully"});
+        // Store Cloudinary secure URL instead of local file path
+        await db.query(sql, [profile_pic.path, id]);
+
+        return res.status(200).json({
+            message: "Profile picture updated successfully",
+            imageUrl: profile_pic.path // frontend can use this directly
+        });
     } catch (error) {
         console.error("Error updating profile picture:", error);
-        return res.status(500).json({message: "Internal server error"});
+        return res.status(500).json({ message: "Internal server error" });
     }
-}
+};
+
 
 const editUser = async(req,res)=>{
     const {name,contact} = req.body;
