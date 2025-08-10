@@ -1,3 +1,3 @@
 export const asset = {
-    imageBaseUrl: 'http://localhost:5000',
+    imageBaseUrl: 'https://quenzy-ecommerce-website.onrender.com',
 }
