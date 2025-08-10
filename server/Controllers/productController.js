@@ -2,17 +2,19 @@ const db = require("../db");
 
 const getAllProducts = async (req, res) => {
     try {
-      const page = parseInt(req.query.page) || 1;
-      const limit = parseInt(req.query.limit) || 5;
-      const offset = (page - 1) * limit;
-  
-      // Count total products for pagination
-      const [countResult] = await db.query("SELECT COUNT(*) AS total FROM products");
-      const totalProducts = countResult[0].total;
-      const totalPages = Math.ceil(totalProducts / limit);
-  
-      // Paginated products query
-      const productSql = `
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 5;
+        const offset = (page - 1) * limit;
+
+        // Count total products for pagination
+        const [countResult] = await db.query(
+            "SELECT COUNT(*) AS total FROM products"
+        );
+        const totalProducts = countResult[0].total;
+        const totalPages = Math.ceil(totalProducts / limit);
+
+        // Paginated products query
+        const productSql = `
         SELECT 
           p.id, p.name, p.slug, p.description, p.short_description, 
           p.price, p.discount_percentage, p.stock, p.is_active, p.created_at,
@@ -32,33 +34,32 @@ const getAllProducts = async (req, res) => {
         ORDER BY p.created_at DESC
         LIMIT ? OFFSET ?
       `;
-      const [products] = await db.query(productSql, [limit, offset]);
-  
-      const imageSql = `SELECT product_id, image_url, is_main FROM product_images`;
-      const [images] = await db.query(imageSql);
-  
-      const productsWithImages = products.map(product => {
-        const productImages = images.filter(img => img.product_id === product.id);
-        return {
-          ...product,
-          images: productImages
-        };
-      });
-  
-      res.json({
-        products: productsWithImages,
-        currentPage: page,
-        totalPages,
-        totalProducts
-      });
-  
+        const [products] = await db.query(productSql, [limit, offset]);
+
+        const imageSql = `SELECT product_id, image_url, is_main FROM product_images`;
+        const [images] = await db.query(imageSql);
+
+        const productsWithImages = products.map((product) => {
+            const productImages = images.filter(
+                (img) => img.product_id === product.id
+            );
+            return {
+                ...product,
+                images: productImages,
+            };
+        });
+
+        res.json({
+            products: productsWithImages,
+            currentPage: page,
+            totalPages,
+            totalProducts,
+        });
     } catch (error) {
-      console.error("Error fetching products:", error.message);
-      res.status(500).json({ error: "Failed to get products with images" });
+        console.error("Error fetching products:", error.message);
+        res.status(500).json({ error: "Failed to get products with images" });
     }
-  };
-  
-  
+};
 
 const addProduct = async (req, res) => {
     const {
@@ -108,100 +109,113 @@ const addProduct = async (req, res) => {
 
         if (images && images.length > 0) {
             const imageSql =
-                "INSERT INTO product_images (product_id,image_url,is_main) VALUES ?";
-            const imageValues = images.map((image,index) => [
+                "INSERT INTO product_images (product_id, image_url, is_main) VALUES ?";
+            const imageValues = images.map((image, index) => [
                 productId,
-                `/uploads/products/${image.filename}`,
+                image.path || image.secure_url,
                 index === 0 ? 1 : 0,
             ]);
             await db.query(imageSql, [imageValues]);
         }
+
         return res.status(201).json({ message: "Product added successfully!" });
     } catch (error) {
-        return res.status(500).json({ message: "Internal Server Error" , error: error.message });
+        return res
+            .status(500)
+            .json({ message: "Internal Server Error", error: error.message });
     }
 };
 
-const updateProduct = async(req,res)=>{
-  const productId = req.params.id;
-  const {
-    name,
-    short_description,
-    description,
-    price,
-    discount_percentage,
-    stock,
-    category_id,
-    brand_id,
-    seller_id,
-    is_active
-  } = req.body;
-  const images = req.files;
-  const slugify = (name) => {
-      return name
-          .toLowerCase()
-          .trim()
-          .replace(/[\s\W-]+/g, "-")
-          .replace(/^-+|-+$/g, "");
-  };
-  const slug = slugify(name);
-  const sql = "UPDATE products SET name=?, slug=?, short_description=?, description=?, price=?, discount_percentage=?, stock=?, category_id=?, brand_id=?, seller_id=?, is_active=? WHERE id=?";
-  const values = [
-      name,
-      slug,
-      short_description,
-      description,
-      price,
-      discount_percentage,
-      stock,
-      category_id,
-      brand_id,
-      seller_id,
-      is_active,
-      productId
-  ];
-  try {
-      const [result] = await db.query(sql, values);
-      if (result.affectedRows === 0) {
-          return res.status(404).json({ message: "Product not found" });
-      }
-      if (images && images.length > 0) {
-          const imageSql = "INSERT INTO product_images (product_id, image_url, is_main) VALUES ?";
-          const imageValues = images.map((image, index) => [
-              productId,
-              `/uploads/products/${image.filename}`,
-              index === 0 ? 1 : 0,
-          ]);
-          await db.query(imageSql, [imageValues]);
-      }
-      return res.status(200).json({ message: "Product updated successfully!" });
-  } catch (error) {
-      return res.status(500).json({ message: "Internal Server Error", error: error.message });
-  }
-}
+const updateProduct = async (req, res) => {
+    const productId = req.params.id;
+    const {
+        name,
+        short_description,
+        description,
+        price,
+        discount_percentage,
+        stock,
+        category_id,
+        brand_id,
+        seller_id,
+        is_active,
+    } = req.body;
+    const images = req.files;
+    const slugify = (name) => {
+        return name
+            .toLowerCase()
+            .trim()
+            .replace(/[\s\W-]+/g, "-")
+            .replace(/^-+|-+$/g, "");
+    };
+    const slug = slugify(name);
+    const sql =
+        "UPDATE products SET name=?, slug=?, short_description=?, description=?, price=?, discount_percentage=?, stock=?, category_id=?, brand_id=?, seller_id=?, is_active=? WHERE id=?";
+    const values = [
+        name,
+        slug,
+        short_description,
+        description,
+        price,
+        discount_percentage,
+        stock,
+        category_id,
+        brand_id,
+        seller_id,
+        is_active,
+        productId,
+    ];
+    try {
+        const [result] = await db.query(sql, values);
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+        if (images && images.length > 0) {
+            const imageSql =
+                "INSERT INTO product_images (product_id, image_url, is_main) VALUES ?";
+            const imageValues = images.map((image, index) => [
+                productId,
+                image.path || image.secure_url,
+                index === 0 ? 1 : 0,
+            ]);
+            await db.query(imageSql, [imageValues]);
+        }
+
+        return res
+            .status(200)
+            .json({ message: "Product updated successfully!" });
+    } catch (error) {
+        return res
+            .status(500)
+            .json({ message: "Internal Server Error", error: error.message });
+    }
+};
 
 const deleteProduct = async (req, res) => {
-  const product_id = req.params.id;
-  const sql = "DELETE FROM products WHERE id = ?";
-  try {
-      const [result] = await db.query(sql, [product_id]);
-      if (result.affectedRows === 0) {
-          return res.status(404).json({ message: "Product not found" });
-      }
-      return res.status(200).json({ message: "Product deleted successfully!" });
-  } catch (error) {
-      console.error("Error deleting product:", error.message);
-      return res.status(500).json({ message: "Internal Server Error", error: error.message });
-  }
-
-}
-
+    const product_id = req.params.id;
+    const sql = "DELETE FROM products WHERE id = ?";
+    try {
+        const [result] = await db.query(sql, [product_id]);
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+        return res
+            .status(200)
+            .json({ message: "Product deleted successfully!" });
+    } catch (error) {
+        console.error("Error deleting product:", error.message);
+        return res
+            .status(500)
+            .json({ message: "Internal Server Error", error: error.message });
+    }
+};
 
 const getOneProduct = async (req, res) => {
-  const slug = req.params.slug;
+    const slug = req.params.slug;
 
-  try {
-    const [productResult] = await db.query(`
+    try {
+        const [productResult] = await db.query(
+            `
       SELECT 
         p.id, p.name, p.slug, p.description, p.short_description, 
         p.price, p.discount_percentage, p.stock, p.is_active, p.created_at,
@@ -222,69 +236,71 @@ const getOneProduct = async (req, res) => {
       WHERE p.slug = ?
       GROUP BY p.id
       LIMIT 1
-    `, [slug]);
+    `,
+            [slug]
+        );
 
-    if (productResult.length === 0) {
-      return res.status(404).json({ message: "Product not found" });
-    }
+        if (productResult.length === 0) {
+            return res.status(404).json({ message: "Product not found" });
+        }
 
-    const product = productResult[0];
-    
+        const product = productResult[0];
 
-    const [images] = await db.query(
-      "SELECT image_url, is_main FROM product_images WHERE product_id = ?",
-      [product.id]
-    );
+        const [images] = await db.query(
+            "SELECT image_url, is_main FROM product_images WHERE product_id = ?",
+            [product.id]
+        );
 
-    const [reviews] = await db.query(
-  `SELECT r.id, r.rating, r.comment, r.created_at, u.name AS user_name,u.profile_pic AS profile_pic
+        const [reviews] = await db.query(
+            `SELECT r.id, r.rating, r.comment, r.created_at, u.name AS user_name,u.profile_pic AS profile_pic
    FROM reviews r
    JOIN users u ON r.user_id = u.id
    WHERE r.product_id = ?`,
-  [product.id]
-);
+            [product.id]
+        );
 
-product.reviews = reviews;
+        product.reviews = reviews;
 
+        product.images = images;
 
-    product.images = images;
-
-    res.json( product );
-
-  } catch (error) {
-    console.error("Error fetching product:", error.message);
-    res.status(500).json({ message: "Internal Server Error", error: error.message });
-  }
+        res.json(product);
+    } catch (error) {
+        console.error("Error fetching product:", error.message);
+        res.status(500).json({
+            message: "Internal Server Error",
+            error: error.message,
+        });
+    }
 };
 
 const getProductsByCategory = async (req, res) => {
-  try {
-    const slug = req.params.slug;
+    try {
+        const slug = req.params.slug;
 
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 5;
-    const offset = (page - 1) * limit;
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 5;
+        const offset = (page - 1) * limit;
 
-    const [categoryResult] = await db.query(
-      `SELECT id FROM categories WHERE slug = ?`,
-      [slug]
-    );
+        const [categoryResult] = await db.query(
+            `SELECT id FROM categories WHERE slug = ?`,
+            [slug]
+        );
 
-    if (categoryResult.length === 0) {
-      return res.status(404).json({ message: "Category not found" });
-    }
+        if (categoryResult.length === 0) {
+            return res.status(404).json({ message: "Category not found" });
+        }
 
-    const categoryId = categoryResult[0].id;
+        const categoryId = categoryResult[0].id;
 
-    const [countResult] = await db.query(
-      `SELECT COUNT(*) AS total FROM products WHERE category_id = ?`,
-      [categoryId]
-    );
+        const [countResult] = await db.query(
+            `SELECT COUNT(*) AS total FROM products WHERE category_id = ?`,
+            [categoryId]
+        );
 
-    const totalProducts = countResult[0].total;
-    const totalPages = Math.ceil(totalProducts / limit);
+        const totalProducts = countResult[0].total;
+        const totalPages = Math.ceil(totalProducts / limit);
 
-    const productSql = `
+        const productSql = `
       SELECT 
         p.id, p.name, p.slug, p.description, p.short_description, 
         p.price, p.discount_percentage, p.stock, p.is_active, p.created_at,
@@ -299,35 +315,36 @@ const getProductsByCategory = async (req, res) => {
       ORDER BY p.created_at DESC
       LIMIT ? OFFSET ?
     `;
-    const [products] = await db.query(productSql, [categoryId, limit, offset]);
+        const [products] = await db.query(productSql, [
+            categoryId,
+            limit,
+            offset,
+        ]);
 
-    const imageSql = `SELECT product_id, image_url, is_main FROM product_images`;
-    const [images] = await db.query(imageSql);
+        const imageSql = `SELECT product_id, image_url, is_main FROM product_images`;
+        const [images] = await db.query(imageSql);
 
-    const productsWithImages = products.map(product => {
-      const productImages = images.filter(img => img.product_id === product.id);
-      return {
-        ...product,
-        images: productImages
-      };
-    });
+        const productsWithImages = products.map((product) => {
+            const productImages = images.filter(
+                (img) => img.product_id === product.id
+            );
+            return {
+                ...product,
+                images: productImages,
+            };
+        });
 
-    res.json({
-      products: productsWithImages,
-      currentPage: page,
-      totalPages,
-      totalProducts
-    });
-  } catch (error) {
-    console.error("Error fetching products by category:", error);
-    res.status(500).json({ message: "Server error" });
-  }
+        res.json({
+            products: productsWithImages,
+            currentPage: page,
+            totalPages,
+            totalProducts,
+        });
+    } catch (error) {
+        console.error("Error fetching products by category:", error);
+        res.status(500).json({ message: "Server error" });
+    }
 };
-
-
-
-
- 
 
 module.exports = {
     getAllProducts,
@@ -335,5 +352,5 @@ module.exports = {
     updateProduct,
     deleteProduct,
     getOneProduct,
-    getProductsByCategory
+    getProductsByCategory,
 };
