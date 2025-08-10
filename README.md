@@ -176,7 +176,6 @@ Quenzy/
 <img width="300" alt="Screenshot 2025-08-10 220619" src="https://github.com/user-attachments/assets/69144b3f-3ee8-465b-b992-0c7a41a5130b" />
 <img width="300" alt="Screenshot 2025-08-10 220648" src="https://github.com/user-attachments/assets/51065c7b-b386-4f13-859c-4626a7d9c036" />
 <img width="300" alt="Screenshot 2025-08-10 220719" src="https://github.com/user-attachments/assets/abaced28-ef86-4c23-9ee4-de3b758ea38b" />
-<img width="300" alt="Screenshot 2025-08-10 220808" src="https://github.com/user-attachments/assets/e1112909-9a40-48c6-a728-48994db46272" />
 
 
 </p>
@@ -184,6 +183,7 @@ Quenzy/
 ### Other pages
 
 <p float="left">
+   <img width="300" alt="Screenshot 2025-08-10 220808" src="https://github.com/user-attachments/assets/e1112909-9a40-48c6-a728-48994db46272" />
    <img width="300" alt="Screenshot 2025-08-10 220907" src="https://github.com/user-attachments/assets/4b3a063d-deb8-4ccd-9040-bc437eeac0ab" />
    <img width="300" alt="Screenshot 2025-08-10 220925" src="https://github.com/user-attachments/assets/de8e7a4b-c1f3-4d18-875c-faf5bb3cbf0e" />
    <img width="300" alt="Screenshot 2025-08-10 220940" src="https://github.com/user-attachments/assets/53c5516b-c54b-433a-ac2c-f9e7f28adc95" />
