@@ -11,7 +11,6 @@ build/
 coverage/
 logs
 *.log
-Uploads/
 
 # PM2 / Process Manager logs
 pids
