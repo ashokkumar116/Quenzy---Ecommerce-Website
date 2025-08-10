@@ -16,6 +16,7 @@ import { FaRegHeart } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
 import { FaBars } from "react-icons/fa";
 import logo from "../assets/navlogo.png";
+import { GrUserAdmin } from "react-icons/gr";
 
 const Navbar = () => {
     const { user, logout } = useContext(AuthContext);
@@ -188,7 +189,7 @@ const Navbar = () => {
                                 setShowDropdown(false);
                             }}
                         >
-                            <FaRegUser /> Admin Panel
+                            <GrUserAdmin /> Admin Panel
                         </li>
                         )}
                         <li
