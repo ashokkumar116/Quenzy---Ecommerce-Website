@@ -4,6 +4,7 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {AuthContext} from "../Contexts/AuthContext";
 import { CiLogin } from "react-icons/ci";
+import LoginImg from  "../assets/login.png"
 
 
 const Login = () => {
@@ -44,7 +45,7 @@ const Login = () => {
                 {message && <p className="text-error" >{message}</p>}
                 </div>
                 <div className="flex justify-center items-center hidden xl:block">
-                    <img src="../src/assets/login.png" className="p-5" />
+                    <img src={LoginImg} className="p-5" />
                 </div>
             </div>
         </div>

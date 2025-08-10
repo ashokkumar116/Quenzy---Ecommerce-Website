@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { LuUserPlus } from "react-icons/lu";
-
+import LoginImg from  "../assets/login.png"
 
 import axios from '../axios';
 
@@ -57,7 +57,7 @@ const Register = () => {
                 {message && <p className='text-error' >{message}</p>}
                 </div>
                 <div className="flex justify-center items-center hidden xl:block">
-                    <img src="../src/assets/login.png" className="p-5" />
+                    <img src={LoginImg} className="p-5" />
                 </div>
             </div>
         </div>

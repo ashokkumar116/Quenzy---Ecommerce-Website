@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GoSearch } from "react-icons/go";
 import { IoCartOutline } from "react-icons/io5";
 import { Badge } from "primereact/badge";
@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "../axios";
 import { useCart } from "../Contexts/CartContext";
 import { asset } from "../assets/asset";
-import { FaUserCircle } from "react-icons/fa";
+import { FaMoon, FaSun, FaUserCircle } from "react-icons/fa";
 import { AiOutlineProduct } from "react-icons/ai";
 import { FaRegUser } from "react-icons/fa";
 import { FiShoppingBag } from "react-icons/fi";
@@ -25,6 +25,19 @@ const Navbar = () => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [showMobileMenu, setShowMobileMenu] = useState(false);
     const [query, setQuery] = useState("");
+
+    const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+    // Apply theme whenever it changes
+    useEffect(() => {
+        document.querySelector("html").setAttribute("data-theme", theme);
+        localStorage.setItem("theme", theme);
+    }, [theme]);
+
+    const handleThemeToggle = () => {
+        setTheme(theme === "light" ? "dark" : "light");
+    };
+
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -46,7 +59,7 @@ const Navbar = () => {
             <nav className="flex justify-between items-center">
                 {/* Logo */}
                 <div className="cursor-pointer" onClick={() => navigate("/")}>
-                    <img className="w-60 max-md:w-40" src={logo} alt="Logo" />
+                    <img className="w-60 max-md:w-40 max-sm:w-30" src={logo} alt="Logo" />
                 </div>
 
                 {/* Desktop Menu */}
@@ -78,6 +91,14 @@ const Navbar = () => {
                             <Badge value={cart.length || 0} severity="success" />
                         </div>
                     </li>
+                     <li>
+                        <button
+                            onClick={handleThemeToggle}
+                            className="btn btn-ghost text-primary text-xl"
+                        >
+                            {theme === "light" ? <FaMoon /> : <FaSun />}
+                        </button>
+                    </li>
                     <li>
                         {user ? (
                             user.profile_pic ? (
@@ -104,7 +125,7 @@ const Navbar = () => {
                         )}
                     </li>
                 </ul>
-                <div className="lg:hidden absolute right-15">
+                <div className="lg:hidden absolute right-12 flex">
                         {user ? (
                             user.profile_pic ? (
                                 <img
@@ -122,16 +143,23 @@ const Navbar = () => {
                             )
                         ) : (
                             <Link to={"/login"}>
-                                <button className="btn btn-primary flex items-center gap-2 w-full">
+                                <button className="btn btn-primary flex items-center gap-2 w-full ">
                                     <MdLogin />
                                     Login
                                 </button>
                             </Link>
                         )}
+                        <button
+                        onClick={handleThemeToggle}
+                        className="btn btn-ghost text-primary text-xl rounded-full"
+                    >
+                        {theme === "light" ? <FaMoon /> : <FaSun />}
+                    </button>
                     </div>
 
                 {/* Mobile Menu Toggle */}
-                <div className="lg:hidden">
+                <div className="lg:hidden flex gap-5">
+                    
                     <FaBars className="text-2xl cursor-pointer" onClick={handleMobileMenuToggle} />
                 </div>
             </nav>
@@ -221,7 +249,9 @@ const Navbar = () => {
                         </li>
                     </ul>
                 </div>
+                
             )}
+            
         </div>
     );
 };
