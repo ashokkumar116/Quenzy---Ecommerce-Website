@@ -120,7 +120,7 @@ const AddSeller = () => {
   return (
     <div className="pt-20">
         <h1 className="text-3xl text-primary uppercase font-bold mb-6">Add Seller</h1>
-        <form onSubmit={handleSubmit} className="flex items-center gap-5">
+        <form onSubmit={handleSubmit} className="flex items-center gap-5 max-xl:flex-col">
             <input
                 type="text"
                 name="name"
@@ -162,9 +162,9 @@ const AddSeller = () => {
                 transition={Bounce}
             />
         </form>
-        <div className="bg-base-100 rounded-lg shadow-lg">
+        <div className="bg-base-100 rounded-lg shadow-lg overflow-x-scroll mt-5">
             <h2 className="text-2xl font-bold mt-10 mb-5 text-primary py-2 px-5">Sellers List</h2>
-            <table className="pl-5 transition-all duration-300 p-3 w-full table text-center">
+            <table className="pl-5 transition-all duration-300 p-3 w-full table text-center ">
                 <thead>
                     <tr>
                         <th>Name</th>
