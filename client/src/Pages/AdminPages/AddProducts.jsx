@@ -520,10 +520,10 @@ const AddProducts = () => {
 
             {/* Edit Product Modal (Placeholder) */}
             {showEditModal && (
-                <div className="fixed top-20 inset-0 bg-[rgba(1,1,1,0.7)] bg-opacity-50 flex items-center justify-center z-50 overflow-y-scroll pt-20 pb-3">
+                <div className="fixed top-20 inset-0 bg-[rgba(1,1,1,0.7)] bg-opacity-50 flex items-center justify-center z-50 overflow-y-scroll py-25 pt-20 pb-3">
                     <form
                         onSubmit={handleEditSave}
-                        className="bg-base-100 shadow-xl rounded-xl p-8 grid grid-cols-1 md:grid-cols-2 gap-8 w-200"
+                        className="bg-base-100 shadow-xl rounded-xl p-8 mt-80 mx-5 md:mt-0 grid grid-cols-1 md:grid-cols-2 gap-8 w-200"
                     >
                         {/* Left Column */}
                         <div className="flex flex-col gap-5">
