@@ -20,11 +20,9 @@ const Products = () => {
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
-    const [isFilterOpen, setIsFilterOpen] = useState(false); 
+    const [isFilterOpen, setIsFilterOpen] = useState(false);
 
     const { cart } = useCart();
-
-    
 
     const fetchFilters = async () => {
         try {
@@ -93,9 +91,14 @@ const Products = () => {
                         <BiCategory /> Categories
                     </h2>
                     {categories.map((category) => (
-                        <label key={category.id} className="flex items-center gap-2 cursor-pointer">
+                        <label
+                            key={category.id}
+                            className="flex items-center gap-2 cursor-pointer"
+                        >
                             <input
-                                checked={selectedCategories.includes(category.id)}
+                                checked={selectedCategories.includes(
+                                    category.id
+                                )}
                                 type="checkbox"
                                 value={category.id}
                                 onChange={(e) => {
@@ -103,7 +106,9 @@ const Products = () => {
                                     setSelectedCategories((prev) =>
                                         e.target.checked
                                             ? [...prev, value]
-                                            : prev.filter((item) => item !== value)
+                                            : prev.filter(
+                                                  (item) => item !== value
+                                              )
                                     );
                                 }}
                             />
@@ -118,7 +123,10 @@ const Products = () => {
                         <HiOutlineTag /> Brands
                     </h2>
                     {brands.map((brand) => (
-                        <label key={brand.id} className="flex items-center gap-2 cursor-pointer">
+                        <label
+                            key={brand.id}
+                            className="flex items-center gap-2 cursor-pointer"
+                        >
                             <input
                                 type="checkbox"
                                 value={brand.id}
@@ -128,7 +136,9 @@ const Products = () => {
                                     setSelectedBrands((prev) =>
                                         e.target.checked
                                             ? [...prev, value]
-                                            : prev.filter((item) => item !== value)
+                                            : prev.filter(
+                                                  (item) => item !== value
+                                              )
                                     );
                                 }}
                             />
@@ -142,19 +152,21 @@ const Products = () => {
                     <h2 className="text-2xl max-md:text-[16px] font-semibold mb-2 flex items-center gap-2">
                         <HiOutlineCurrencyRupee /> Price Range
                     </h2>
-                    <p className="mb-2">₹{selectedPriceRange[0]} - ₹{selectedPriceRange[1]}</p>
-<div style={{ touchAction: "none" }}>
-  <Slider
-    value={selectedPriceRange}
-    onChange={(e) => setSelectedPriceRange(e.value)}
-    range
-    min={priceRange.min}
-    max={priceRange.max}
-    step={100}
-    style={{ width: "80%" }}
-  />
-</div>
-
+                    <p className="mb-2">
+                        ₹{selectedPriceRange[0]} - ₹{selectedPriceRange[1]}
+                    </p>
+                    <div style={{ touchAction: "none" }}>
+                        <Slider
+                            value={selectedPriceRange}
+                            onChange={(e) => setSelectedPriceRange(e.value)}
+                            range
+                            min={priceRange.min}
+                            max={priceRange.max}
+                            step={100}
+                            style={{ width: "80%" }}
+                        />
+                    </div>
+                    ̥
                 </div>
             </div>
         </div>
@@ -162,7 +174,9 @@ const Products = () => {
 
     return (
         <div className="bg-base-300 min-h-screen py-20">
-            <h1 className="text-3xl font-bold text-center my-10 text-primary">Products</h1>
+            <h1 className="text-3xl font-bold text-center my-10 text-primary">
+                Products
+            </h1>
 
             {/* Mobile Filter Button */}
             <div className="lg:hidden px-5 mb-4">
@@ -195,9 +209,14 @@ const Products = () => {
                     >
                         <div className="grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 lg:px-5 place-items-center">
                             {products.map((product) => {
-                                const isInCart = cart.find((item) => item.id === product.id);
+                                const isInCart = cart.find(
+                                    (item) => item.id === product.id
+                                );
                                 const offerPrice =
-                                    product.price - (product.price * product.discount_percentage) / 100;
+                                    product.price -
+                                    (product.price *
+                                        product.discount_percentage) /
+                                        100;
                                 return (
                                     <ProductCard
                                         key={`product-${product.id}`}
@@ -218,17 +237,27 @@ const Products = () => {
                     <div className="bg-white w-72 p-5 overflow-y-auto">
                         <div className="flex justify-between items-center mb-4">
                             <h2 className="text-xl font-semibold">Filters</h2>
-                            <button className="cursor-pointer" onClick={() => setIsFilterOpen(false)}>
+                            <button
+                                className="cursor-pointer"
+                                onClick={() => setIsFilterOpen(false)}
+                            >
                                 <FiX size={24} />
                             </button>
                         </div>
                         <FiltersSidebar />
                     </div>
-                    <div className="flex-1" onClick={() => setIsFilterOpen(false)}></div>
+                    <div
+                        className="flex-1"
+                        onClick={() => setIsFilterOpen(false)}
+                    ></div>
                 </div>
             )}
 
-            <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+            />
         </div>
     );
 };
