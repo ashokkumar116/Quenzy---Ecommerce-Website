@@ -1,6 +1,6 @@
 
 import axios from "../axios";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {AuthContext} from "../Contexts/AuthContext";
 import { CiLogin } from "react-icons/ci";
@@ -12,10 +12,21 @@ const Login = () => {
     const [values,setValues] = useState({});
     const navigate = useNavigate();
     const {login, message} = useContext(AuthContext);
+    const [cookiesBlocked, setCookiesBlocked] = useState(false);
 
     const handleChange = (e) => {
         setValues({...values,[e.target.name]:e.target.value});
     }
+
+     useEffect(() => {
+        try {
+            document.cookie = "testcookie=1; SameSite=None; Secure";
+            const cookiesEnabled = document.cookie.includes("testcookie=");
+            setCookiesBlocked(!cookiesEnabled);
+        } catch (err) {
+            setCookiesBlocked(true);
+        }
+    }, []);
 
     const handleSubmit = async (e) =>{
         e.preventDefault();
@@ -36,6 +47,14 @@ const Login = () => {
             <div className="form flex justify-center max-md:w-100 items-center gap-7 bg-base-100 shadow-lg rounded-lg w-[70%] h-[70%] ">
                 <div className="p-20 rounded-md flex  flex-col justify-center items-center gap-6 max-sm:p-10">
                 <h1 className="text-3xl text-primary font-bold">Login</h1>
+                {cookiesBlocked && (
+                        <p className="text-red-500 text-sm bg-red-100 p-2 rounded">
+                            ⚠ Please enable <strong>third-party cookies</strong> in your browser settings to log in.
+                            <br />
+                            In Chrome: Go to{" "}
+                            <span className="font-mono">Settings → Privacy and security → Cookies</span> → Allow all cookies.
+                        </p>
+                    )}
                 <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center gap-6">
                     <input className="input-prime max-md:w-90 max-sm:w-70" placeholder="Email" name="email" onChange={handleChange} />
                     <input className="input-prime max-md:w-90 max-sm:w-70" placeholder="Password" type="password" name="password" onChange={handleChange}/>
