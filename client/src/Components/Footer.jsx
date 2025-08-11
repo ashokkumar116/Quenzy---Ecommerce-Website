@@ -1,5 +1,5 @@
 import { href ,Link } from 'react-router-dom';
-import logo from '../assets/NavLogo.png'
+import logo from '../assets/navlogo.png'
 
 
 const Footer = () => {
