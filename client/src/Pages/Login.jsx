@@ -31,7 +31,7 @@ const Login = () => {
             <div className="form flex justify-center max-md:w-100 items-center gap-7 bg-base-100 shadow-lg rounded-lg w-[70%] h-[70%] ">
                 <div className="p-20 rounded-md flex  flex-col justify-center items-center gap-6 max-sm:p-10">
                     <h1 className="text-3xl text-primary font-bold">Login</h1>
-                    <p className="text-red-500 text-sm bg-red-100 p-2 rounded">
+                    <p className="text-red-500 text-xs bg-red-100 p-2 rounded">
                         ⚠ Please enable <strong>third-party cookies</strong> in
                         your browser settings to log in
                         <span className="italic">
@@ -44,9 +44,8 @@ const Login = () => {
                         <span className="font-mono">
                             Settings → Privacy and security → Third Party Cookies
                         </span>{" "}
-                        → Allow Third Party cookies.
+                        → Allow Third Party Cookies.
                     </p>
-                    ̥
                     <form
                         onSubmit={handleSubmit}
                         className="flex flex-col justify-center items-center gap-6"
