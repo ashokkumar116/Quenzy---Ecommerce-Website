@@ -66,15 +66,15 @@ const Dashboard = () => {
             {/* Cards */}
             <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[
-                    { title: "Total Users", value: `${stats.total_users} Users registered.` },
-                    { title: "Total Products", value: `${stats.total_products} Products available.` },
-                    { title: "Total Sellers", value: `${sellerCount} Sellers registered.` },
-                    { title: "Total Orders", value: `${stats.total_orders} Orders placed.` },
-                    { title: "Total Revenue", value: `₹ ${stats.total_revenue} Revenue generated.` },
+                    { title: "Total Users", value: `${stats.total_users}` },
+                    { title: "Total Products", value: `${stats.total_products}` },
+                    { title: "Total Sellers", value: `${sellerCount}` },
+                    { title: "Total Orders", value: `${stats.total_orders}` },
+                    { title: "Total Revenue", value: `₹ ${stats.total_revenue}` },
                 ].map((card, index) => (
-                    <div key={index} className="rounded-xl shadow-xl bg-base-100 p-4 hover:scale-[1.02] transition-transform">
+                    <div key={index} className="rounded-xl shadow-xl flex flex-col justify-center items-center bg-base-100 p-4 py-6 hover:scale-[1.02] transition-transform">
                         <h3 className="text-lg font-semibold text-base-content">{card.title}</h3>
-                        <p className="text-sm mt-2 text-base-content">{card.value}</p>
+                        <p className="text-lg mt-2 text-base-content">{card.value}</p>
                     </div>
                 ))}
             </div>
