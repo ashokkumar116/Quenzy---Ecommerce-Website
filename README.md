@@ -35,7 +35,7 @@ Built with a focus on **scalability**, **security**, and **modern UI**.
 - **MySQL** – Database
 - **JWT** – Authentication
 - **Multer + Cloudinary** – Image uploads
-- **Chart.js** – Data visualization
+- **Recharts** – Data visualization
 
 ---
 
