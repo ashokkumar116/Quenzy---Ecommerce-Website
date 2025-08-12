@@ -39,6 +39,8 @@ const AddProducts = () => {
     const [editIsActive, setEditIsActive] = useState("1");
     const [moreImages, setMoreImages] = useState([]);
 
+    const [dataLoading, setDataLoading] = useState(false);
+
     // Pagination state
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
@@ -51,6 +53,8 @@ const AddProducts = () => {
     // Refs for file inputs
     const fileInputRef = useRef(null);
     const editFileInputRef = useRef(null);
+
+
 
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
@@ -67,17 +71,24 @@ const AddProducts = () => {
 
     // Fetch brands, categories, sellers, and products from the server
     const fetchDatas = async () => {
-        const brandsres = await axios.get("/brands/getbrandspage");
-        const categoriesres = await axios.get("/categories/getcategoriespage");
-        const sellersres = await axios.get("/sellers/getsellerspage");
-        const productsres = await axios.get(
-            `/products/getproducts?page=${page}&limit=${limit}`
-        );
-        setBrands(brandsres.data);
-        setCategories(categoriesres.data);
-        setSellers(sellersres.data);
-        setProducts(productsres.data.products);
-        setTotalPages(productsres.data.totalPages);
+        try {
+            setDataLoading(true)
+            const brandsres = await axios.get("/brands/getbrandspage");
+            const categoriesres = await axios.get("/categories/getcategoriespage");
+            const sellersres = await axios.get("/sellers/getsellerspage");
+            const productsres = await axios.get(
+                `/products/getproducts?page=${page}&limit=${limit}`
+            );
+            setBrands(brandsres.data);
+            setCategories(categoriesres.data);
+            setSellers(sellersres.data);
+            setProducts(productsres.data.products);
+            setTotalPages(productsres.data.totalPages);
+        } catch (error) {
+            console.log(error)
+        } finally{
+            setDataLoading(false);
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -420,7 +431,9 @@ const AddProducts = () => {
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
+                        {
+                            dataLoading ? <tbody className="text-left"><tr><td colSpan={12}><span class="loading loading-dots loading-xl"></span></td></tr></tbody> : (
+                                <tbody>
                             {products.length > 0 &&
                                 products.map((product) => (
                                     <tr
@@ -482,6 +495,8 @@ const AddProducts = () => {
                                     </tr>
                                 ))}
                         </tbody>
+                            )
+                        }
                     </table>
                 </div>
                 {/* Pagination Buttons */}
