@@ -102,7 +102,7 @@ const MyOrders = () => {
                     No orders placed yet.
                 </div>
             ) : (
-                orders.map((order) => (
+                [...orders].reverse().map((order) => (
                     <div
                         key={order.order_id}
                         className="bg-base-100 rounded-2xl p-6 mb-8 shadow-md hover:shadow-xl transition duration-300 max-md:flex max-md:flex-col"

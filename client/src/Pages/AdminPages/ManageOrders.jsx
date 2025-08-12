@@ -62,7 +62,7 @@ const ManageOrders = () => {
       {orders.length === 0 ? (
         <p>No orders found</p>
       ) : (
-        orders.map((order) => (
+        [...orders].reverse().map((order) => (
           <div
             key={order.order_id}
             className="mb-6 p-6 bg-base-100 rounded-xl shadow-lg border border-base-300"
