@@ -2,6 +2,8 @@ const express = require('express');
 const db = require('../db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
@@ -25,8 +27,8 @@ const loginUser = async (req, res) => {
 
     res.cookie('token',token,{
         httpOnly: true,
-        secure: true,
-        sameSite: 'None',
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ?'None' : 'Strict',
         maxAge: 3600000 
     });
 
