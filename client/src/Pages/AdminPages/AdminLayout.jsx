@@ -35,7 +35,7 @@ function AdminLayout() {
     >
       {/* Toggle button inside sidebar */}
       <button
-        className="absolute top-[50%] -right-3 bg-base-200 rounded-full p-1 shadow max-lg:hidden"
+        className="absolute top-[50%] -right-3 bg-base-200 rounded-full p-1 shadow max-lg:hidden cursor-pointer"
         onClick={() => setIsExpanded(!isExpanded)}
       >
         {isExpanded ? <FaChevronLeft /> : <FaChevronRight />}
