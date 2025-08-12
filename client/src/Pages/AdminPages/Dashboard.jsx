@@ -16,6 +16,7 @@ import QuenzyLoader from "../../Loader/QuenzyLoader";
 const Dashboard = () => {
     const { user } = useContext(AuthContext);
     const [loading, setLoading] = useState(false);
+    const [dataLoading, setDataLoading] = useState(false);
     const [sellerCount, setSellerCount] = useState(0);
     const [categoryData, setCategoryData] = useState([]);
     const [stats, setStats] = useState({});
@@ -27,14 +28,27 @@ const Dashboard = () => {
 
     const getDatas = async () => {
         try {
-            const sellerCountResponse = await axios.get("/dashboard/getsellerscount");
-            const categoryDataResponse = await axios.get("/dashboard/categoriesdata");
+            setDataLoading(true);
+            const sellerCountResponse = await axios.get(
+                "/dashboard/getsellerscount"
+            );
+            const categoryDataResponse = await axios.get(
+                "/dashboard/categoriesdata"
+            );
             const statsResponse = await axios.get("/dashboard/stats");
-            const recentOrdersResponse = await axios.get("/dashboard/recent-orders");
+            const recentOrdersResponse = await axios.get(
+                "/dashboard/recent-orders"
+            );
             const lowStockResponse = await axios.get("/dashboard/low-stock");
-            const orderChartResponse = await axios.get("/dashboard/order-chart");
-            const revenueChartResponse = await axios.get("/dashboard/revenue-chart");
-            const topSellingResponse = await axios.get("/dashboard/top-products");
+            const orderChartResponse = await axios.get(
+                "/dashboard/order-chart"
+            );
+            const revenueChartResponse = await axios.get(
+                "/dashboard/revenue-chart"
+            );
+            const topSellingResponse = await axios.get(
+                "/dashboard/top-products"
+            );
 
             setSellerCount(sellerCountResponse.data.sellerCount);
             setCategoryData(categoryDataResponse.data);
@@ -47,7 +61,7 @@ const Dashboard = () => {
         } catch (error) {
             console.error("Error fetching dashboard data:", error);
         } finally {
-            setLoading(false);
+            setDataLoading(false);
         }
     };
 
@@ -67,14 +81,31 @@ const Dashboard = () => {
             <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[
                     { title: "Total Users", value: `${stats.total_users}` },
-                    { title: "Total Products", value: `${stats.total_products}` },
+                    {
+                        title: "Total Products",
+                        value: `${stats.total_products}`,
+                    },
                     { title: "Total Sellers", value: `${sellerCount}` },
                     { title: "Total Orders", value: `${stats.total_orders}` },
-                    { title: "Total Revenue", value: `₹ ${stats.total_revenue}` },
+                    {
+                        title: "Total Revenue",
+                        value: `₹ ${stats.total_revenue}`,
+                    },
                 ].map((card, index) => (
-                    <div key={index} className="rounded-xl shadow-xl flex flex-col justify-center items-center bg-base-100 p-4 py-6 hover:scale-[1.02] transition-transform">
-                        <h3 className="text-lg font-semibold text-base-content">{card.title}</h3>
-                        <p className="text-lg mt-2 text-base-content">{card.value}</p>
+                    <div
+                        key={index}
+                        className="rounded-xl shadow-xl flex flex-col justify-center items-center bg-base-100 p-4 py-6 hover:scale-[1.02] transition-transform"
+                    >
+                        <h3 className="text-lg font-semibold text-base-content">
+                            {card.title}
+                        </h3>
+                        {dataLoading ? (
+                            <span class="loading loading-spinner loading-xs"></span>
+                        ) : (
+                            <p className="text-lg mt-2 text-base-content">
+                                {card.value}
+                            </p>
+                        )}
                     </div>
                 ))}
             </div>
@@ -83,37 +114,67 @@ const Dashboard = () => {
             <div className="mt-10 space-y-8">
                 {/* Categories Chart */}
                 <div className="rounded-xl shadow-xl p-5 bg-base-100 overflow-x-scroll">
-                    <h3 className="text-lg font-semibold mb-4">Categories Wise Product Count</h3>
-                    <div className="w-full h-64 sm:h-80 min-w-200 ">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <BarChart data={categoryData}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="name" />
-                                <YAxis />
-                                <Tooltip />
-                                <Legend />
-                                <Bar dataKey="productCount" className="fill-primary" />
-                            </BarChart>
-                        </ResponsiveContainer>
-                    </div>
+                    <h3 className="text-lg font-semibold mb-4">
+                        Categories Wise Product Count
+                    </h3>
+                    {dataLoading ? (
+                        <div className="flex flex-col justify-center items-center">
+                            <span class="loading loading-spinner loading-xl"></span>
+                        </div>
+                    ) : (
+                        <div className="w-full h-64 sm:h-80 min-w-200 ">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <BarChart data={categoryData}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="name" />
+                                    <YAxis />
+                                    <Tooltip />
+                                    <Legend />
+                                    <Bar
+                                        dataKey="productCount"
+                                        className="fill-primary"
+                                    />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </div>
+                    )}
                 </div>
 
                 {/* Recent Orders */}
                 <div className="rounded-xl shadow-xl p-5 bg-base-100 overflow-x-auto">
-                    <h3 className="text-lg font-semibold mb-4">Recent Orders</h3>
+                    <h3 className="text-lg font-semibold mb-4">
+                        Recent Orders
+                    </h3>
                     {recentOrders.length === 0 ? (
                         <p>No recent orders found.</p>
                     ) : (
                         <ul className="space-y-4 min-w-[300px]">
                             {recentOrders.map((order) => (
-                                <li key={order.id} className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 bg-base-200 rounded-lg">
+                                <li
+                                    key={order.id}
+                                    className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 bg-base-200 rounded-lg"
+                                >
                                     <div>
-                                        <p className="font-semibold">{order.user_name} ({order.user_email})</p>
-                                        <p className="text-sm">Order ID: {order.order_uuid}</p>
-                                        <p className="text-sm">Total: ₹{order.total_price}</p>
+                                        <p className="font-semibold">
+                                            {order.user_name} (
+                                            {order.user_email})
+                                        </p>
+                                        <p className="text-sm">
+                                            Order ID: {order.order_uuid}
+                                        </p>
+                                        <p className="text-sm">
+                                            Total: ₹{order.total_price}
+                                        </p>
                                     </div>
-                                    <span className={`badge ${order.status === "delivered" ? "badge-success" : "badge-warning"} mt-2 sm:mt-0`}>
-                                        {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                                    <span
+                                        className={`badge ${
+                                            order.status === "delivered"
+                                                ? "badge-success"
+                                                : "badge-warning"
+                                        } mt-2 sm:mt-0`}
+                                    >
+                                        {order.status.charAt(0).toUpperCase() +
+                                            order.status.slice(1)}
                                     </span>
                                 </li>
                             ))}
@@ -123,16 +184,25 @@ const Dashboard = () => {
 
                 {/* Low Stock Products */}
                 <div className="rounded-xl shadow-xl p-5 bg-base-100 overflow-x-auto">
-                    <h3 className="text-lg font-semibold mb-4">Low Stock Products</h3>
+                    <h3 className="text-lg font-semibold mb-4">
+                        Low Stock Products
+                    </h3>
                     {lowStockProducts.length === 0 ? (
                         <p>No low stock products found.</p>
                     ) : (
                         <ul className="space-y-4 min-w-[300px]">
                             {lowStockProducts.map((product) => (
-                                <li key={product.id} className="flex justify-between items-center p-4 bg-base-200 rounded-lg">
+                                <li
+                                    key={product.id}
+                                    className="flex justify-between items-center p-4 bg-base-200 rounded-lg"
+                                >
                                     <div>
-                                        <p className="font-semibold">{product.name}</p>
-                                        <p className="text-sm">Stock: {product.stock}</p>
+                                        <p className="font-semibold">
+                                            {product.name}
+                                        </p>
+                                        <p className="text-sm">
+                                            Stock: {product.stock}
+                                        </p>
                                     </div>
                                 </li>
                             ))}
@@ -142,50 +212,75 @@ const Dashboard = () => {
 
                 {/* Orders Chart */}
                 <div className="rounded-xl shadow-xl p-5 bg-base-100 overflow-x-scroll">
-                    <h3 className="text-lg font-semibold mb-4">Orders (Last 7 Days)</h3>
-                    <div className="w-full h-64 sm:h-80 min-w-200">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <BarChart data={orderChartData}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="date" />
-                                <YAxis />
-                                <Tooltip />
-                                <Legend />
-                                <Bar dataKey="count" fill="#8884d8" />
-                            </BarChart>
-                        </ResponsiveContainer>
-                    </div>
+                    <h3 className="text-lg font-semibold mb-4">
+                        Orders (Last 7 Days)
+                    </h3>
+                    {dataLoading ? (
+                        <div className="flex flex-col justify-center items-center">
+                            <span class="loading loading-spinner loading-xl"></span>
+                        </div>
+                    ) : (
+                        <div className="w-full h-64 sm:h-80 min-w-200">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <BarChart data={orderChartData}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="date" />
+                                    <YAxis />
+                                    <Tooltip />
+                                    <Legend />
+                                    <Bar dataKey="count" fill="#8884d8" />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </div>
+                    )}
                 </div>
 
                 {/* Revenue Chart */}
                 <div className="rounded-xl shadow-xl p-5 bg-base-100 overflow-x-scroll">
-                    <h3 className="text-lg font-semibold mb-4">Revenues (Last 7 Days)</h3>
-                    <div className="w-full h-64 sm:h-80 min-w-200">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <BarChart data={revenueChartData}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="date" />
-                                <YAxis />
-                                <Tooltip />
-                                <Legend />
-                                <Bar dataKey="revenue" fill="#82ca9d" />
-                            </BarChart>
-                        </ResponsiveContainer>
-                    </div>
+                    <h3 className="text-lg font-semibold mb-4">
+                        Revenues (Last 7 Days)
+                    </h3>
+                    {dataLoading ? (
+                        <div className="flex flex-col justify-center items-center">
+                            <span class="loading loading-spinner loading-xl"></span>
+                        </div>
+                    ) : (
+                        <div className="w-full h-64 sm:h-80 min-w-200">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <BarChart data={revenueChartData}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="date" />
+                                    <YAxis />
+                                    <Tooltip />
+                                    <Legend />
+                                    <Bar dataKey="revenue" fill="#82ca9d" />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </div>
+                    )}
                 </div>
 
                 {/* Top Selling Products */}
                 <div className="rounded-xl shadow-xl p-5 bg-base-100 overflow-x-auto">
-                    <h3 className="text-lg font-semibold mb-4">Top Selling Products</h3>
+                    <h3 className="text-lg font-semibold mb-4">
+                        Top Selling Products
+                    </h3>
                     {topSellingProducts.length === 0 ? (
                         <p>No top selling products found.</p>
                     ) : (
                         <ul className="space-y-4 min-w-[300px]">
                             {topSellingProducts.map((product) => (
-                                <li key={product.id} className="flex justify-between items-center p-4 bg-base-200 rounded-lg">
+                                <li
+                                    key={product.id}
+                                    className="flex justify-between items-center p-4 bg-base-200 rounded-lg"
+                                >
                                     <div>
-                                        <p className="font-semibold">{product.name}</p>
-                                        <p className="text-sm">Total Sold: {product.total_sold}</p>
+                                        <p className="font-semibold">
+                                            {product.name}
+                                        </p>
+                                        <p className="text-sm">
+                                            Total Sold: {product.total_sold}
+                                        </p>
                                     </div>
                                 </li>
                             ))}
