@@ -16,7 +16,7 @@ const bouncingDot = {
 
 export default function QuenzyLoader() {
   return (
-    <div className="w-full h-screen bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 flex flex-col items-center justify-center">
+    <div className="w-full h-screen bg-base-100 flex flex-col items-center justify-center">
       <motion.h1
         className="text-5xl font-extrabold text-purple-600 tracking-wide mb-6"
         initial={{ opacity: 0, y: -20 }}
@@ -43,7 +43,7 @@ export default function QuenzyLoader() {
         ))}
       </div>
 
-      <p className="mt-6 text-sm text-gray-500 tracking-wide">Loading... please wait</p>
+      <p className="mt-6 text-sm text-base-content/70 tracking-wide">Loading... please wait</p>
     </div>
   );
 }
