@@ -16,12 +16,14 @@ const filtersRoutes = require('./Routes/filtersRoutes');
 const searchRoutes = require('./Routes/searchRoutes');
 const orderRoutes = require('./Routes/orderRoutes');
 const reviewRoutes = require('./Routes/reviewRoutes');
+const job = require('./lib/cron');
 
 //Express App Initialization
 const app = express();
 const path = require('path');
 
 //Middlewares
+job.start();
 app.use(express.json());
 app.use(cors(
     {
